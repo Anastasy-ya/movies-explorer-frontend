@@ -5,8 +5,8 @@
   border-radius: 4px;
   background: #2F2F2F;
   width: 100%;
-  max-width: 684px;
-  height: 54px;
+  max-width: 1060px;
+  height: 48px;
   font-size: 14px;
   border: 0;
   border-radius: 3px;
@@ -25,8 +25,125 @@
   color:#767676;
 }
 
-.search-form {
-  padding: 80px 70px 10px;
+.search-input {
+  display: flex;
+  flex-direction: column;
 }
 
-/* border-bottom: 1px solid rgba(84, 84, 84, 0.7); */
+.search-input__box {
+  padding: 80px 0 40px;
+  display: grid;
+  grid-template-columns: auto 70px;
+  gap: 10px;
+  border-bottom: 1px solid rgba(66, 66, 66, 1);
+}
+
+.search-input__field {
+  height: 44px;
+  width: 100%;
+  border-radius: 4px;
+  background: #2F2F2F;
+  border: none;
+}
+
+.search-input__button {
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-weight: 500;
+  width: 70px;
+  height: 44px;
+  border-radius: 4px;
+  background-color: rgba(66, 133, 244, 1);
+  color: #FFF;
+  text-align: center;
+  font-size: 12px;
+  line-height: 18px;
+
+}
+
+.search-input__tumbl {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+/* .tumbl {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+} */
+
+.search-input__text {
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-weight: 400;
+  color: #FFF;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* The switch - the box around the slider начало слайдера*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
