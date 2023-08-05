@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 // import Main from "./Main";
 import Footer from "../Footer/Footer";
 import SearchForm from "../SearchForm/SearchForm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
 // import ImagePopup from "./ImagePopup";
 // import Login from "./Login";
 // import Register from "./Register";
@@ -26,7 +27,12 @@ function App() {
       <div className="page">
         {/* <CurrentUserContext.Provider value={currentUser || ""}> */}
           <Header /> 
-          <SearchForm />
+          <div className="content">
+            <SearchForm />
+            <MoviesCardList />
+          </div>
+          
+          
           {/*userEmail={userEmail} deleteToken={deleteToken} */}
           {/* <Routes>
             <Route

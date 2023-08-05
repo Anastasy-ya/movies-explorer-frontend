@@ -1,5 +1,10 @@
+* {
+  border: 1px solid red;
+}
+
 .root {
   background-color: rgba(32, 32, 32, 1);
+
 }
 
 .page {
@@ -19,7 +24,7 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-  min-height: 100vh;
+  min-height: 100vh; /*min-height: 100vh;*/
 }
 
 @media screen and (max-width: 768px) {
@@ -28,7 +33,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 600px) {
   .page {
     grid-template-rows: 14px auto 14px;
   }
