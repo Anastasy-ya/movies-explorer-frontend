@@ -5,7 +5,8 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-// import ImagePopup from "./ImagePopup";
+import LearnMore from "../LearnMore/LearnMore";
+import Main from "../Main/Main";
 // import Login from "./Login";
 // import Register from "./Register";
 // import InfoTooltip from "./InfoTooltip";
@@ -27,10 +28,12 @@ function App() {
       <div className="page">
         {/* <CurrentUserContext.Provider value={currentUser || ""}> */}
           <Header /> 
-          <div className="content">
-            <SearchForm />
+          <main className="content">
+            {/* <SearchForm />
             <MoviesCardList />
-          </div>
+            <LearnMore /> */}
+            <Main />
+          </main>
           
           
           {/*userEmail={userEmail} deleteToken={deleteToken} */}

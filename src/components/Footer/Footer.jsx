@@ -1,14 +1,22 @@
 import React from "react";
 import './Footer.css';
 // не забыть поменять теги на ашки
-function Footer() {
+const year = new Date().getFullYear();
+
+function Footer() {// заменить теги на заголовки текста
   return (
     <footer className="footer">
+      <div className="size-container footer__size-container">
         <p className="footer__text footer__text_type_gray">Учебный проект Яндекс.Практикум х BeatFilm.</p>
-      <div className="footer__box">
-        <p className="footer__text">© 2020</p>
-        <p className="footer__text">Яндекс.Практикум</p>
-        <p className="footer__text">Github</p>
+        <div className="footer__line"></div>
+        <div className="footer__box">
+          <p className="footer__text">© {year}</p>
+          <div className="footer__box">
+            <p className="footer__text">Яндекс.Практикум</p>
+            {/* это будет линк */}
+            <p className="footer__text">Github</p> 
+          </div>
+        </div>
       </div>
     </footer>
   );

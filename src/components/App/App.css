@@ -1,17 +1,22 @@
-* {
+/* * {
   border: 1px solid red;
-}
+} */
 
 .root {
   background-color: rgba(32, 32, 32, 1);
+  min-height: 100vh;
 
 }
 
 .page {
-  max-width: 1140px;
+  /* max-width: 1140px; */
   display: grid;
   margin: 0 auto;
-  grid-template-rows: 70px auto 70px;
+  display: grid;
+/* grid-template-columns: 70px 1fr 70px; */
+grid-template-rows: repeat(3, auto);
+
+  
   grid-template-areas:
     "header"
     "content"
@@ -24,7 +29,7 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-  min-height: 100vh; /*min-height: 100vh;*/
+  /* min-height: 100vh; */
 }
 
 @media screen and (max-width: 768px) {
@@ -38,6 +43,21 @@
     grid-template-rows: 14px auto 14px;
   }
 }
+
+.content {
+  grid-area: content;
+}
+
+.size-container { /*организовать через глобальную переменную*/
+  /* display: flex; */
+  /* flex-direction: column; */
+  
+  max-width: 1140px;
+  /* height: 100%; */
+  margin: auto;
+  padding: 0;
+  
+} 
 
 /* .App {
   text-align: center;

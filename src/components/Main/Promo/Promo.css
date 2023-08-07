@@ -1,0 +1,30 @@
+.banner {
+  background-color: #073042;
+  max-height: 524px;
+  padding: 82px 275px 122px;
+}
+
+.banner__image {
+  min-height: 320px;
+  background-image: url("../../../images/main-page_packground.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-size: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.banner__text {
+  color: #ffffff;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-size: 50px;
+  font-weight: 400;
+  letter-spacing: -2px;
+  line-height: 58px;
+  text-align: center;
+  /* width: 730px; */
+  /* margin: auto; */
+  align-self: center;
+}

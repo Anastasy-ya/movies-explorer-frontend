@@ -1,9 +1,13 @@
 import React from 'react';
-// import './Main.css';
+import './Main.css';
+
+import Promo from '../Main/Promo/Promo';
 
 function Main() {
   return (
-    console.log()
+    <Promo></Promo>
+    
+
   );
 }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import './MoviesCard.css';
 
-function MoviesCard() {
+function MoviesCard() { // заменить дивы на заголовки
   return (
-    <div className="card">
+    <li className="card">
       <div className="card__shadow">
         <div className="card__info">
           <div className="card__text-block">
@@ -15,7 +15,7 @@ function MoviesCard() {
         
         <div className="card__image" alt=""></div>
       </div>
-    </div>
+    </li>
   );
 }
 

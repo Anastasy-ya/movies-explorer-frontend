@@ -5,11 +5,13 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 
 function MoviesCardList() {
   return (
-    <div className="card-list">
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-    </div>
+    <section className="card-list">
+      <ul>
+        <MoviesCard />
+        <MoviesCard />
+        <MoviesCard />
+      </ul>
+    </section>
   );
 }
 

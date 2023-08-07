@@ -7,8 +7,8 @@ import { NavLink } from "react-router-dom";
 
 function Header(props) { // { userEmail, deleteToken }
   return (
-    <header className="header">
-      {/* <div className="header__box"> */}
+    <header className="header header_type_turquoise">
+      <div className="size-container header__size-container">
         <img className="header__logo" alt="Логотип" src={logo} />
         
         <nav className="header__navigation-box">
@@ -42,8 +42,11 @@ function Header(props) { // { userEmail, deleteToken }
         </nav>
 
         <div className="header__info-account">
-          <p className="header__text">Аккаунт</p>
-          <button className="header__account-button"></button>
+          {/* <p className="header__text">Аккаунт</p>
+          <button className="header__account-button"></button> */}
+          {/*ниже альтернативный вариант для неавторизованного пользователя */}
+          <p className="header__text">Регистрация</p>
+          <button className="header__login-button">Войти</button>
           {/* <Routes>
             <Route
               path="/profile"
@@ -70,7 +73,7 @@ function Header(props) { // { userEmail, deleteToken }
             />
           </Routes> */}
         </div>
-      {/* </div> */}
+      </div>
     </header>
   );
 }
