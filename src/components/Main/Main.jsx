@@ -1,13 +1,41 @@
 import React from 'react';
 import './Main.css';
 
-import Promo from '../Main/Promo/Promo';
+import Promo from './Promo/Promo';
+import NavTab from './NavTab/NavTab';
+import SectionFrame from './SectionFrame/SectionFrame';
+import AboutProject from '../Main/AboutProject/AboutProject';
+import Techs from '../Main/Techs/Techs';
+import AboutMe from '../Main/AboutMe/AboutMe';
 
 function Main() {
   return (
-    <Promo></Promo>
-    
+    <>
+      <Promo></Promo>
+      <NavTab></NavTab>
 
+      <SectionFrame
+        content={<AboutProject></AboutProject>}
+        title={'О проекте'}
+        sectionName={'about-project'}
+      >
+      </SectionFrame>
+
+      <SectionFrame
+        content={<Techs></Techs>}
+        title={'Технологии'}
+        sectionName={'techs'}
+      >
+      </SectionFrame>
+
+      <SectionFrame
+        content={<AboutMe></AboutMe>}
+        title={'Студент'}
+        sectionName={'about-me'}
+      >
+      </SectionFrame>
+      
+    </>
   );
 }
 

@@ -1,8 +1,6 @@
 .card {
   background-color: #1f1f1f;
-  /* display: flex; */
   justify-content: space-between;
-  
   padding: 70px 0 30px;
 }
 
@@ -10,9 +8,7 @@
   background-color: #222222;
   box-shadow: 0px 4px 30px #00000014;
   height: 271px;
-  /* left: 70px; */
   max-width: 364px;
-  
 }
 
 .card__image {
@@ -40,7 +36,6 @@
   color: #8b8b8b;
   font-size: 11px;
   height: 13px;
-  /* left: 14px; */
   letter-spacing: 0;
   line-height: normal;
   white-space: nowrap;

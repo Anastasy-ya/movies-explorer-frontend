@@ -1,0 +1,12 @@
+.section-frame__title {
+  color: #ffffff;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.88px;
+  line-height: normal;
+  padding: 0 0 23px;
+  margin: 0;
+  border-bottom: solid 1px rgba(218, 218, 218, 1);
+}

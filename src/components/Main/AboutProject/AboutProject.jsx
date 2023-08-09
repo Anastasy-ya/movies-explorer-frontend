@@ -1,0 +1,54 @@
+import React from 'react';
+import './AboutProject.css';
+
+function AboutProject() {
+  return (
+      <>
+        <ul className="about-project__container">
+
+          <li className="about-project__column">
+            <h3 className="about-project__subtitle">Дипломный проект включал 5 этапов</h3>
+            <p className="about-project__text">
+              Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.
+            </p>
+          </li>
+
+          <li className="about-project__column">
+            <h3 className="about-project__subtitle">На выполнение диплома ушло 5 недель</h3>
+            <p className="about-project__text">
+              У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.
+            </p>
+          </li>
+
+        </ul>
+
+        <div className="about-project__infographic">
+        <p className="
+          about-project__text 
+          about-project__text_type_center 
+          about-project__text_type_black 
+          about-project__text_type_green-background
+        ">1 неделя</p>
+        <p className="
+          about-project__text 
+          about-project__text_type_center 
+          about-project__text_type_gray-background
+        ">4 недели</p>
+        <p className="
+          about-project__text 
+          about-project__text_type_center 
+          about-project__text_type_gray
+        ">Back-end</p>
+        <p className="
+          about-project__text 
+          about-project__text_type_center 
+          about-project__text_type_gray
+        ">Front-end</p>
+        </div>
+      </>  
+      
+  );
+}
+
+export default AboutProject;
+

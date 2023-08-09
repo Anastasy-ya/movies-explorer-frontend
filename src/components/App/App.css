@@ -49,14 +49,10 @@ grid-template-rows: repeat(3, auto);
 }
 
 .size-container { /*организовать через глобальную переменную*/
-  /* display: flex; */
-  /* flex-direction: column; */
-  
   max-width: 1140px;
   /* height: 100%; */
   margin: auto;
   padding: 0;
-  
 } 
 
 /* .App {
