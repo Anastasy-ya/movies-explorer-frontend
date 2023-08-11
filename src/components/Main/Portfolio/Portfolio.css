@@ -1,0 +1,43 @@
+.portfolio {
+
+}
+
+.text-COLOR-font-3 {
+  color: var(--grey);
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 20px;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+}
+
+.text-COLOR-font-main-20 {
+  color: white;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -1.2px;
+  line-height: 60px;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+}
+
+
+.text-COLOR-font-main-16 {
+  color: white;
+  font-family: "Inter", Helvetica;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -1.2px;
+  line-height: 50px;
+  max-width: 1140px;
+  border-bottom: solid rgba(66, 66, 66, 1) 1px;
+  margin: 0;
+  padding: 0;
+}

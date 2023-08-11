@@ -1,5 +1,5 @@
 .banner {
-  background-color: #073042;
+  background-color: var(--dark-turquoise);
   max-height: 524px;
   padding: 82px 205px 122px;
 }
@@ -16,7 +16,7 @@
 }
 
 .banner__text {
-  color: #ffffff;
+  color: white;
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;
   font-size: 50px;

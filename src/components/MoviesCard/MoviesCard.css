@@ -1,39 +1,49 @@
 .card {
-  background-color: #1f1f1f;
+  background-color: var(--dark-grey);
   justify-content: space-between;
-  padding: 70px 0 30px;
+  /* padding: 70px 0 30px; */
+  padding: 0;
+  max-width: 364px;
+  max-height: 271px;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+  list-style: none;
 }
 
-.card__shadow {
-  background-color: #222222;
-  box-shadow: 0px 4px 30px #00000014;
-  height: 271px;
-  max-width: 364px;
+.card__size-container {
+  
 }
+
+/* .card__shadow {
+  background-color: red;
+  
+  height: 100%;
+  width: 100%px;
+} */
 
 .card__image {
   height: 203px;
   object-fit: cover;
-  max-width: 364px;
+  width: 364px;
   background-image: url(../../images/image.jpg);
 }
 
 .card__header {
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;
-  color: #ffffff;
+  color: white;
   font-size: 15px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: normal;
   width: 280px;
+  
 }
 
 .card__subtitle {
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;
   font-weight: 400;
-  color: #8b8b8b;
+  color: var(--grey);
   font-size: 11px;
   height: 13px;
   letter-spacing: 0;
@@ -45,7 +55,7 @@
   width: 30px;
   height: 30px;
   border-radius: 36px;
-  background: #313131;
+  background: var(--middle-grey);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

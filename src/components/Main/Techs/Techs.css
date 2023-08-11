@@ -1,10 +1,10 @@
 .techs {
-  background-color: #272727;
+  background-color: var(--dark-grey);
   padding: 100px 0 100px;
 }
 
 .techs__subtitle {
-  color: #ffffff;
+  color: white;
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;
   font-size: 50px;
@@ -18,7 +18,7 @@
 }
 
 .techs__text {
-  color: #ffffff;
+  color: white;
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;
   font-size: 14px;
@@ -42,7 +42,7 @@
 }
 
 .techs__box {
-  background-color: #2f2f2f;
+  background-color: var(--middle-grey);
   border-radius: 10px;
   /* height: 60px; */
   width: 90px;

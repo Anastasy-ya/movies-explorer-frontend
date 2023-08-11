@@ -12,8 +12,8 @@ function Header(props) { // { userEmail, deleteToken }
         <img className="header__logo" alt="Логотип" src={logo} />
         
         <nav className="header__navigation-box">
-          <p className="header__text header__link-text">Фильмы</p>
-          <p className="header__text header__link-text">Сохраненные фильмы</p>
+          <a href="/" className="header__text header__link-text">Фильмы</a> {/* заглушка, изменить на линки */}
+          <a href="/" className="header__text header__link-text">Сохраненные фильмы</a>
           {/* <Routes>
             <Route
               path="/movies"

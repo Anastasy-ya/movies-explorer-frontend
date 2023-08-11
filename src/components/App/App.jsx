@@ -29,9 +29,9 @@ function App() {
         {/* <CurrentUserContext.Provider value={currentUser || ""}> */}
           <Header /> 
           <main className="content">
-            {/* <SearchForm />
+            <SearchForm />
             <MoviesCardList />
-            <LearnMore /> */}
+            <LearnMore />
             <Main />
           </main>
           

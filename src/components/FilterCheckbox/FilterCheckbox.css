@@ -1,0 +1,63 @@
+/*начало слайдера*/
+.tumbl {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.search-input__tumbl {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 0 0 40px;
+  margin: 0;
+  align-items: center;
+}
+
+.tumbl__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20px;
+  background-color: var(--middle-grey);
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.tumbl__slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  right: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.search-input__text {
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-weight: 400;
+  color: white;
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+input:checked + .tumbl__slider {
+  background-color: var(--green);
+}
+
+input:checked + .tumbl__slider:before {
+  transform: translateX(-15px);
+}

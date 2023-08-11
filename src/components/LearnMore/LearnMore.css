@@ -5,7 +5,7 @@
 .block-learn-more__button {
   width: 100%;
   margin: auto;
-  background-color: #2e2e2e;
+  background-color: var(--middle-grey);
   border-radius: 6px;
   height: 36px;
   width: 1140px;

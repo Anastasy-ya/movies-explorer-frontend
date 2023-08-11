@@ -4,7 +4,8 @@ import './MoviesCard.css';
 function MoviesCard() { // заменить дивы на заголовки
   return (
     <li className="card">
-      <div className="card__shadow">
+      {/* <div className="card__shadow"> */}
+      
         <div className="card__info">
           <div className="card__text-block">
             <div className="card__header">33 слова о дизайне</div>
@@ -14,7 +15,7 @@ function MoviesCard() { // заменить дивы на заголовки
         </div>
         
         <div className="card__image" alt=""></div>
-      </div>
+      {/* </div> */}
     </li>
   );
 }
