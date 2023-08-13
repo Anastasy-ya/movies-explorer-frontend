@@ -1,5 +1,5 @@
 .about-project__size-container {
-  padding: 110px 0 110px;
+  padding: 110px 0 100px;
 }
 
 .about-project__subtitle {
@@ -17,17 +17,17 @@
 
 .about-project__container {
   display: flex;
-  /* flex-direction: column; */
-  /* flex-wrap: wrap; */
-  gap: 40px;
+  gap: 50px;
   margin: 0;
-  padding: 70px 0 110px;
+  padding: 73px 0 115px;
 }
 
 .about-project__infographic {
   display: grid;
   grid-template-rows: 36px 36px;
-  grid-template-columns: 200px auto;
+  grid-template-columns: 228px auto;
+  grid-row-gap: 7px;
+  /* padding: 0 0 10px */
 }
 
 @media screen and (max-width: 768px) {
@@ -44,7 +44,6 @@
 
 .about-project__column {
   max-width: calc(50%-20px); 
-  list-style: none;
   /*размер контейнера напополам для двух столбцов минус промежуток между ними*/
 }
 
@@ -52,18 +51,19 @@
   background-color: var(--green);
 }
 
-.about-project__text_type_gray-background {
+.about-project__text_type_grey-background {
   background-color: var(--middle-grey);
 }
 
+.about-project__text_type_weight500 {
+  font-weight: 500;
+}
+
 .about-project__text {
-  color: white;
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0;
-  line-height: 36px;
+  line-height: 20px;
   margin: 0;
   padding: 0;
   height: 36px;
@@ -77,13 +77,14 @@
 
 .about-project__text_type_center {
   text-align: center;
+  line-height: 36px;
 }
 
 .about-project__text_type_black {
   color: black;
 }
 
-.about-project__text_type_gray {
+.about-project__text_type_grey {
   color: var(--grey);
 }
 

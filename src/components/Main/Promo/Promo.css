@@ -1,7 +1,16 @@
 .banner {
   background-color: var(--dark-turquoise);
   max-height: 524px;
-  padding: 82px 205px 122px;
+  padding: 82px 0px 122px;
+  width: 100vw;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1150px) {
+  .banner {
+    /* max-width: 708px; */
+    min-height: 784px;
+  }
 }
 
 .banner__image {
@@ -24,7 +33,7 @@
   letter-spacing: -2px;
   line-height: 58px;
   text-align: center;
-  /* width: 730px; */
+  max-width: 730px;
   /* margin: auto; */
   align-self: center;
 }

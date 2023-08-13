@@ -13,8 +13,12 @@ function SearchForm({ placeholder, handleChange }) {
             className="search-input__field"
             placeholder={placeholder}
             onChange={handleChange}
+            aria-label="write key words for searching"
           />
-          <button className="search-input__button">Найти</button>
+          <button 
+          className="search-input__button"
+          aria-label="search films"
+          >Найти</button>
         </div>
         <FilterCheckbox />
 

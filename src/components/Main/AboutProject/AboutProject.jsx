@@ -32,17 +32,19 @@ function AboutProject() {
         <p className="
           about-project__text 
           about-project__text_type_center 
-          about-project__text_type_gray-background
+          about-project__text_type_grey-background
         ">4 недели</p>
         <p className="
           about-project__text 
           about-project__text_type_center 
-          about-project__text_type_gray
+          about-project__text_type_grey
+          about-project__text_type_weight500 
         ">Back-end</p>
         <p className="
           about-project__text 
           about-project__text_type_center 
-          about-project__text_type_gray
+          about-project__text_type_grey
+          about-project__text_type_weight500 
         ">Front-end</p>
         </div>
       </>  

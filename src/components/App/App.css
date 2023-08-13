@@ -1,3 +1,6 @@
+@import url('../../vendor/normalize.css');
+@import url('../../vendor/fonts/fonts.css');
+
 /* * {
   border: 1px solid red;
 } */
@@ -5,7 +8,6 @@
 .root {
   background-color: rgba(32, 32, 32, 1);
   min-height: 100vh;
-
 }
 
 :root {
@@ -20,27 +22,61 @@
   --pink: rgba(238, 52, 101, 1); /* var(--pink) */
 }
 
- /*стилизация кнопок*/
-:enabled:hover {
+ /*стилизация кнопок при наведении*/
+
+button:enabled {
+  transition: opacity 0.6s linear;
+  cursor: pointer;
+}
+button:enabled:hover {
   opacity: 0.8;
+  transition: opacity 1s linear;
 }
 
- /*стилизация линков*/
+ /*стилизация линков при наведении*/
 :any-link:hover {
   font-weight: 500;
+  cursor: pointer;
+}
+
+:any-link {
+  text-decoration: none;
+  /* transition: font-weight 1s linear; */
+}
+
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+article,
+button {
+  color: white;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
 }
 
 .page {
   display: grid;
-  margin: 0 auto;
+  margin: 0;
   display: grid;
+  /* place-items: center; */
   grid-template-rows: repeat(3, auto);
   grid-template-areas:
     "header"
     "content"
     "footer";
   box-sizing: border-box;
-  font-family: Inter, Arial, Helvetica, sans-serif;
+  place-items: center;
+  /* font-family: Inter, Arial, Helvetica, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
@@ -63,12 +99,26 @@
 }
 
 .content {
-  grid-area: content;
+  grid-area: content;  
+}
+
+@media screen and (max-width: 1150px) {
+  .content {
+    max-width: 668px;
+  }
 }
 
 .size-container { 
   max-width: 1140px;
-  margin: auto;
+  margin: 0 auto;
   padding: 0;
-} 
+}
+
+@media screen and (max-width: 1150px) {
+  .size-container {
+    max-width: 708px;
+  }
+}
+
+
 

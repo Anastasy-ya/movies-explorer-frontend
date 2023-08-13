@@ -8,12 +8,21 @@ import { NavLink } from "react-router-dom";
 function Header(props) { // { userEmail, deleteToken }
   return (
     <header className="header header_type_turquoise">
-      <div className="size-container header__size-container">
+      <div className="header__size-container size-container">
         <img className="header__logo" alt="Логотип" src={logo} />
         
         <nav className="header__navigation-box">
-          <a href="/" className="header__text header__link-text">Фильмы</a> {/* заглушка, изменить на линки */}
-          <a href="/" className="header__text header__link-text">Сохраненные фильмы</a>
+          <a 
+          href="/" 
+          className="header__link" 
+          aria-label="link to films"
+          >Фильмы
+          </a> {/* заглушка, изменить на линки */}
+          <a 
+          href="/" 
+          className="header__link" 
+          aria-label="link to saved films"
+          >Сохраненные фильмы</a>
           {/* <Routes>
             <Route
               path="/movies"
@@ -45,8 +54,16 @@ function Header(props) { // { userEmail, deleteToken }
           {/* <p className="header__text">Аккаунт</p>
           <button className="header__account-button"></button> */}
           {/*ниже альтернативный вариант для неавторизованного пользователя */}
-          <p className="header__text">Регистрация</p>
-          <button className="header__login-button">Войти</button>
+          <p 
+          className="header__authentification"
+          aria-label=""//вставлять когда ссылка становится действующей
+          >Регистрация</p>
+          <button 
+          className="header__login-button"
+          aria-label="login button"
+          >Войти</button>
+
+          
           {/* <Routes>
             <Route
               path="/profile"

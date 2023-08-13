@@ -7,13 +7,32 @@ function Portfolio() {
 
     <div className="portfolio">
 
-      <h4 className="text-COLOR-font-3">Портфолио</h4>
-      <a href="/" className="text-COLOR-font-main-16">Статичный сайт</a> {/*это будут линки */}
-      <div className="text-COLOR-font-main-20">↗</div>
-      <a href="/" className="text-COLOR-font-main-16">Адаптивный сайт</a>
-      <div className="text-COLOR-font-main-20">↗</div>
-      <a href="/" className="text-COLOR-font-main-16">Одностраничное приложение</a>
-      <div className="text-COLOR-font-main-20">↗</div>
+      <h4 className="portfolio__title">Портфолио</h4>
+
+      <div className="portfolio__link">
+        <a 
+        href="/" 
+        className="portfolio__text"
+        aria-label="link to static web site"
+        >Статичный сайт</a> {/*это будут линки */}
+        <div className="portfolio__icon">↗</div>
+      </div>
+      <div className="portfolio__link">
+        <a 
+        href="/" 
+        className="portfolio__text"
+        aria-label="link to adaptive web site"
+        >Адаптивный сайт</a>
+        <div className="portfolio__icon">↗</div>
+      </div>
+      <div className="portfolio__link">
+        <a 
+        href="/" 
+        className="portfolio__text"
+        aria-label="link to one-page application"
+        >Одностраничное приложение</a>
+        <div className="portfolio__icon">↗</div>
+      </div>
     </div>
 
   );

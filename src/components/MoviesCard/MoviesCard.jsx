@@ -11,7 +11,11 @@ function MoviesCard() { // заменить дивы на заголовки
             <div className="card__header">33 слова о дизайне</div>
             <div className="card__subtitle">1ч 47м</div>
           </div>
-            <button className="card__delete-icon" alt=""></button>
+            <button 
+            className="card__delete-icon" 
+            alt="delete movie from list"
+            aria-label="delete movie from your list"
+            ></button>
         </div>
         
         <div className="card__image" alt=""></div>

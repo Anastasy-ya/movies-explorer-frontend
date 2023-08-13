@@ -19,7 +19,7 @@ function AboutMe() {
           </article>
         </div>
 
-        <a href="/" className="about-me__gihub">Github</a>{/*это будут линки */}
+        <a href="/" className="about-me__gihub" aria-label="link to Github">Github</a>{/*это будут линки */}
         
       </div>
       <img className="about-me__image" alt="" src="../" />

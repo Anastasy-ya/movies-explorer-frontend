@@ -8,7 +8,7 @@ function FilterCheckbox() {
       <div className="search-input__tumbl">
         <label class="tumbl">
           <input type="checkbox" />
-          <span class="tumbl__slider"></span>
+          <span class="tumbl__slider" aria-label="filter short films"></span>
         </label>
         <p className="search-input__text">Корометражки</p>
       </div>

@@ -19,55 +19,38 @@
 }
 
 .about-me__name {
-  color: white;
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
   font-size: 50px;
   font-weight: 400;
    letter-spacing: -2px;
   line-height: 58px;
   width: 100%;
   margin: 0 0 18px;
-  padding: 0;
+  
 }
 
 .about-me__gihub {
-  color: white;
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: normal;
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
 }
 
 .about-me__profession {
-  color: white;
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 20px;
-  width: 600px;
-  margin: 0 0 26x;
-  padding: 0;
+  max-width: 600px;
+  /* margin: 0 0 30x; */
 }
 
 .about-me__info {
-  color: white;
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 22px;
-  width: 600px;
-  margin: 0;
-  padding: 0;
+  max-width: 600px;
+  margin: 26px 0 0;
 }
 
 

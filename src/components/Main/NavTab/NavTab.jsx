@@ -5,9 +5,21 @@ function NavTab() {
   return (
     <section className="navigation">
       <div className="size-container navigation__size-container">
-        <h2 className="navigation__text">О проекте</h2> {/*тут будут линки */}
-        <h2 className="navigation__text">Технологии</h2>
-        <h2 className="navigation__text">Студент</h2>
+        <a
+        href="/"
+        className="navigation__text" 
+        aria-label="navigate to about project info"
+        >О проекте</a> {/*тут будут линки */}
+        <a
+        href="/"
+        className="navigation__text" 
+        aria-label="navigate to used technologies"
+        >Технологии</a>
+        <a
+        href="/"
+        className="navigation__text" 
+        aria-label="navigate to info about student"
+        >Студент</a>
       </div>
     </section>
   );
