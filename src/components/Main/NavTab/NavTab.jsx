@@ -4,7 +4,7 @@ import './NavTab.css';
 function NavTab() {
   return (
     <section className="navigation">
-      <div className="size-container navigation__size-container">
+      <div className="navigation__size-container size-container ">
         <a
         href="/"
         className="navigation__text" 

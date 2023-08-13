@@ -24,27 +24,23 @@ function AboutProject() {
 
         <div className="about-project__infographic">
         <p className="
-          about-project__text 
-          about-project__text_type_center 
-          about-project__text_type_black 
-          about-project__text_type_green-background
+          infographic__text
+          infographic__text_type_black 
+          infographic__text_type_green-background
         ">1 неделя</p>
         <p className="
-          about-project__text 
-          about-project__text_type_center 
-          about-project__text_type_grey-background
+          infographic__text 
+          infographic__text_type_grey-background
         ">4 недели</p>
         <p className="
-          about-project__text 
-          about-project__text_type_center 
-          about-project__text_type_grey
-          about-project__text_type_weight500 
+          infographic__text 
+          infographic__text_type_grey
+          infographic__text_type_weight500 
         ">Back-end</p>
         <p className="
-          about-project__text 
-          about-project__text_type_center 
-          about-project__text_type_grey
-          about-project__text_type_weight500 
+          infographic__text 
+          infographic__text_type_grey
+          infographic__text_type_weight500 
         ">Front-end</p>
         </div>
       </>  

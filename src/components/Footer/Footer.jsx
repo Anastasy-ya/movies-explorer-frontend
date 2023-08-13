@@ -12,9 +12,19 @@ function Footer() {// заменить теги на заголовки текс
         <div className="footer__box">
           <p className="footer__text">© {year}</p>
           <div className="footer__box">
-            <a href="/" className="footer__text" aria-label="link to Yandex praktikum">Яндекс.Практикум</a>
+            <a 
+            href="/" 
+            className="footer__text" 
+            aria-label="link to Yandex praktikum"
+            target="_blank"
+            >Яндекс.Практикум</a>
             {/* это будет линк */}
-            <a href="/" className="footer__text" aria-label="link to Github">Github</a> 
+            <a 
+            href="/" 
+            className="footer__text" 
+            aria-label="link to Github"
+            target="_blank"
+            >Github</a> 
           </div>
         </div>
       </div>

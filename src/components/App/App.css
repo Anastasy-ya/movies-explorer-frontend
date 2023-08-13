@@ -2,7 +2,7 @@
 @import url('../../vendor/fonts/fonts.css');
 
 /* * {
-  border: 1px solid red;
+  border: 0.5px solid red;
 } */
 
 .root {
@@ -67,15 +67,15 @@ li {
 .page {
   display: grid;
   margin: 0;
-  display: grid;
   /* place-items: center; */
   grid-template-rows: repeat(3, auto);
   grid-template-areas:
     "header"
     "content"
     "footer";
-  box-sizing: border-box;
-  place-items: center;
+    /* justify-content: center; */
+  /* box-sizing: border-box; */
+  /* place-items: center; */
   /* font-family: Inter, Arial, Helvetica, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -83,18 +83,19 @@ li {
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
+  width: 100%;
   /* min-height: 100vh; */
 }
 
 @media screen and (max-width: 768px) {
   .page {
-    grid-template-rows: 30px auto 30px;
+    /* grid-template-rows: 30px auto 30px; */
   }
 }
 
 @media screen and (max-width: 600px) {
   .page {
-    grid-template-rows: 14px auto 14px;
+    /* grid-template-rows: 14px auto 14px; */
   }
 }
 
@@ -102,9 +103,10 @@ li {
   grid-area: content;  
 }
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1200px) {
   .content {
-    max-width: 668px;
+    /* max-width: 668px; */
+    /* padding: 0 20px; */
   }
 }
 
@@ -114,11 +116,24 @@ li {
   padding: 0;
 }
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1200px) {
   .size-container {
     max-width: 708px;
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .size-container_type_768mm {
+    max-width: 668px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .size-container_type_768mm {
+    max-width: 668px;
+  }
+}
+
 
 
 

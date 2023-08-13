@@ -55,12 +55,12 @@ function Header(props) { // { userEmail, deleteToken }
           <button className="header__account-button"></button> */}
           {/*ниже альтернативный вариант для неавторизованного пользователя */}
           <p 
-          className="header__authentification"
-          aria-label=""//вставлять когда ссылка становится действующей
+            className="header__authentification"
+            aria-label=""//вставлять когда ссылка становится действующей
           >Регистрация</p>
           <button 
-          className="header__login-button"
-          aria-label="login button"
+            className="header__login-button"
+            aria-label="login button"
           >Войти</button>
 
           

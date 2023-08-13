@@ -38,8 +38,13 @@
   max-width: 1140px;
   margin: 0;
   padding: 0;
-  
   /* text-decoration: none; */
+}
+
+@media screen and (max-width: 1200px) {
+  .portfolio__text {
+    font-size: 28px;
+  }
 }
 
 .portfolio__link {

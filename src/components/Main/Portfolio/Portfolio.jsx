@@ -14,6 +14,7 @@ function Portfolio() {
         href="/" 
         className="portfolio__text"
         aria-label="link to static web site"
+        target="_blank"
         >Статичный сайт</a> {/*это будут линки */}
         <div className="portfolio__icon">↗</div>
       </div>
@@ -22,6 +23,7 @@ function Portfolio() {
         href="/" 
         className="portfolio__text"
         aria-label="link to adaptive web site"
+        target="_blank"
         >Адаптивный сайт</a>
         <div className="portfolio__icon">↗</div>
       </div>
@@ -30,6 +32,7 @@ function Portfolio() {
         href="/" 
         className="portfolio__text"
         aria-label="link to one-page application"
+        target="_blank"
         >Одностраничное приложение</a>
         <div className="portfolio__icon">↗</div>
       </div>

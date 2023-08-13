@@ -2,6 +2,12 @@
   padding: 110px 0 100px;
 }
 
+@media screen and (max-width: 1200px) {
+  .about-project__size-container {
+    padding: 90px 0 80px;
+  }
+}
+
 .about-project__subtitle {
   color: white;
   font-family: "Inter", "Arial", "sans-serif";
@@ -15,11 +21,24 @@
   padding: 0;
 }
 
+@media screen and (max-width: 1200px) {
+  .about-project__subtitle {
+    margin: 0 0 20px;
+  }
+}
+
 .about-project__container {
   display: flex;
   gap: 50px;
   margin: 0;
-  padding: 73px 0 115px;
+  padding: 70px 0 115px;
+}
+
+@media screen and (max-width: 1200px) {
+  .about-project__container {
+    gap: 40px;
+    padding: 70px 0 110px;
+  }
 }
 
 .about-project__infographic {
@@ -30,7 +49,7 @@
   /* padding: 0 0 10px */
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
   .about-project__infographic {
     grid-template-columns: 140px auto;
   }
@@ -47,15 +66,21 @@
   /*размер контейнера напополам для двух столбцов минус промежуток между ними*/
 }
 
-.about-project__text_type_green-background {
+@media screen and (max-width: 1200px) {
+  .about-project__column {
+    max-width: calc(50%-15px); 
+  }
+}
+
+.infographic__text_type_green-background {
   background-color: var(--green);
 }
 
-.about-project__text_type_grey-background {
+.infographic__text_type_grey-background {
   background-color: var(--middle-grey);
 }
 
-.about-project__text_type_weight500 {
+.infographic__text_type_weight500 {
   font-weight: 500;
 }
 
@@ -64,27 +89,34 @@
   font-weight: 400;
   letter-spacing: 0;
   line-height: 20px;
-  margin: 0;
-  padding: 0;
+  /* margin: 0;
+  padding: 0; */
   height: 36px;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 1200px) {
   .about-project__text {
-    font-size: 14px;
+    font-size: 12px;
+    line-height: 18px;
   }
 }
 
-.about-project__text_type_center {
+.infographic__text {
   text-align: center;
+  /* font-family: Inter; */
+  font-size: 14px;
+  /* font-style: normal; */
+  font-weight: 400;
+  line-height: normal;
+  /* text-align: center; */
   line-height: 36px;
 }
 
-.about-project__text_type_black {
+.infographic__text_type_black {
   color: black;
 }
 
-.about-project__text_type_grey {
+.infographic__text_type_grey {
   color: var(--grey);
 }
 

@@ -1,18 +1,26 @@
 .header {
   grid-area: header;
   min-height: 74px;  
-  
   width: 100%;
 }
 
-@media screen and (max-width: 1000px) {
-  .header {
-      /* max-width: 708px; */
+.header__size-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 74px;
+  min-width: 1140px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1200px) {
+  .header__size-container {
+      min-width: 708px;
   }
 }
 
 @media screen and (max-width: 320px) {
-  .header {
+  .header__size-container {
     /* padding: 14px 0; */
   }
 }
@@ -57,7 +65,7 @@
 
 .header__info-account {
   display: flex;
-  gap: 17px;
+  gap: 30px;
   align-items: center;
 }
 
@@ -93,11 +101,4 @@
   line-height: 16px;
 }
 
-.header__size-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 74px;
-  /* max-width: 1140px; */
-  margin: 0 auto;
-}
+
