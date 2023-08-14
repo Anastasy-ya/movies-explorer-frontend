@@ -122,17 +122,25 @@ li {
   }
 }
 
-@media screen and (max-width: 1200px) {
-  .size-container_type_768mm {
-    max-width: 668px;
+@media screen and (max-width: 800px) {
+  .size-container {
+    max-width: 500px;
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 550px) {
+  .size-container {
+    max-width: 292px;
+  }
+}
+
+
+
+/* @media screen and (max-width: 800px) {
   .size-container_type_768mm {
     max-width: 668px;
   }
-}
+} */
 
 
 

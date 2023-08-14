@@ -9,7 +9,7 @@ function SectionFrame({
 
   return (
     <section className={`${sectionName} section-frame`}>
-      <div className={`${sectionName}__size-container size-container size-container_type_768mm`}>
+      <div className={`${sectionName}__size-container size-container`}>
         <h2 className="section-frame__title">{title}</h2>
         {content}
         </div>
