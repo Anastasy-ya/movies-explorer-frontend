@@ -1,12 +1,12 @@
 import React from 'react';
 import './Main.css';
 
-import Promo from './Promo/Promo';
-import NavTab from './NavTab/NavTab';
-import SectionFrame from './SectionFrame/SectionFrame';
-import AboutProject from '../Main/AboutProject/AboutProject';
-import Techs from '../Main/Techs/Techs';
-import AboutMe from '../Main/AboutMe/AboutMe';
+import Promo from '../Promo/Promo';
+import NavTab from '../NavTab/NavTab';
+import SectionFrame from '../SectionFrame/SectionFrame';
+import AboutProject from '../AboutProject/AboutProject';
+import Techs from '../Techs/Techs';
+import AboutMe from '../AboutMe/AboutMe';
 
 function Main() {
   return (

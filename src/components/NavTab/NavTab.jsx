@@ -6,19 +6,19 @@ function NavTab() {
     <section className="navigation">
       <div className="navigation__size-container size-container ">
         <a
-        href="/"
-        className="navigation__text" 
-        aria-label="navigate to about project info"
+          href="/"
+          className="navigation__text" 
+          aria-label="navigate to about project info"
         >О проекте</a> {/*тут будут линки */}
         <a
-        href="/"
-        className="navigation__text" 
-        aria-label="navigate to used technologies"
+          href="/"
+          className="navigation__text" 
+          aria-label="navigate to used technologies"
         >Технологии</a>
         <a
-        href="/"
-        className="navigation__text" 
-        aria-label="navigate to info about student"
+          href="/"
+          className="navigation__text" 
+          aria-label="navigate to info about student"
         >Студент</a>
       </div>
     </section>

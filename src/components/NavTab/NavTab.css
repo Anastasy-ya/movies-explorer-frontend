@@ -11,12 +11,18 @@
   align-items: center;
   gap: 40px;
   height: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+@media screen and (max-width: 720px) {
+  .navigation__size-container {  
+    max-width: 214px;
+    gap: 24px;
+  }
 }
 
 .navigation__text {
-  color: white;
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
   font-size: 13px;
   font-weight: 500;
   height: 18px;
@@ -26,6 +32,10 @@
   text-decoration: underline;
   white-space: nowrap;
   width: 67px;
-  margin: 0;
-  padding: 0;
+}
+
+@media screen and (max-width: 720px) {
+  .navigation__text {  
+    font-size: 11px;
+  }
 }

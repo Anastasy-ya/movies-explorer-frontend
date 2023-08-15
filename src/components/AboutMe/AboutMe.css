@@ -8,8 +8,15 @@
 
 @media screen and (max-width: 1200px) {
   .about-me__size-container {
-    /* max-width: 668px; */
+    max-width: 668px;
     padding: 90px 0 90px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .about-me__size-container {
+    padding: 70px 0 70px;
+    max-width: 292px;
   }
 }
 
@@ -22,19 +29,27 @@
 .about-me__student {
   display: flex;
   justify-content: space-between;
-  padding: 66px 0 100px;
+  padding: 67px 0 100px;
+  
 }
 
 @media screen and (max-width: 1200px) {
   .about-me__student {
-    padding: 66px 0 91px;
+    padding: 65px 0 91px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .about-me__student {
+    flex-wrap: wrap-reverse;
+    padding: 58px 0 70px;
   }
 }
 
 .about-me__name {
   font-size: 50px;
   font-weight: 400;
-   letter-spacing: -2px;
+  letter-spacing: -2px;
   line-height: 58px;
   width: 100%;
   margin: 0 0 18px;
@@ -49,11 +64,26 @@
   }
 }
 
+@media screen and (max-width: 720px) {
+  .about-me__name {
+    font-size: 30px;
+    line-height: normal;
+    letter-spacing: -1.2px;
+    margin: 38px 0 19px;
+  }
+}
+
 .about-me__gihub {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: normal;
+}
+
+@media screen and (max-width: 720px) {
+  .about-me__gihub {
+    margin: 40px 0 0;
+  }
 }
 
 .about-me__profession {
@@ -67,9 +97,15 @@
 
 @media screen and (max-width: 1200px) {
   .about-me__profession {
-    /* font-feature-settings: 'clig' off, 'liga' off; */
     font-size: 12px;
-    line-height: 18px; /* 150% */
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .about-me__profession {
+    font-size: 11px;
+    line-height: 16px;
   }
 }
 
@@ -92,6 +128,15 @@
   }
 }
 
+@media screen and (max-width: 720px) {
+  .about-me__info {
+    font-size: 11px;
+    line-height: 16px;
+    text-align: justify;
+    margin: 21px 0 0;
+  }
+}
+
 .about-me__image {
   height: 327px;
   object-fit: cover;
@@ -105,5 +150,12 @@
   .about-me__image {
     height: 307px;
     width: 255px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .about-me__image {
+    height: 352px;
+    width: 292px;
   }
 }

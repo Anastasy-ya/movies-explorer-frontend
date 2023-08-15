@@ -4,20 +4,28 @@
 
 @media screen and (max-width: 1200px) {
   .section-frame {
-    max-width: 668px;
+    /* max-width: 668px; */
     margin: 0 auto;
   }
 }
 
 .section-frame__title {
-  color: white;
+  /* color: white;
   font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
+  font-style: normal; */
   font-size: 22px;
   font-weight: 400;
   letter-spacing: -0.88px;
   line-height: normal;
   padding: 0 0 23px;
-  margin: 0;
+  /* margin: 0; */
   border-bottom: solid 1px var(--light-grey);
+}
+
+@media screen and (max-width: 720px) {
+  .section-frame__title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    padding: 0 0 28px;
+  }
 }

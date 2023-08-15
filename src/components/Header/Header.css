@@ -9,21 +9,27 @@
   justify-content: space-between;
   align-items: center;
   min-height: 74px;
-  min-width: 1140px;
+  /* min-width: 1140px; */
   margin: 0 auto;
 }
 
-@media screen and (max-width: 1200px) {
+/* @media screen and (max-width: 1200px) {
   .header__size-container {
       min-width: 708px;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 800px) {
   .header__size-container {
-    /* padding: 14px 0; */
+    max-width: 500px;
   }
 }
+
+@media screen and (max-width: 720px) {
+  .header__size-container {
+    max-width: 292px;
+  }
+} */
 
 
 
@@ -58,6 +64,24 @@
   text-align: center;
 }
 
+@media screen and (max-width: 1200px) {
+  .header__authentification {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .header__authentification {
+    font-size: 10px;
+  }
+}
+
+
+
+
+
+
+
 .header__link-text {
   /* text-decoration: none; */
   /* cursor: pointer; */
@@ -67,6 +91,12 @@
   display: flex;
   gap: 30px;
   align-items: center;
+}
+
+@media screen and (max-width: 720px) {
+  .header__info-account {
+    gap: 14px;
+  }
 }
 
 .header__account-button {
@@ -99,6 +129,20 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 16px;
+}
+
+@media screen and (max-width: 1200px) {
+  .header__login-button {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .header__login-button {
+    height: 26px;
+    width: 54px;
+    font-size: 12px;
+  }
 }
 
 

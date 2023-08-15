@@ -9,7 +9,7 @@ function AboutMe() {
     <div className="about-me__student">
       <div className="about-me__box">
 
-        <div>
+        <div className="about-me__colunm">
           <h2 className="about-me__name">Виталий</h2>
           <h3 className="about-me__profession">Фронтенд-разработчик, 30 лет</h3>
           <article className="about-me__info">
@@ -20,10 +20,10 @@ function AboutMe() {
         </div>
 
         <a 
-        href="/" 
-        className="about-me__gihub" 
-        aria-label="link to Github"
-        target="_blank"
+          href="/" 
+          className="about-me__gihub" 
+          aria-label="link to Github"
+          target="_blank"
         >Github</a>{/*это будут линки */}
         
       </div>

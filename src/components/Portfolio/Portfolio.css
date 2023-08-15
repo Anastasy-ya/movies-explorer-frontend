@@ -4,19 +4,25 @@
 
 .portfolio__title {
   color: var(--grey);
-  /* font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal; */
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 20px;
   width: 250px;
-  margin: 0 0 50px;
-  padding: 0;
+  margin: 0 0 52px;
+}
+
+@media screen and (max-width: 720px) {
+  .portfolio__title {
+    /* margin: 40px 0 0; */
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 40px;
+  }
 }
 
 .portfolio__icon {
-  color: white;
+  color: white; /*свойства общего текста здесь нужны, не удалять*/
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;
   font-size: 30px;
@@ -24,26 +30,35 @@
   letter-spacing: -1.2px;
   line-height: 60px;
   white-space: nowrap;
-
 }
 
+@media screen and (max-width: 720px) {
+  .portfolio__icon {
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: -0.72px;
+  }
+}
 
 .portfolio__text {
-  /* color: white;
-  font-family: "Inter", Helvetica; */
   font-size: 30px;
   font-weight: 400;
   letter-spacing: -1.2px;
   line-height: 50px;
   max-width: 1140px;
-  margin: 0;
-  padding: 0;
-  /* text-decoration: none; */
 }
 
 @media screen and (max-width: 1200px) {
   .portfolio__text {
     font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .portfolio__text {
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: -0.72px;
   }
 }
 
@@ -57,4 +72,11 @@
 
 .portfolio__link:last-of-type {
   border: none;
+}
+
+@media screen and (max-width: 720px) {
+  .portfolio__link {
+    height: 50px;
+    margin: 17px 0 0;
+  }
 }

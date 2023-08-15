@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import './App.css';
 import Header from "../Header/Header";
-// import Main from "./Main";
 import Footer from "../Footer/Footer";
-import SearchForm from "../SearchForm/SearchForm";
-import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import LearnMore from "../LearnMore/LearnMore";
+
 import Main from "../Main/Main";
+import Movies from "../Movies/Movies";
 // import Login from "./Login";
 // import Register from "./Register";
 // import InfoTooltip from "./InfoTooltip";
@@ -14,30 +12,43 @@ import Main from "../Main/Main";
 // import EditProfilePopup from "./EditProfilePopup";
 // import EditAvatarPopup from "./EditAvatarPopup";
 // import AddPlacePopup from "./AddPlacePopup";
-// import { ProtectedRoute } from "./ProtectedRoute";
-// import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
-// import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // import * as auth from "../utils/auth";
 
 // import PopupWithConfirm from "./PopupWithConfirm";
 
+
+
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [showPreloader, setShowPreloader] = useState(false);
+  const [currentUser, setCurrentUser] = React.useState({});
+  
+  
   
   return (
     <div className="root">
       <div className="page">
-        {/* <CurrentUserContext.Provider value={currentUser || ""}> */}
-          <Header /> 
+        <CurrentUserContext.Provider value={currentUser || ""}>
+          <Header isLoggedIn={isLoggedIn}/> 
           <main className="content">
-            {/* <SearchForm />
-            <MoviesCardList />
-            <LearnMore /> */}
-            <Main />
-          </main>
+
+
+
+
+
+
+
+
+           
+            {/* <Main /> */}
           
           
-          {/*userEmail={userEmail} deleteToken={deleteToken} */}
-          {/* <Routes>
+          <Routes>
+          
             <Route
               path="*" //пользователь вошел на несуществующую страницу
               element={
@@ -50,50 +61,40 @@ function App() {
             />
 
             <Route
-              path="/sign-up"
-              element={
-                <Register
-                  onSubmit={handleRegister}
-                  title={"Регистрация"}
-                  formName={"sign-up"}
-                  buttonName={"Зарегистрироваться"}
-                  onclose={closeAllPopups}
-                  isLoading={isLoading}
-                />
-              }
-            />
-
-            <Route
-              path="/sign-in"
-              element={
-                <Login
-                  onSubmit={handleLogin}
-                  title={"Вход"}
-                  formName={"sign-in"}
-                  buttonName={"Войти"}
-                  isLoading={isLoading}
-                />
-              }
-            />
-
-            <Route
               path="/"
               element={
-                <ProtectedRoute
+                <Main
                   isLoggedIn={isLoggedIn}
-                  element={Main}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onEditAvatar={handleEditAvatarClick}
-                  cards={cards}
-                  onCardLike={handleCardLike}
-                  onCardDelete={handleOpenConfirmationPopup} //удаляет handleCardDelete, а сюда подставим ф-ю открывающую попап
-                  onCardClick={handleCardClick}
+                  // element={Main}
+                  // onEditProfile={handleEditProfileClick}
+                  // onAddPlace={handleAddPlaceClick}
+                  // onEditAvatar={handleEditAvatarClick}
+                  // cards={cards}
+                  // onCardLike={handleCardLike}
+                  // onCardDelete={handleOpenConfirmationPopup} //удаляет handleCardDelete, а сюда подставим ф-ю открывающую попап
+                  // onCardClick={handleCardClick}
                 />
               }
-            />
+              /> {/*конец роута Movies */}
+
+              <Route
+                path="/movies"
+                element={
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    element={Movies}
+                  // onEditProfile={handleEditProfileClick}
+                  // onAddPlace={handleAddPlaceClick}
+                  // onEditAvatar={handleEditAvatarClick}
+                  // cards={cards}
+                  // onCardLike={handleCardLike}
+                  // onCardDelete={handleOpenConfirmationPopup} //удаляет handleCardDelete, а сюда подставим ф-ю открывающую попап
+                  // onCardClick={handleCardClick}
+                  />
+                }
+              /> {/*конец роута "/" */}
           </Routes>
-          <EditProfilePopup //редактирование имени польз
+          {/* <EditProfilePopup //редактирование имени польз
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
@@ -130,8 +131,9 @@ function App() {
             isEntry={isEntry}
             userMessage={userMessage}
           /> */}
+          </main>
           <Footer />
-        {/* </CurrentUserContext.Provider> */}
+        </CurrentUserContext.Provider>
       </div>
     </div>
   );
