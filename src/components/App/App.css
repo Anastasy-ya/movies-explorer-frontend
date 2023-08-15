@@ -10,6 +10,10 @@
   min-height: 100vh;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --dark-turquoise: rgba(7, 48, 66, 1); /* var(--dark-turquoise) */
   --main-background: rgba(32, 32, 32, 1); /* var(--main-background) */
