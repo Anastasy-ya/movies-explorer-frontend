@@ -16,7 +16,7 @@ function Header(props) {
 
   const isLogged = props.isLoggedIn;
 
-  console.log(isWideScreen, isLogged);
+  // console.log(isWideScreen, isLogged);
 
 // function a(isLogged, isWideScreen) {
 //   switch ({ isLogged, isWideScreen }) {
@@ -35,22 +35,37 @@ function Header(props) {
 
     let headerView;
 
-  switch ({ isLogged, isWideScreen }) {
-    case (isLogged && isWideScreen):
-      headerView = (<p>'зарегистрирован и экран широкий'</p>);
-      break;
-    case (isLogged && !isWideScreen):
-      headerView = (<p>'зарегистрирован, экран узкий - бургер с доступом к меню'</p>);
-      break;
-    case (!isLogged && isWideScreen):
-      headerView = (<p>'незарегистрирован и экран широкий - предложить войти, меню нет'</p>);
-      break;
-    case (!isLogged && !isWideScreen):
-      headerView = (<p>'не зарегистрирован, экран узкий - бургер'</p>);
-      break;
-    default:
-      console.log('ошибка');
-  }
+  // switch ({ isLogged, isWideScreen }) {
+  //   case  ({isLogged:true, isWideScreen:true}) :
+  //     headerView = (<p>'зарегистрирован и экран широкий'</p>);
+  //     break;
+  //   case ({isLogged:true, isWideScreen:false}) :
+  //     headerView = (<p>'зарегистрирован, экран узкий - бургер с доступом к меню'</p>);
+  //     break;
+  //   case ({isLogged:false, isWideScreen:true}):
+  //     headerView = (<p>'незарегистрирован и экран широкий - предложить войти, меню нет'</p>);
+  //     break;
+  //   case ({isLogged:false, isWideScreen:false}):
+  //     headerView = (<p>'не зарегистрирован, экран узкий - бургер со ссылкой на авторизацию'</p>);
+  //     break;
+  //   default:
+  //     headerView = (<p>'какая-то херня'</p>);
+  //     break;
+  // }
+
+  useEffect(() => {
+      if (isLogged && isWideScreen) { //работает
+        console.log('зарегистрирован и экран широкий', isLogged, isWideScreen);
+      } else if (isLogged && !isWideScreen) { // не работает
+        console.log('зарегистрирован, экран узкий - бургер с доступом к меню', isLogged, isWideScreen);
+      } else if (!isLogged && isWideScreen) { // работает
+        console.log('незарегистрирован и экран широкий - предложить войти, меню нет', isLogged, isWideScreen);
+      } else if (!isLogged && !isWideScreen) {
+        console.log('не зарегистрирован, экран узкий - бургер со ссылкой на авторизацию', isLogged, isWideScreen);
+      } else {
+        console.log('да сколько ж можно!!!');
+      }
+  }, [isLogged, isWideScreen]); 
 
   return (
     
