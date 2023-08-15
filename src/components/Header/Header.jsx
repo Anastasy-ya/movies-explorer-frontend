@@ -3,42 +3,25 @@ import "./Header.css";
 // import { Route, Routes } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { NavLink, useLocation } from "react-router-dom";
+import { useResize } from "../../components/hooks/useResize";
 
 function Header(props) {
-  // { isLoggedIn,  }
+  // пропсы { isLoggedIn,  }
 
   const [isMainPage, setIsMainPage] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(document.documentElement.clientWidth); //наверное стоит перенести в app
 
   const path = useLocation();
 
-  useEffect(() => {
-    if (path.pathname === "/") {
-      setIsMainPage(true);
-    }
-    setIsMainPage(false);
-  }, [path]);
+  const { isWideScreen } = useResize();
 
-  useEffect(() => {
-    window.addEventListener("resize", () => setWindowWidth(document.documentElement.clientWidth));
-    console.log(document.documentElement.clientWidth);
-    // window.removeEventListener("resize", () => setWindowWidth(document.documentElement.clientWidth));
-  }, [windowWidth]);
-  
-    
-  
-
-  
-
+  // console.log(isWideScreen);
   return (
     <header className={`header ${isMainPage ? "header_type_turquoise" : ""}`}>
       <div className="header__size-container size-container">
         <img className="header__logo" alt="Логотип" src={logo} />
         
-        {props.isLoggedIn && 
-        // если пользователь зарегистрирован и ширина экрана юольше 720, то показать навигацию
-          windowWidth > 720 ? (
-              <nav className="header__navigation-box">
+        {props.isLoggedIn && isWideScreen ? (
+          <nav className="header__navigation-box">
               <NavLink
                 className="header__link"
                 aria-label="link to films"
@@ -56,8 +39,7 @@ function Header(props) {
                 Сохраненные фильмы
               </NavLink>
             </nav>
-            ) : ("")
-          }
+        ) : ("")};
         
         
 
