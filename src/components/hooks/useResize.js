@@ -1,4 +1,3 @@
-// import { useEffect } from "react";
 import { useState, useEffect } from 'react';
 
 export const useResize = () => {
@@ -15,6 +14,6 @@ export const useResize = () => {
   }, []);
 
   return {
-    isWideScreen: width >= 768,
+    isWideScreen: width >= 850, //768
   };
 };

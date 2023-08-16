@@ -4,6 +4,7 @@ import "./Header.css";
 import logo from "../../images/logo.svg";
 import { NavLink, useLocation } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
+import Burger from "../Burger/Burger"
 
 function Header(props) {
   // пропсы { isLoggedIn,  }
@@ -44,8 +45,12 @@ function Header(props) {
           </div>
         </>
       )
-    } else if (isLogged && !isWideScreen) {
-      setHeaderView(<p>зарегистрирован, экран узкий - бургер с доступом к меню</p>)
+    } else if (isLogged && !isWideScreen) { //полное меню
+      setHeaderView(
+        <div className="header__info-account">
+          <Burger></Burger>
+        </div>
+      )
     } else if (!isLogged && isWideScreen) {
       setHeaderView(
         <div className="header__info-account">
@@ -60,8 +65,12 @@ function Header(props) {
           </button>
         </div>
       )
-    } else if (!isLogged && !isWideScreen) {
-      setHeaderView(<p>не зарегистрирован, экран узкий - бургер со ссылкой на авторизацию</p>)
+    } else if (!isLogged && !isWideScreen) {  //бургер ведет на регистрацию
+      setHeaderView(
+        <div className="header__info-account">
+          <Burger></Burger>
+        </div>
+      )
     }
   }, [isLogged, isWideScreen]);
 
