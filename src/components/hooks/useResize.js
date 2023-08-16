@@ -15,6 +15,6 @@ export const useResize = () => {
   }, []);
 
   return {
-    isWideScreen: width >= 720,
+    isWideScreen: width >= 768,
   };
 };

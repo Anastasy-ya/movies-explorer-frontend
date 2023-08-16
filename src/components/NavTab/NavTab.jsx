@@ -6,21 +6,25 @@ function NavTab() {
   return (
     <section className="navigation">
       <div className="navigation__size-container size-container ">
-        <a
-          href="/"
+        <Link
+          to="#about-project"
+          reloadDocument
           className="navigation__text" 
           aria-label="navigate to about project info"
-        >О проекте</a> {/*тут будут линки */}
-        <a
-          href="/"
+        >О проекте</Link> {/*тут будут линки */}
+        
+        <Link
+          to="#techs"
+          reloadDocument
           className="navigation__text" 
           aria-label="navigate to used technologies"
-        >Технологии</a>
-        <a
-          href="/"
+        >Технологии</Link>
+        <Link
+          to="#about-me"
+          reloadDocument
           className="navigation__text" 
           aria-label="navigate to info about student"
-        >Студент</a>
+        >Студент</Link>
       </div>
     </section>
   );

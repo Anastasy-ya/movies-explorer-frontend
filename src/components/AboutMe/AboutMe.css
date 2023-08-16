@@ -92,7 +92,6 @@
   letter-spacing: 0;
   line-height: 20px;
   max-width: 600px;
-  /* margin: 0 0 30x; */
 }
 
 @media screen and (max-width: 1200px) {
@@ -120,7 +119,6 @@
 
 @media screen and (max-width: 1200px) {
   .about-me__info {
-    /* font-feature-settings: 'clig' off, 'liga' off; */
     font-size: 12px;
     line-height: 18px;
     margin: 20px 0 0;
@@ -141,9 +139,11 @@
   height: 327px;
   object-fit: cover;
   width: 270px;
-  border: white 1px solid;
+  background-image: url("../../images/main-page_packground.svg");
   border-radius: 10px;
   box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 @media screen and (max-width: 1200px) {

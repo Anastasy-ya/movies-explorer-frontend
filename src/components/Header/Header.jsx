@@ -9,113 +9,79 @@ function Header(props) {
   // пропсы { isLoggedIn,  }
 
   const [isMainPage, setIsMainPage] = useState(false);
-
   const path = useLocation();
-
-  const { isWideScreen } = useResize();
-
+  const { isWideScreen } = useResize(); //получение значения от кастомного хука
   const isLogged = props.isLoggedIn;
-
-  // console.log(isWideScreen, isLogged);
-
-// function a(isLogged, isWideScreen) {
-//   switch ({ isLogged, isWideScreen }) {
-//     case isLogged && isWideScreen:
-//       <p>'зарегистрирован и экран широкий'</p>;
-//       break;
-//     case isLogged && !isWideScreen:
-//       <p>'зарегистрирован, экран узкий - бургер'</p>;
-//       break;
-//     case !isLogged && isWideScreen:
-//       <p>'незарегистрирован и экран широкий - предложить войти, меню нет'</p>;
-//       break;
-//     default:
-//       <p>'не зарегистрирован, экран узкий - бургер'</p>;
-//   }};
-
-    let headerView;
-
-  // switch ({ isLogged, isWideScreen }) {
-  //   case  ({isLogged:true, isWideScreen:true}) :
-  //     headerView = (<p>'зарегистрирован и экран широкий'</p>);
-  //     break;
-  //   case ({isLogged:true, isWideScreen:false}) :
-  //     headerView = (<p>'зарегистрирован, экран узкий - бургер с доступом к меню'</p>);
-  //     break;
-  //   case ({isLogged:false, isWideScreen:true}):
-  //     headerView = (<p>'незарегистрирован и экран широкий - предложить войти, меню нет'</p>);
-  //     break;
-  //   case ({isLogged:false, isWideScreen:false}):
-  //     headerView = (<p>'не зарегистрирован, экран узкий - бургер со ссылкой на авторизацию'</p>);
-  //     break;
-  //   default:
-  //     headerView = (<p>'какая-то херня'</p>);
-  //     break;
-  // }
+  const [headerView, setHeaderView] = useState(<p></p>);
 
   useEffect(() => {
-      if (isLogged && isWideScreen) { //работает
-        console.log('зарегистрирован и экран широкий', isLogged, isWideScreen);
-      } else if (isLogged && !isWideScreen) { // не работает
-        console.log('зарегистрирован, экран узкий - бургер с доступом к меню', isLogged, isWideScreen);
-      } else if (!isLogged && isWideScreen) { // работает
-        console.log('незарегистрирован и экран широкий - предложить войти, меню нет', isLogged, isWideScreen);
-      } else if (!isLogged && !isWideScreen) {
-        console.log('не зарегистрирован, экран узкий - бургер со ссылкой на авторизацию', isLogged, isWideScreen);
-      } else {
-        console.log('да сколько ж можно!!!');
-      }
-  }, [isLogged, isWideScreen]); 
+
+    if (isLogged && isWideScreen) {
+      setHeaderView(
+        <>
+          <nav className="header__navigation-box">
+
+            <NavLink
+              className={({isActive}) => `header__link ${isActive ? "header__link_active" : ""}`}
+              aria-label="link to films"
+              to="/movies"
+            // onClick={props.deleteToken}
+            >
+              Фильмы
+            </NavLink>
+
+            <NavLink
+              className="header__link"
+              aria-label="link to saved films"
+              to="/saved-movies"
+            >
+              Сохраненные фильмы
+            </NavLink>
+          </nav>
+          <div className="header__info-account">
+            <p className="header__authentification">Аккаунт</p>
+            <button className="header__account-button"></button>
+          </div>
+        </>
+      )
+    } else if (isLogged && !isWideScreen) {
+      setHeaderView(<p>зарегистрирован, экран узкий - бургер с доступом к меню</p>)
+    } else if (!isLogged && isWideScreen) {
+      setHeaderView(
+        <div className="header__info-account">
+          <p
+            className="header__authentification"
+            aria-label="" //вставлять когда ссылка становится действующей
+          >
+            Регистрация
+          </p>
+          <button className="header__login-button" aria-label="login button">
+            Войти
+          </button>
+        </div>
+      )
+    } else if (!isLogged && !isWideScreen) {
+      setHeaderView(<p>не зарегистрирован, экран узкий - бургер со ссылкой на авторизацию</p>)
+    }
+  }, [isLogged, isWideScreen]);
+
+
+  useEffect(() => {
+    path.pathname === "/" ?
+      setIsMainPage(true) :
+      setIsMainPage(false);
+  }, [path]);
 
   return (
-    
+
     <header className={`header ${isMainPage ? "header_type_turquoise" : ""}`}>
       <div className="header__size-container size-container">
         <img className="header__logo" alt="Логотип" src={logo} />
         {headerView}
-        {/* {(() => { //самовызывающаяся функция
-          console.log({ isLogged, isWideScreen })
-        switch({ isLogged, isWideScreen }) {
-          case (isLogged && isWideScreen):
-          return console.log('зарегистрирован и экран широкий')
-          
-          case isLogged && !isWideScreen:
-          return console.log('зарегистрирован, экран узкий - бургер')
-          
-          case !isLogged && isWideScreen:
-          return console.log('незарегистрирован и экран широкий - предложить войти, меню нет')
-          
-          case !isLogged && !isWideScreen:
-          return console.log('не зарегистрирован, экран узкий - бургер')
-          
-          default:
-            console.log('ошибка');
-        }
-      })()} */}
-
-      
 
 
 
-        {/* {
-          switch (isLogged, isWideScreen) {
-        case isLogged && isWideScreen:
-        return <p>'зарегистрирован и экран широкий'</p>
-        
-        case isLogged && !isWideScreen:
-        return <p>'зарегистрирован, экран узкий - бургер'</p>
-        
-        case !isLogged && isWideScreen:
-        return <p>'незарегистрирован и экран широкий - предложить войти, меню нет'</p>
-        
-        default:
-        <p>'не зарегистрирован, экран узкий - бургер'</p>;
-  }
-        } */}
-
-        {/* { a(isLogged, isWideScreen)} */}
-
-        {props.isLoggedIn && isWideScreen ? (
+        {/* {props.isLoggedIn && isWideScreen ? (
           <nav className="header__navigation-box">
           
             <NavLink
@@ -135,30 +101,17 @@ function Header(props) {
               Сохраненные фильмы
             </NavLink>
           </nav>
-        ) : ("")}
+        ) : ("")} */}
 
 
 
-        <div className="header__info-account">
-          {/* <p className="header__text">Аккаунт</p>
-          <button className="header__account-button"></button> */}
-          {/*ниже альтернативный вариант для неавторизованного пользователя */}
 
-          <p
-            className="header__authentification"
-            aria-label="" //вставлять когда ссылка становится действующей
-          >
-            Регистрация
-          </p>
-          <button className="header__login-button" aria-label="login button">
-            Войти
-          </button>
-        </div>
+
       </div>
     </header>
 
-          
-        
+
+
   );
 }
 

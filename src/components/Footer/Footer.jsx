@@ -1,5 +1,6 @@
 import React from "react";
 import './Footer.css';
+import { Link } from 'react-router-dom';
 // не забыть поменять теги на ашки
 const year = new Date().getFullYear();
 
@@ -18,19 +19,19 @@ function Footer() {// заменить теги на заголовки текс
           <p className="footer__text">© {year}</p>
 
           <div className="footer__links-box">
-            <a 
-              href="/" 
+            <Link
+              to="https://practicum.yandex.ru/" 
               className="footer__text" 
               aria-label="link to Yandex praktikum"
               target="_blank"
-            >Яндекс.Практикум</a>
+            >Яндекс.Практикум</Link>
             {/* это будет линк */}
-            <a 
-              href="/" 
+            <Link 
+              to="https://github.com/Anastasy-ya" 
               className="footer__text" 
               aria-label="link to Github"
               target="_blank"
-            >Github</a> 
+            >Github</Link> 
           </div>
 
         </div>
