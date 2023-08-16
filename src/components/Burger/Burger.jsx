@@ -1,14 +1,14 @@
 import React from "react";
 import './Burger.css';
-import { Link } from 'react-router-dom';
 
-function Burger() {// заменить теги на заголовки текста
+function Burger(props) {
 
   function handler() {
     document.querySelector(".burger").classList.toggle('open');
+    props.setIsOpenPopup(!props.isOpenPopup);
+    console.log(props.isOpenPopup);
+    // props.handleOpenClosePopup();
   }
-
-  // console.log(document.querySelector(".burger"));
 
   return (
     <div 
@@ -20,3 +20,6 @@ function Burger() {// заменить теги на заголовки текс
 }
 
 export default Burger;
+
+// isOpenPopup={props.isOpenPopup}
+//             setIsOpenPopup={props.setIsOpenPopup}

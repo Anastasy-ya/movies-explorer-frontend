@@ -11,7 +11,7 @@ function NavTab() {
           reloadDocument
           className="navigation__text" 
           aria-label="navigate to about project info"
-        >О проекте</Link> {/*тут будут линки */}
+        >О проекте</Link>
         
         <Link
           to="#techs"

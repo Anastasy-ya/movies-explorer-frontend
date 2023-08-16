@@ -32,13 +32,13 @@ button:enabled {
   transition: opacity 0.6s linear;
   cursor: pointer;
 }
-button:enabled:hover {
+button:enabled:hover:focus {
   opacity: 0.8;
   transition: opacity 1s linear;
 }
 
  /*стилизация линков при наведении*/
-:any-link:hover {
+:any-link:hover:focus {
   font-weight: 500;
   cursor: pointer;
 }

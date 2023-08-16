@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import './App.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
-// import Login from "./Login";
-// import Register from "./Register";
-// import InfoTooltip from "./InfoTooltip";
-// import api from "../utils/Api";
-// import EditProfilePopup from "./EditProfilePopup";
-// import EditAvatarPopup from "./EditAvatarPopup";
-// import AddPlacePopup from "./AddPlacePopup";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Popup from "../Popup/Popup";
+import Profile from "../Profile/Profile";
+import Login from "../Login/Login";
+import Register from "../Register/Register";
+import PageNotFound from "../PageNotFound/PageNotFound";
+
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { NavLink, useLocation, Link } from "react-router-dom";
 // import * as auth from "../utils/auth";
 
-// import PopupWithConfirm from "./PopupWithConfirm";
+
 
 
 
@@ -26,56 +26,93 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+  const [isSignInOrSignOut, setIsSignInOrSignOut] = useState(false);
+  const [isMainPage, setIsMainPage] = useState(false);
   
-  
-  
+
+  const path = useLocation();
+
+  // function handleOpenClosePopup() {
+  //   console.log(isOpenPopup);
+  //   //   setIsOpenPopup(false) :
+  //     setIsOpenPopup(!isOpenPopup);
+  //     console.log(isOpenPopup);
+  // };
+
+
+
+  useEffect(() => {
+    path.pathname === "/" ?
+      setIsMainPage(true) :
+      setIsMainPage(false);
+    path.pathname === "/signin" ||
+      path.pathname === "/signup" ?
+      setIsSignInOrSignOut(true) :
+      setIsSignInOrSignOut(false)
+  }, [path]);
+
+
+
   return (
     <div className="root">
       <div className="page">
         <CurrentUserContext.Provider value={currentUser || ""}>
-          <Header isLoggedIn={isLoggedIn}/> 
+
+          <Header
+            isLoggedIn={isLoggedIn}
+            // handleOpenClosePopup={handleOpenClosePopup}
+            isOpenPopup={isOpenPopup}
+            setIsOpenPopup={setIsOpenPopup}
+            isMainPage={isMainPage}
+            isSignInOrSignOut={isSignInOrSignOut}
+          />
+
           <main className="content">
 
+            <Routes>
 
+              <Route
+                path="*" //пользователь вошел на несуществующую страницу
+                element={<PageNotFound/>}
+                // element={
+                //   isLoggedIn ? (
+                //     <Navigate to="/" />
+                //   ) : (
+                //     <Navigate to="/signup" replace />
+                //   )
+                // }
+              />
 
+              <Route
+                path="/signup"
+                element={
+                  <Register
+                    // onSubmit={handleRegister}
+                    // buttonName={"Зарегистрироваться"}
+                    // isLoading={isLoading}
+                  />
+                }
+              />
 
+              <Route
+                path="/signin"
+                element={
+                  <Login
+                    // onSubmit={handleLogin}
+                    // buttonName={"Войти"}
+                  />
+                }
+              />
 
-
-
-
-           
-            {/* <Main /> */}
-          
-          
-          <Routes>
-          
-            <Route
-              path="*" //пользователь вошел на несуществующую страницу
-              element={
-                isLoggedIn ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Navigate to="/sign-up" replace />
-                )
-              }
-            />
-
-            <Route
-              path="/"
-              element={
-                <Main
-                  isLoggedIn={isLoggedIn}
-                  // element={Main}
-                  // onEditProfile={handleEditProfileClick}
-                  // onAddPlace={handleAddPlaceClick}
-                  // onEditAvatar={handleEditAvatarClick}
-                  // cards={cards}
-                  // onCardLike={handleCardLike}
-                  // onCardDelete={handleOpenConfirmationPopup} //удаляет handleCardDelete, а сюда подставим ф-ю открывающую попап
-                  // onCardClick={handleCardClick}
-                />
-              }
-              /> {/*конец роута Movies */}
+              <Route
+                path="/"
+                element={
+                  <Main
+                    isLoggedIn={isLoggedIn}
+                  />
+                }
+              /> {/*конец роута / */}
 
               <Route
                 path="/movies"
@@ -83,56 +120,38 @@ function App() {
                   <ProtectedRoute
                     isLoggedIn={isLoggedIn}
                     element={Movies}
-                  // onEditProfile={handleEditProfileClick}
-                  // onAddPlace={handleAddPlaceClick}
-                  // onEditAvatar={handleEditAvatarClick}
-                  // cards={cards}
-                  // onCardLike={handleCardLike}
-                  // onCardDelete={handleOpenConfirmationPopup} //удаляет handleCardDelete, а сюда подставим ф-ю открывающую попап
-                  // onCardClick={handleCardClick}
                   />
                 }
-              /> {/*конец роута "/" */}
-          </Routes>
-          {/* <EditProfilePopup //редактирование имени польз
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
-            onUpdateUser={handleUpdateUser}
-            isLoading={isLoading}
-          />
-          <AddPlacePopup //добавление новой карточки
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-            onAddPlace={handleAddPlaceSubmit}
-            isLoading={isLoading}
-          />
-          <EditAvatarPopup //редактирование аватара
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-            isLoading={isLoading}
-          />
-          <PopupWithConfirm 
-            isOpen={isOpenConfirmationPopup}
-            onClose={closeAllPopups}
-            onConfirm={handleCardDelete}
-            isLoading={isLoading}
-          />
-          <ImagePopup
-            onClose={closeAllPopups}
-            isOpen={isOpenImage}
-            name={selectedCard.name}
-            link={selectedCard.link}
-          />
-          <InfoTooltip
-            isOpen={openInfoTooltip}
-            formName={"success"}
-            onClose={closeAllPopups}
-            isEntry={isEntry}
-            userMessage={userMessage}
-          /> */}
+              /> {/*конец роута "/movies" */}
+
+              <Route
+                path="/saved-movies"
+                element={
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    element={SavedMovies}
+                  />
+                }
+              /> {/*конец роута "/saved-movies" */}
+
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute
+                    element={Profile}
+                  />
+                }
+              /> {/*конец роута "/profile" */}
+
+            </Routes>
+            <Popup
+              isOpen={isOpenPopup}
+              isLoggedIn={isLoggedIn}
+              // handleOpenClosePopup={handleOpenClosePopup}
+            />
+
           </main>
-          <Footer />
+          <Footer isSignInOrSignOut={isSignInOrSignOut}/>
         </CurrentUserContext.Provider>
       </div>
     </div>

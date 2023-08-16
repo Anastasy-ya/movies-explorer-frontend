@@ -11,7 +11,6 @@ function Movies() {
       <SearchForm />
       <MoviesCardList />
       <LearnMore />
-      
     </>
   );
 }
