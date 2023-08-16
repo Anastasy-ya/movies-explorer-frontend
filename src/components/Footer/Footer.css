@@ -1,5 +1,5 @@
 .footer {
-  grid-area: footer; /*тут не работает*/
+  grid-area: footer;
   padding: 65px 0 20px;
   max-width: 1140px;
   width: 100%;
@@ -10,6 +10,10 @@
   .footer {
     padding: 60px 0 20px;
   }
+}
+
+.footer_type_invisible {
+  display: none;
 }
 
 .footer__text {

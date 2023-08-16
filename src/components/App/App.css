@@ -55,7 +55,9 @@ h2,
 h3,
 h4,
 article,
-button {
+button,
+input,
+label {
   color: white;
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;

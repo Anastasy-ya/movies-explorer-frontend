@@ -33,12 +33,12 @@ function App() {
 
   const path = useLocation();
 
-  // function handleOpenClosePopup() {
+  function handleOpenClosePopup() {
   //   console.log(isOpenPopup);
   //   //   setIsOpenPopup(false) :
-  //     setIsOpenPopup(!isOpenPopup);
+      setIsOpenPopup(!isOpenPopup);
   //     console.log(isOpenPopup);
-  // };
+  };
 
 
 
@@ -61,9 +61,9 @@ function App() {
 
           <Header
             isLoggedIn={isLoggedIn}
-            // handleOpenClosePopup={handleOpenClosePopup}
+            handleOpenClosePopup={handleOpenClosePopup}
             isOpenPopup={isOpenPopup}
-            setIsOpenPopup={setIsOpenPopup}
+            // setIsOpenPopup={setIsOpenPopup}
             isMainPage={isMainPage}
             isSignInOrSignOut={isSignInOrSignOut}
           />
@@ -75,22 +75,21 @@ function App() {
               <Route
                 path="*" //пользователь вошел на несуществующую страницу
                 element={<PageNotFound/>}
-                // element={
-                //   isLoggedIn ? (
-                //     <Navigate to="/" />
-                //   ) : (
-                //     <Navigate to="/signup" replace />
-                //   )
-                // }
               />
 
               <Route
                 path="/signup"
                 element={
                   <Register
-                    // onSubmit={handleRegister}
-                    // buttonName={"Зарегистрироваться"}
+                    // onSubmit={handleRegister} раскомментировать на 4 этапе
                     // isLoading={isLoading}
+                    formName={"signup"}
+                    className={"auth-container__form"}
+                    buttonText={"Зарегистрироваться"}
+                    wellcomeText={"Добро пожаловать!"}
+                    askToChangeForm={"Уже зарегистрированы? "}
+                    askToChangeFormLink={"Войти"}
+                    routTo={"/signin"}
                   />
                 }
               />
@@ -100,7 +99,7 @@ function App() {
                 element={
                   <Login
                     // onSubmit={handleLogin}
-                    // buttonName={"Войти"}
+                    // isLoading={isLoading}
                   />
                 }
               />
@@ -139,6 +138,7 @@ function App() {
                 element={
                   <ProtectedRoute
                     element={Profile}
+                    isLoggedIn={isLoggedIn}
                   />
                 }
               /> {/*конец роута "/profile" */}

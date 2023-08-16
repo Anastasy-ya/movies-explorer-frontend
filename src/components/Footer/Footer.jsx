@@ -1,16 +1,14 @@
 import React from "react";
 import './Footer.css';
 import { Link } from 'react-router-dom';
-// не забыть поменять теги на ашки
+
 const year = new Date().getFullYear();
 
 function Footer(props) {// заменить теги на заголовки текста
   return (
 
 
-    <footer className="footer">
-      {
-        !props.isSignInOrSignOut && (
+    <footer className={`footer ${props.isSignInOrSignOut ? "footer_type_invisible" : ""}`}>
           <div className="size-container footer__size-container">
 
             <div className="footer__info">
@@ -40,8 +38,6 @@ function Footer(props) {// заменить теги на заголовки т�
             </div>
 
           </div>
-        )
-      }
     </footer>
   );
 }

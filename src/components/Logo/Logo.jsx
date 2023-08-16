@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Logo() {
   return (
     <Link
-      to="#about-project"
+      to="/"
       reloadDocument
       aria-label="navigate to about project info"
     >

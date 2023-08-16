@@ -1,0 +1,13 @@
+.form__button {
+  background-color: var(--blue);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 3px;
+  width: 396px;
+  height: 45px;
+  border: none;
+  margin: 126px 0 16px;
+
+}

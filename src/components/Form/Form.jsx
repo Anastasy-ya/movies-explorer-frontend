@@ -1,8 +1,12 @@
 import React from 'react';
 import './Form.css';
 
-
-function Form({ formName, onSubmit, children, isLoading}) {
+function Form({ 
+  formName, 
+  onSubmit, 
+  children, 
+  // isLoading, раскомментировать на 4 этапе
+  buttonText}) {
 
   return (
     <form
@@ -11,8 +15,8 @@ function Form({ formName, onSubmit, children, isLoading}) {
       onSubmit={onSubmit}
     >
       {children}
-      <button className="popup__button" type="submit" aria-label="Save">
-        Зарегистрироваться
+      <button className="form__button" type="submit" aria-label={formName}>
+        {buttonText}
       </button>
     </form>
   );

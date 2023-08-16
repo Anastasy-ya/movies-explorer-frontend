@@ -51,24 +51,15 @@ function Header(props) {
         <div className="header__info-account">
           <Burger
             isLoggedIn={props.isLoggedIn}
-            // handleOpenClosePopup={props.handleOpenClosePopup}
-            isOpenPopup={props.isOpenPopup}
-            setIsOpenPopup={props.setIsOpenPopup}
+            handleOpenClosePopup={props.handleOpenClosePopup}
           />
         </div>
       )
     )
-  }, [props.isLoggedIn, isWideScreen]);
-
-
-
-
-  // console.log(isSignInOrSignOut, '1', isMainPage, '2', props.path.pathname)
+  }, [props.isLoggedIn, isWideScreen, props.isOpenPopup]);
 
   return (
-    <header className="header">
-      {
-        !props.isSignInOrSignOut && (
+    <header className={`header ${props.isSignInOrSignOut ? "header_type_invisible" : ""}`}>
           <div className={`${props.isMainPage ? "header_type_turquoise" : ""}`}>
             <div className="header__size-container size-container">
               <Logo/>
@@ -76,8 +67,6 @@ function Header(props) {
 
             </div>
           </div>
-        )
-      }
     </header>
   );
 }

@@ -5,9 +5,9 @@ function Burger(props) {
 
   function handler() {
     document.querySelector(".burger").classList.toggle('open');
-    props.setIsOpenPopup(!props.isOpenPopup);
-    console.log(props.isOpenPopup);
-    // props.handleOpenClosePopup();
+    // props.setIsOpenPopup(!props.isOpenPopup);
+    // console.log(props.isOpenPopup);
+    props.handleOpenClosePopup();
   }
 
   return (
@@ -20,6 +20,3 @@ function Burger(props) {
 }
 
 export default Burger;
-
-// isOpenPopup={props.isOpenPopup}
-//             setIsOpenPopup={props.setIsOpenPopup}

@@ -1,0 +1,70 @@
+.form__input {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+  padding: 13px 0 18px; /*расстояние до черты и над плейсхолдером*/
+  min-height: 20px;
+  box-sizing: border-box;
+  border-bottom: 1px var(--middle-grey) solid;
+  background-color: var(--main-background);
+  color: white;
+  width: 100%;
+}
+
+@media screen and (max-width: 720px) {
+    .form__input {
+      /* max-width: 238px; */
+    }
+}
+
+.form__label {
+  max-height: 70px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  color: var(--grey);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+  
+  /* margin: 0 0 0px; */
+}
+
+
+.form__input:focus {
+  outline: none;
+}
+
+.form__input::placeholder {
+  color:  #C4C4C4;
+}
+
+.form__input:invalid {
+  color:  var(--pink);
+}
+
+.form__input_type_error {
+  border-bottom: 1px var(--pink) solid;
+  box-sizing: border-box;
+}
+
+.form__input-error {/*текст ошибки*/
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  min-height: 30px;
+  color: var(--pink);
+  /* opacity: 0; */
+  padding: 0;
+  margin: 5px 0 0;
+}
+
+@media screen and (max-width: 720px) {
+  .form__input-error {
+    /* max-width: 238px; */
+  }
+}

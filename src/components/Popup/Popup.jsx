@@ -9,8 +9,8 @@ function Popup({ isOpen, onLoading, isLoggedIn }) {
   // const formToggle = document.querySelector('.form__toggle');
   // const form = document.querySelector('.form');
 
-  // usePopupClose(isOpen); //раскомментировать
- console.log(isOpen, '1111');
+  usePopupClose(isOpen); //раскомментировать
+//  console.log(isOpen, '1111');
 
 
   return (
