@@ -116,9 +116,12 @@ function App() {
                       isOpenPopup={isOpenPopup}
                       isMainPage={isMainPage}
                     />
-                    <ProtectedRoute
+                    {/* <ProtectedRoute
                       isLoggedIn={isLoggedIn}
                       element={Movies}
+                    /> */}
+                    <Movies
+                      isLoggedIn={isLoggedIn}
                     />
                     <Footer />
                   </>
@@ -135,9 +138,12 @@ function App() {
                       isOpenPopup={isOpenPopup}
                       isMainPage={isMainPage}
                     />
-                    <ProtectedRoute
+                    {/* <ProtectedRoute
                       isLoggedIn={isLoggedIn}
                       element={SavedMovies}
+                    /> */}
+                    <SavedMovies
+                      isLoggedIn={isLoggedIn}
                     />
                     <Footer />
                   </>
@@ -154,8 +160,11 @@ function App() {
                       isOpenPopup={isOpenPopup}
                       isMainPage={isMainPage}
                     />
-                    <ProtectedRoute
+                    {/* <ProtectedRoute
                       element={Profile}
+                      isLoggedIn={isLoggedIn}
+                    /> */}
+                    <Profile
                       isLoggedIn={isLoggedIn}
                     />
                   </>
