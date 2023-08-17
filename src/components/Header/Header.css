@@ -4,10 +4,6 @@
   width: 100%;
 }
 
-.header_type_invisible {
-  display: none;
-}
-
 .header__size-container {
   display: flex;
   justify-content: space-between;
@@ -16,7 +12,7 @@
   margin: 0 auto;
 }
 
-.header_type_turquoise {
+.header__main_type_turquoise {
   background-color: var(--dark-turquoise);
 }
 

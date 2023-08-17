@@ -54,7 +54,7 @@ function Header(props) {
 
   return (
     <header className="header">
-      <div className={`${props.isMainPage ? "header_type_turquoise" : ""}`}>
+      <div className={`header__main ${props.isMainPage ? "header__main_type_turquoise" : ""}`}>
         <div className="header__size-container size-container">
           <Logo />
           {headerView}

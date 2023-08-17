@@ -8,7 +8,7 @@ import Input from "../Input/Input"
 function Login(props) {
 
   return (
-    <div className="signup signup__auth-container">
+    <section className="signup signup__auth-container">
       <div className="auth-container">
 
         <Logo />
@@ -52,7 +52,7 @@ function Login(props) {
         </p>
 
       </div>
-    </div>
+    </section>
   );
 }
 

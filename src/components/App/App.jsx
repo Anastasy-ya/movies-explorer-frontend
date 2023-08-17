@@ -18,7 +18,7 @@ import { useLocation } from "react-router-dom";
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);

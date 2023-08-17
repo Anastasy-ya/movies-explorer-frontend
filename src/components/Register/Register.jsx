@@ -27,7 +27,7 @@ function Register(props) {
   // }
 
   return (
-    <div className="signup signup__auth-container">
+    <section className="signup signup__auth-container">
       <div className="auth-container ">
 
         <Logo/>
@@ -78,7 +78,7 @@ function Register(props) {
         </p>
 
       </div>
-    </div>
+    </section>
   );
 }
 
