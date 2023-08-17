@@ -6,7 +6,12 @@
   height: 20px;
 }
 
-.search-input__tumbl {
+.tumbl__checker {
+  width: 0;
+  height: 0;
+}
+
+.search-input__tumbl { /*контейнер*/
   display: flex;
   gap: 12px;
   justify-content: center;
@@ -15,7 +20,7 @@
   align-items: center;
 }
 
-.tumbl__slider {
+.tumbl__slider { /*сам тумблер*/
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -29,7 +34,7 @@
   border-radius: 34px;
 }
 
-.tumbl__slider:before {
+.tumbl__slider:before { /*белый переключатель*/
   position: absolute;
   content: "";
   height: 16px;
@@ -43,15 +48,10 @@
 }
 
 .search-input__text {
-  /* font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal; */
   font-feature-settings: 'clig' off, 'liga' off;
   font-weight: 400;
-  /* color: white; */
   font-size: 12px;
   line-height: 18px;
-  /* margin: 0;
-  padding: 0; */
 }
 
 input:checked + .tumbl__slider {

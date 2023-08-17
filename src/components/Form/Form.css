@@ -8,13 +8,13 @@
   width: 396px;
   height: 45px;
   border: none;
-  margin: 126px 0 16px;
+  margin: 192px 0 16px; /**/
 }
 
 @media screen and (max-width: 720px) {
   .form__button {
     max-width: 260px;
-    margin: 215px 0 14px;
+    margin: 284px 0 14px; /*215 0 14*/
     font-size: 12px;
   }
 }

@@ -14,12 +14,6 @@
   width: 100%;
 }
 
-@media screen and (max-width: 720px) {
-    .form__input {
-      /* max-width: 238px; */
-    }
-}
-
 .form__label {
   max-height: 70px;
   width: 100%;

@@ -11,15 +11,10 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import PageNotFound from "../PageNotFound/PageNotFound";
-
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { NavLink, useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 // import * as auth from "../utils/auth";
-
-
-
-
 
 function App() {
 
@@ -27,29 +22,19 @@ function App() {
   const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
-  const [isSignInOrSignOut, setIsSignInOrSignOut] = useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
-  
+
 
   const path = useLocation();
 
   function handleOpenClosePopup() {
-  //   console.log(isOpenPopup);
-  //   //   setIsOpenPopup(false) :
-      setIsOpenPopup(!isOpenPopup);
-  //     console.log(isOpenPopup);
+    setIsOpenPopup(!isOpenPopup);
   };
-
-
 
   useEffect(() => {
     path.pathname === "/" ?
       setIsMainPage(true) :
       setIsMainPage(false);
-    path.pathname === "/signin" ||
-      path.pathname === "/signup" ?
-      setIsSignInOrSignOut(true) :
-      setIsSignInOrSignOut(false)
   }, [path]);
 
 
@@ -59,22 +44,13 @@ function App() {
       <div className="page">
         <CurrentUserContext.Provider value={currentUser || ""}>
 
-          <Header
-            isLoggedIn={isLoggedIn}
-            handleOpenClosePopup={handleOpenClosePopup}
-            isOpenPopup={isOpenPopup}
-            // setIsOpenPopup={setIsOpenPopup}
-            isMainPage={isMainPage}
-            isSignInOrSignOut={isSignInOrSignOut}
-          />
-
           <main className="content">
 
             <Routes>
 
               <Route
                 path="*" //пользователь вошел на несуществующую страницу
-                element={<PageNotFound/>}
+                element={<PageNotFound />}
               />
 
               <Route
@@ -114,51 +90,85 @@ function App() {
               <Route
                 path="/"
                 element={
+                  <>
+                  <Header
+                    isLoggedIn={isLoggedIn}
+                    handleOpenClosePopup={handleOpenClosePopup}
+                    isOpenPopup={isOpenPopup}
+                    isMainPage={isMainPage}
+                  />
                   <Main
                     isLoggedIn={isLoggedIn}
                   />
+                  <Footer />
+                  </>
                 }
-              /> {/*конец роута / */}
+              /> 
 
               <Route
                 path="/movies"
                 element={
+                  <>
+                  <Header
+                    isLoggedIn={isLoggedIn}
+                    handleOpenClosePopup={handleOpenClosePopup}
+                    isOpenPopup={isOpenPopup}
+                    isMainPage={isMainPage}
+                  />
                   <ProtectedRoute
                     isLoggedIn={isLoggedIn}
                     element={Movies}
                   />
+                  <Footer />
+                  </>
                 }
-              /> {/*конец роута "/movies" */}
+              />
 
               <Route
                 path="/saved-movies"
                 element={
+                  <>
+                  <Header
+                    isLoggedIn={isLoggedIn}
+                    handleOpenClosePopup={handleOpenClosePopup}
+                    isOpenPopup={isOpenPopup}
+                    isMainPage={isMainPage}
+                  />
                   <ProtectedRoute
                     isLoggedIn={isLoggedIn}
                     element={SavedMovies}
                   />
+                  <Footer />
+                  </>
                 }
-              /> {/*конец роута "/saved-movies" */}
+              />
 
               <Route
                 path="/profile"
                 element={
+                  <>
+                  <Header
+                    isLoggedIn={isLoggedIn}
+                    handleOpenClosePopup={handleOpenClosePopup}
+                    isOpenPopup={isOpenPopup}
+                    isMainPage={isMainPage}
+                  />
                   <ProtectedRoute
                     element={Profile}
                     isLoggedIn={isLoggedIn}
                   />
+                  </>
                 }
-              /> {/*конец роута "/profile" */}
+              />
 
             </Routes>
             <Popup
               isOpen={isOpenPopup}
               isLoggedIn={isLoggedIn}
-              // handleOpenClosePopup={handleOpenClosePopup}
+            // handleOpenClosePopup={handleOpenClosePopup}
             />
 
           </main>
-          <Footer isSignInOrSignOut={isSignInOrSignOut}/>
         </CurrentUserContext.Provider>
       </div>
     </div>

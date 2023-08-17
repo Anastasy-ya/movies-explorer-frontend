@@ -45,7 +45,7 @@ function Login(props) {
           <Link
             to={props.routTo}
             className="auth-container__change-form-text auth-container__change-form-text_type_link"
-            aria-label=""
+            aria-label={props.routTo}
           >{props.askToChangeFormLink}</Link>
         </p>
 

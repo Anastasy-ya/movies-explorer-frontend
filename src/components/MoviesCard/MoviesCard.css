@@ -13,18 +13,18 @@
   
 }
 
-/* .card__shadow {
-  background-color: red;
-  
-  height: 100%;
-  width: 100%px;
-} */
-
 .card__image {
   height: 203px;
   object-fit: cover;
   width: 364px;
   background-image: url(../../images/image.jpg);
+}
+
+@media screen and (max-width: 1200px) {
+  .card__image {
+    height: 190px;
+    width: 339px;
+  }
 }
 
 .card__header {

@@ -1,8 +1,9 @@
 .auth-container {
-  padding: 70px 0;
+  padding: 70px 0; /*70 0 233 0*/
   max-width: 396px;
   margin: 0 auto;
   height: 100vh;
+  min-height: 560px;
 }
 
 @media screen and (max-width: 720px) {
@@ -12,6 +13,7 @@
     align-items: center;
     flex-direction: column;
     padding: 57px 0;
+    min-height: 694px;
   }
 }
 
@@ -38,9 +40,15 @@
 .auth-container__change-form-text {
   color: var(--grey);
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   line-height: normal;
+}
+
+@media screen and (max-width: 720px) {
+  .auth-container__change-form-text {
+    font-size: 12px;
+  }
 }
 
 .auth-container__change-form-text_type_link {

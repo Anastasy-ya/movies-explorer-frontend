@@ -11,7 +11,7 @@ function Input({
   placeholder }) {
 
   return (
-    <label className="form__label">
+    <label className="form__label form__label_type_profile">
       {labelText}
       <input
         type={type}

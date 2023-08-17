@@ -59,7 +59,7 @@ function Header(props) {
   }, [props.isLoggedIn, isWideScreen, props.isOpenPopup]);
 
   return (
-    <header className={`header ${props.isSignInOrSignOut ? "header_type_invisible" : ""}`}>
+    <header className="header">
           <div className={`${props.isMainPage ? "header_type_turquoise" : ""}`}>
             <div className="header__size-container size-container">
               <Logo/>

@@ -23,7 +23,7 @@
 }
 
 .search-input__box {
-  padding: 80px 0 30px;
+  padding: 80px 0 33px;
   display: grid;
   grid-template-columns: auto 70px;
   gap: 10px;

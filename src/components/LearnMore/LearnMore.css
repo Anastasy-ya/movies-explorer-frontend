@@ -1,5 +1,5 @@
 .block-learn-more {
-  padding: 50px 0 80px;
+  padding: 50px 0 93px;
 }
 
 .block-learn-more__button {
@@ -9,9 +9,7 @@
   border-radius: 6px;
   height: 36px;
   width: 1140px;
-  color: #ffffff;
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
+  color: white;
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
