@@ -23,7 +23,7 @@ import { NavLink, useLocation, Link } from "react-router-dom";
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
@@ -98,8 +98,15 @@ function App() {
                 path="/signin"
                 element={
                   <Login
-                    // onSubmit={handleLogin}
+                    // onSubmit={handleRegister} раскомментировать на 4 этапе
                     // isLoading={isLoading}
+                    formName={"signin"}
+                    className={"auth-container__form"}
+                    buttonText={"Войти"}
+                    wellcomeText={"Рады видеть!"}
+                    askToChangeForm={"Ещё не зарегистрированы? "}
+                    askToChangeFormLink={"Регистрация"}
+                    routTo={"/signup"}
                   />
                 }
               />

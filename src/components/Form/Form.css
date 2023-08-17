@@ -2,12 +2,19 @@
   background-color: var(--blue);
   text-align: center;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
   border-radius: 3px;
   width: 396px;
   height: 45px;
   border: none;
   margin: 126px 0 16px;
+}
 
+@media screen and (max-width: 720px) {
+  .form__button {
+    max-width: 260px;
+    margin: 215px 0 14px;
+    font-size: 12px;
+  }
 }

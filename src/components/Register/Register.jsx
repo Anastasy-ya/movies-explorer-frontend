@@ -28,9 +28,9 @@ function Register(props) {
 
   return (
     <div className="signup signup__auth-container">
-      <div className="auth-container">
+      <div className="auth-container ">
 
-        <Logo />
+        <Logo/>
         <h1 className="auth-container__wellcome">{props.wellcomeText}</h1>
 
         <Form

@@ -3,14 +3,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 30px;
+  gap: 30px;
 }
 
 .info-account_type_login {
   gap: 17px;
-}
-
-.info-account_type_logout {
-  gap: 30px;
 }
 
 .info-account__authentification {
@@ -21,6 +19,13 @@
   background-color: transparent;
   border: none;
 }
+
+/* .info-account__container {
+  display: flex;
+  gap: 17px;
+  align-items: baseline;
+  justify-content: center;
+} */
 
 @media screen and (max-width: 720px) {
   .info-account__authentification {
@@ -53,6 +58,8 @@
   font-weight: 500;
   line-height: 16px;
   border: none;
+  margin: 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 720px) {
