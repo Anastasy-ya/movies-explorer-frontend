@@ -45,5 +45,5 @@
     "react-router-dom": "^6.11.2",
     "webpack": "^5.88.2"
   },
-  "homepage": "http://localhost:3000/"
+  "homepage": "https://anastasy-ya.github.io/movies-explorer-frontend/"
 }
