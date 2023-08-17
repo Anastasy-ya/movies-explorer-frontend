@@ -2,8 +2,11 @@
 Дипломная работа по курсу Веб-разработчик. Яндекс Практикум
 
 
-Ссылка на макет в Figma:
+## Ссылка на макет в Figma:
 https://www.figma.com/file/mqW0Joa8w2EToBoXqKky1S/Diploma-(Copy)?type=design&node-id=344-0&mode=design
+
+## Gh Pages 
+https://anastasy-ya.github.io/movies-explorer-frontend/
 
 
 
