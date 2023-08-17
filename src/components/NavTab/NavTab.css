@@ -16,7 +16,7 @@
 }
 
 @media screen and (max-width: 720px) {
-  .navigation__size-container {  
+  .navigation__size-container {
     max-width: 214px;
     gap: 24px;
   }
@@ -35,7 +35,7 @@
 }
 
 @media screen and (max-width: 720px) {
-  .navigation__text {  
+  .navigation__text {
     font-size: 11px;
   }
 }

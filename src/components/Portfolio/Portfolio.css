@@ -1,7 +1,3 @@
-.portfolio {
-
-}
-
 .portfolio__title {
   color: var(--grey);
   font-size: 18px;
@@ -14,7 +10,6 @@
 
 @media screen and (max-width: 720px) {
   .portfolio__title {
-    /* margin: 40px 0 0; */
     font-size: 14px;
     line-height: 20px;
     margin: 0 0 40px;

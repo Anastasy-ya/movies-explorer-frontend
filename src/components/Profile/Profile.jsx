@@ -1,10 +1,7 @@
 import React from 'react';
 import './Profile.css';
 // import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import Logo from "../Logo/Logo";
-import Form from "../Form/Form";
 import { Link } from "react-router-dom";
-import Input from "../Input/Input";
 
 const currentUser = { name: "Анастасия", email: "mail@mail.com" }
 
@@ -13,7 +10,6 @@ function Profile(props) {
   return (
     <section className="profile">
       <div className="profile-container ">
-
 
         <h1 className="profile__wellcome">Привет, {currentUser.name}</h1>
 
@@ -40,8 +36,6 @@ function Profile(props) {
           // onChange={(e) => handleChangeName(e)}
           // value={name || ""} //currentUser.name
           />
-          {/* <span className="form__input-error form__name-input-error"></span> */}
-
 
           <label className="profile-form__label label_type_grid3">
             E-mail
@@ -61,7 +55,7 @@ function Profile(props) {
           // onChange={(e) => handleChangeName(e)}
           // value={name || ""} //currentUser.name
           />
-          
+
           <button className="profile__change-data" type="submit" aria-label="change data">
             Редактировать
           </button>
@@ -69,10 +63,11 @@ function Profile(props) {
 
         <Link
           to={props.routTo}
-          // className="profile__change-data profile__change-data_type_link"
           aria-label="logout"
         >
-        <p className="profile__change-data profile__change-data_type_link">Выйти из аккаунта</p></Link>
+          <p className="profile__change-data profile__change-data_type_link">
+          Выйти из аккаунта
+          </p></Link>
 
       </div>
     </section>

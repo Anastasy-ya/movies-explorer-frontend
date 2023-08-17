@@ -11,7 +11,7 @@ function Login(props) {
     <div className="signup signup__auth-container">
       <div className="auth-container">
 
-        <Logo/>
+        <Logo />
         <h1 className="auth-container__wellcome">{props.wellcomeText}</h1>
 
         <Form
@@ -40,8 +40,10 @@ function Login(props) {
           />
 
         </Form>
+        
         <p className="auth-container__change-form-text">
           {props.askToChangeForm}
+          
           <Link
             to={props.routTo}
             className="auth-container__change-form-text auth-container__change-form-text_type_link"

@@ -38,7 +38,7 @@
   background-color: transparent;
   border: none;
   grid-area: button;
-  margin: 14vh 0 0;
+  margin: 189px 0 0;
 }
 
 @media screen and (max-width: 720px) {
@@ -51,7 +51,7 @@
   color: var(--pink);
 }
 
-.profile-form__input { 
+.profile-form__input {
   border-left: none;
   border-right: none;
   border-top: none;
@@ -78,11 +78,11 @@
 }
 
 .form__input::placeholder {
-  color:  #C4C4C4;
+  color: #c4c4c4;
 }
 
 .form__input:invalid {
-  color:  var(--pink);
+  color: var(--pink);
 }
 
 .form__input_type_error {
@@ -90,7 +90,8 @@
   box-sizing: border-box;
 }
 
-.form__input-error {/*текст ошибки*/
+.form__input-error {
+  /*текст ошибки*/
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
@@ -106,7 +107,7 @@
   display: flex;
   flex-direction: column;
   line-height: normal;
-  color: #FFF;
+  color: #fff;
   font-size: 11px;
   font-weight: 500;
   text-align: left;
@@ -145,5 +146,4 @@
     "labelName3 inputName4"
     "button button";
   grid-row-gap: 12px;
-
 }

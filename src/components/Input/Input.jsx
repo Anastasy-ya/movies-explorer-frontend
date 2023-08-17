@@ -2,12 +2,12 @@ import React from 'react';
 import './Input.css';
 
 
-function Input({ 
-  type, 
-  name, 
-  minLength, 
-  maxLength, 
-  labelText, 
+function Input({
+  type,
+  name,
+  minLength,
+  maxLength,
+  labelText,
   placeholder }) {
 
   return (

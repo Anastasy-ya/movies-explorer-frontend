@@ -1,17 +1,12 @@
 import React from "react";
 import './Popup.css';
-import usePopupClose from "../hooks/usePopupClose";
+// import usePopupClose from "../hooks/usePopupClose";
 import { NavLink } from "react-router-dom";
 import InfoAccount from "../InfoAccount/InfoAccount";
 
 function Popup({ isOpen, onLoading, isLoggedIn }) {
 
-  // const formToggle = document.querySelector('.form__toggle');
-  // const form = document.querySelector('.form');
-
-  usePopupClose(isOpen); //раскомментировать
-//  console.log(isOpen, '1111');
-
+  // usePopupClose(isOpen); для следующего этапа
 
   return (
     <>
@@ -46,7 +41,7 @@ function Popup({ isOpen, onLoading, isLoggedIn }) {
               </NavLink>
             </div>
           ) : (
-            <></> //ссылки для незарегистрированного пользователя
+            <></> //ссылки для незарегистрированного пользователя для добавления в будущем
           )}
 
           <InfoAccount

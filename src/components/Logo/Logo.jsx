@@ -9,7 +9,7 @@ function Logo() {
       reloadDocument
       aria-label="navigate to about project info"
     >
-      <div className="header__logo" alt="Логотип" >
+      <div className="header__logo" alt="Логотип">
       </div>
     </Link>
 

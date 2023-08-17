@@ -25,7 +25,6 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  /* background-size: auto; */
   display: flex;
   justify-content: center;
 }
@@ -45,7 +44,6 @@
   max-width: 730px;
   margin: 0 auto;
   align-self: center;
-  /* height: 116px; */
 }
 
 @media screen and (max-width: 1200px) {
@@ -53,12 +51,6 @@
     max-width: 708px;
   }
 }
-
-/* @media screen and (max-width: 800px) {
-  .banner__text {
-    max-width: 500px;
-  }
-} */
 
 @media screen and (max-width: 720px) {
   .banner__text {

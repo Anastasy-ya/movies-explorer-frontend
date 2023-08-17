@@ -1,16 +1,14 @@
 .card {
   background-color: var(--dark-grey);
   justify-content: space-between;
-  /* padding: 70px 0 30px; */
   padding: 0;
+  margin: 0;
   max-width: 364px;
   max-height: 271px;
+  width: auto;
+  height: auto;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
   list-style: none;
-}
-
-.card__size-container {
-  
 }
 
 .card__image {
@@ -27,6 +25,13 @@
   }
 }
 
+@media screen and (max-width: 720px) {
+  .card__image {
+    height: 168px;
+    width: 300px;
+  }
+}
+
 .card__header {
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;
@@ -35,8 +40,6 @@
   font-weight: 500;
   letter-spacing: 0;
   line-height: normal;
-  width: 280px;
-  
 }
 
 .card__subtitle {
@@ -51,31 +54,49 @@
   white-space: nowrap;
 }
 
-.card__delete-icon {
+.card__icon {
   width: 30px;
   height: 30px;
-  border-radius: 36px;
-  background: var(--middle-grey);
+  border-radius: 30px;
+  background-color: rgba(49, 49, 49, 1);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
   background-size: auto;
-  border: none;
-  background-image: url(../../images/delete-movie-button.svg);
   margin: 0;
   padding: 0;
-  transition: opacity 0.5s ease-in;
   cursor: pointer;
+  border: none;
+}
+
+.card__icon_type_delete {
+  background-image: url(../../images/delete-movie-button.svg);
+}
+
+.card__icon_type_save {
+  background-image: url(../../images/save-button.svg);
+}
+
+.card__icon_type_save_active {
+  background-image: url(../../images/save-button_active.svg);
 }
 
 .card__info {
   display: flex;
   padding: 14px;
   justify-content: space-between;
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+}
+
+@media screen and (max-width: 720px) {
+  .card__info {
+  }
 }
 
 .card__text-block {
   display: flex;
   flex-direction: column;
   gap: 9px;
+  width: fit-content;
 }

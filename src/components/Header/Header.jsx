@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./Header.css";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
 import Burger from "../Burger/Burger";
 import InfoAccount from "../InfoAccount/InfoAccount";
 import Logo from "../Logo/Logo";
 
-
-
 function Header(props) {
-
 
   const { isWideScreen } = useResize(); //получение значения от кастомного хука
   const [headerView, setHeaderView] = useState(<p></p>);
 
-
-
   useEffect(() => {
-
     isWideScreen ? (
       setHeaderView(
         <>
@@ -60,13 +54,12 @@ function Header(props) {
 
   return (
     <header className="header">
-          <div className={`${props.isMainPage ? "header_type_turquoise" : ""}`}>
-            <div className="header__size-container size-container">
-              <Logo/>
-              {headerView}
-
-            </div>
-          </div>
+      <div className={`${props.isMainPage ? "header_type_turquoise" : ""}`}>
+        <div className="header__size-container size-container">
+          <Logo />
+          {headerView}
+        </div>
+      </div>
     </header>
   );
 }

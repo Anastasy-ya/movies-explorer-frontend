@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom"; //, Navigate, useNavigate
 import './App.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -19,10 +19,11 @@ import { useLocation } from "react-router-dom";
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [showPreloader, setShowPreloader] = useState(false);
+  // const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
+
 
 
   const path = useLocation();
@@ -91,35 +92,35 @@ function App() {
                 path="/"
                 element={
                   <>
-                  <Header
-                    isLoggedIn={isLoggedIn}
-                    handleOpenClosePopup={handleOpenClosePopup}
-                    isOpenPopup={isOpenPopup}
-                    isMainPage={isMainPage}
-                  />
-                  <Main
-                    isLoggedIn={isLoggedIn}
-                  />
-                  <Footer />
+                    <Header
+                      isLoggedIn={isLoggedIn}
+                      handleOpenClosePopup={handleOpenClosePopup}
+                      isOpenPopup={isOpenPopup}
+                      isMainPage={isMainPage}
+                    />
+                    <Main
+                      isLoggedIn={isLoggedIn}
+                    />
+                    <Footer />
                   </>
                 }
-              /> 
+              />
 
               <Route
                 path="/movies"
                 element={
                   <>
-                  <Header
-                    isLoggedIn={isLoggedIn}
-                    handleOpenClosePopup={handleOpenClosePopup}
-                    isOpenPopup={isOpenPopup}
-                    isMainPage={isMainPage}
-                  />
-                  <ProtectedRoute
-                    isLoggedIn={isLoggedIn}
-                    element={Movies}
-                  />
-                  <Footer />
+                    <Header
+                      isLoggedIn={isLoggedIn}
+                      handleOpenClosePopup={handleOpenClosePopup}
+                      isOpenPopup={isOpenPopup}
+                      isMainPage={isMainPage}
+                    />
+                    <ProtectedRoute
+                      isLoggedIn={isLoggedIn}
+                      element={Movies}
+                    />
+                    <Footer />
                   </>
                 }
               />
@@ -128,17 +129,17 @@ function App() {
                 path="/saved-movies"
                 element={
                   <>
-                  <Header
-                    isLoggedIn={isLoggedIn}
-                    handleOpenClosePopup={handleOpenClosePopup}
-                    isOpenPopup={isOpenPopup}
-                    isMainPage={isMainPage}
-                  />
-                  <ProtectedRoute
-                    isLoggedIn={isLoggedIn}
-                    element={SavedMovies}
-                  />
-                  <Footer />
+                    <Header
+                      isLoggedIn={isLoggedIn}
+                      handleOpenClosePopup={handleOpenClosePopup}
+                      isOpenPopup={isOpenPopup}
+                      isMainPage={isMainPage}
+                    />
+                    <ProtectedRoute
+                      isLoggedIn={isLoggedIn}
+                      element={SavedMovies}
+                    />
+                    <Footer />
                   </>
                 }
               />
@@ -147,16 +148,16 @@ function App() {
                 path="/profile"
                 element={
                   <>
-                  <Header
-                    isLoggedIn={isLoggedIn}
-                    handleOpenClosePopup={handleOpenClosePopup}
-                    isOpenPopup={isOpenPopup}
-                    isMainPage={isMainPage}
-                  />
-                  <ProtectedRoute
-                    element={Profile}
-                    isLoggedIn={isLoggedIn}
-                  />
+                    <Header
+                      isLoggedIn={isLoggedIn}
+                      handleOpenClosePopup={handleOpenClosePopup}
+                      isOpenPopup={isOpenPopup}
+                      isMainPage={isMainPage}
+                    />
+                    <ProtectedRoute
+                      element={Profile}
+                      isLoggedIn={isLoggedIn}
+                    />
                   </>
                 }
               />

@@ -34,7 +34,7 @@ function Main() {
         sectionName={'about-me'}
       >
       </SectionFrame>
-      
+
     </>
   );
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import './Form.css';
 
-function Form({ 
-  formName, 
-  onSubmit, 
-  children, 
+function Form({
+  formName,
+  onSubmit,
+  children,
   // isLoading, раскомментировать на 4 этапе
-  buttonText}) {
+  buttonText }) {
 
   return (
     <form

@@ -1,15 +1,30 @@
 .card-list {
-  margin: 77px 0 0;
+  padding: 78px 0 0;
+}
+
+@media screen and (max-width: 720px) {
+  .card-list {
+    padding: 55px 0 0;
+  }
 }
 
 .card-list__size-container {
   display: flex;
-  gap: 24px;
+  row-gap: 24px;
+  column-gap: 24px;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1200px) {
+  .card-list__size-container {
+    row-gap: 36px;
+    column-gap: 31px;
+  }
 }
 
 @media screen and (max-width: 720px) {
   .card-list__size-container {
-    gap: 30px;
+    row-gap: 16px;
   }
 }

@@ -1,14 +1,14 @@
 .burger {
-    width: 44px;
-    height: 44px;
-    position: relative;
-    transition-duration: 1s;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    z-index: 5;
+  width: 44px;
+  height: 44px;
+  position: relative;
+  transition-duration: 1s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 5;
 }
 
 @media screen and (max-width: 720px) {
@@ -18,14 +18,15 @@
   }
 }
 
-.burger__icon { /*средняя полоска*/
-    height: 3px;
-    width: 29px;
-    background-color: white;
-    position: absolute;
-    transition-duration: .25s;
-    transition-delay: .25s;
-    transition: scale .25s, top .25s .25s;
+.burger__icon {
+  /*средняя полоска*/
+  height: 3px;
+  width: 29px;
+  background-color: white;
+  position: absolute;
+  transition-duration: 0.25s;
+  transition-delay: 0.25s;
+  transition: scale 0.25s, top 0.25s 0.25s;
 }
 
 @media screen and (max-width: 720px) {
@@ -35,16 +36,17 @@
   }
 }
 
-.burger__icon:before { /*верхняя полоска*/
-    left: 0;
-    position: absolute;
-    top: -10px;
-    height: 3px;
-    width: 29px;
-    background-color: white;
-    content: "";
-    transition-duration: .25s;
-    transition: transform .25s, top .25s .25s;
+.burger__icon:before {
+  /*верхняя полоска*/
+  left: 0;
+  position: absolute;
+  top: -10px;
+  height: 3px;
+  width: 29px;
+  background-color: white;
+  content: "";
+  transition-duration: 0.25s;
+  transition: transform 0.25s, top 0.25s 0.25s;
 }
 
 @media screen and (max-width: 720px) {
@@ -54,16 +56,17 @@
   }
 }
 
-.burger__icon:after { /*нижяя полоска*/
-    left: 0;
-    position: absolute;
-    top: 10px;
-    height: 3px;
-    width: 29px;
-    background-color: white;
-    content: "";
-    transition-duration: .25s;
-    transition: transform .25s, top .25s .25s;
+.burger__icon:after {
+  /*нижяя полоска*/
+  left: 0;
+  position: absolute;
+  top: 10px;
+  height: 3px;
+  width: 29px;
+  background-color: white;
+  content: "";
+  transition-duration: 0.25s;
+  transition: transform 0.25s, top 0.25s 0.25s;
 }
 
 @media screen and (max-width: 720px) {
@@ -73,27 +76,30 @@
   }
 }
 
-.open span { /*средняя полоска после преобразования*/
-    transition-duration: 0.1s;
-    transition-delay: .25s;
-    background: transparent;
-    height: 2px;
-    width: 22px;
-    margin: 0 auto;
+.open span {
+  /*средняя полоска после преобразования*/
+  transition-duration: 0.1s;
+  transition-delay: 0.25s;
+  background: transparent;
+  height: 2px;
+  width: 22px;
+  margin: 0 auto;
 }
 
-.open span:before { /*верхняя полоска после преобразования*/
-    transition: top .25s, transform .25s .25s;
-    top: 0px;
-    transform: rotateZ(-45deg);
-    height: 2px;
-    width: 22px;
+.open span:before {
+  /*верхняя полоска после преобразования*/
+  transition: top 0.25s, transform 0.25s 0.25s;
+  top: 0px;
+  transform: rotateZ(-45deg);
+  height: 2px;
+  width: 22px;
 }
 
-.open span:after { /*нижяя полоска осле преобразования*/
-    transition: top 0.4s, transform .25s .25s;
-    top: 0px;
-    transform: rotateZ(45deg);
-    height: 2px;
-    width: 22px;
+.open span:after {
+  /*нижяя полоска осле преобразования*/
+  transition: top 0.4s, transform 0.25s 0.25s;
+  top: 0px;
+  transform: rotateZ(45deg);
+  height: 2px;
+  width: 22px;
 }

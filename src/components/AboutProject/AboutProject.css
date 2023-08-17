@@ -38,18 +38,13 @@
   }
 }
 
-
 .about-project__subtitle {
-  /* color: white;
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal; */
   font-size: 20px;
   font-weight: 400;
   width: 100%;
   letter-spacing: -0.8px;
   line-height: normal;
   margin: 0 0 26px;
-  /* padding: 0; */
 }
 
 @media screen and (max-width: 1200px) {
@@ -71,7 +66,6 @@
   grid-template-rows: 36px 36px;
   grid-template-columns: 228px auto;
   grid-row-gap: 12px;
-  /* padding: 0 0 10px */
 }
 
 @media screen and (max-width: 1200px) {
@@ -88,13 +82,13 @@
 }
 
 .about-project__column {
-  max-width: calc(50%-20px); 
+  max-width: calc(50%-20px);
   /*размер контейнера напополам для двух столбцов минус промежуток между ними*/
 }
 
 @media screen and (max-width: 1200px) {
   .about-project__column {
-    max-width: calc(50%-15px); 
+    max-width: calc(50%-15px);
   }
 }
 
@@ -115,9 +109,6 @@
   font-weight: 400;
   letter-spacing: 0;
   line-height: 20px;
-  /* margin: 0;
-  padding: 0; */
-  /* height: 36px; */
 }
 
 @media screen and (max-width: 1200px) {
@@ -136,12 +127,8 @@
 
 .infographic__text {
   text-align: center;
-  /* font-family: Inter; */
   font-size: 14px;
-  /* font-style: normal; */
   font-weight: 400;
-  /* line-height: normal; */
-  /* text-align: center; */
   line-height: 36px;
 }
 
@@ -153,11 +140,9 @@
 
 .infographic__text_type_black {
   color: black;
-  
 }
 
 .infographic__text_type_grey {
   color: var(--grey);
   line-height: 20px;
 }
-

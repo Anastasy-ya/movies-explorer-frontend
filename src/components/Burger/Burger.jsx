@@ -5,16 +5,14 @@ function Burger(props) {
 
   function handler() {
     document.querySelector(".burger").classList.toggle('open');
-    // props.setIsOpenPopup(!props.isOpenPopup);
-    // console.log(props.isOpenPopup);
     props.handleOpenClosePopup();
   }
 
   return (
-    <div 
-      className="header__burger burger" 
+    <div
+      className="header__burger burger"
       onClick={handler}>
-        <span className="burger__icon"></span>
+      <span className="burger__icon"></span>
     </div>
   );
 }
