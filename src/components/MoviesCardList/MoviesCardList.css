@@ -10,7 +10,7 @@
 
 .card-list__size-container {
   display: flex;
-  row-gap: 24px;
+  row-gap: 30px;
   column-gap: 24px;
   flex-wrap: wrap;
   justify-content: center;
@@ -25,6 +25,6 @@
 
 @media screen and (max-width: 720px) {
   .card-list__size-container {
-    row-gap: 16px;
+    row-gap: 15px;
   }
 }

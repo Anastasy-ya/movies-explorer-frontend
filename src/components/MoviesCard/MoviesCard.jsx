@@ -1,7 +1,10 @@
 import React from 'react';
 import './MoviesCard.css';
 
-function MoviesCard() {
+function MoviesCard(props) { //pageMovie(true/false)
+
+  const saveOrDeleteText = props.isMoviePage ? "save movie" : "delete movie from saved";
+
   return (
     <li className="card">      
         <div className="card__info">
@@ -9,14 +12,13 @@ function MoviesCard() {
             <div className="card__header">33 слова о дизайне</div>
             <div className="card__subtitle">1ч 47м</div>
           </div>
-            <button 
-            className="
-              card__icon 
-              card__icon_type_delete 
-              card__icon_type_save 
-              " /*card__icon_type_save_active */
-            alt="delete movie from list"
-            aria-label="delete movie from your list"
+          {console.log(props.isMoviePage)}
+            <button
+            className={`card__icon ${props.isMoviePage ? "card__icon_type_save" : "card__icon_type_delete"}`}
+             /*card__icon_type_save_active класс добавится на этапе добавления функционала*/
+            alt={saveOrDeleteText}
+            // "delete movie from list"
+            aria-label={saveOrDeleteText}
             ></button>
         </div>
         

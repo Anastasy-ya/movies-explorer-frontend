@@ -42,6 +42,23 @@
   border: none;
   padding: 22px;
   box-sizing: border-box;
+  /*далее стили value*/
+  color: var(--grey);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+@media screen and (max-width: 720px) {
+  .search-input__field {
+    font-size: 12px;
+    padding: 16px;
+  }
+}
+
+.search-input__field:focus {
+  outline: none;
 }
 
 .search-input__field::placeholder {
@@ -52,11 +69,11 @@
   line-height: 18px;
 }
 
-@media screen and (max-width: 720px) {
+/* @media screen and (max-width: 720px) {
   .search-input__field::placeholder {
     font-size: 12px;
   }
-}
+} */
 
 .search-input__label {
   color: var(--grey);

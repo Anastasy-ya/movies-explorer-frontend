@@ -6,7 +6,8 @@ function Form({
   onSubmit,
   children,
   // isLoading, раскомментировать на 4 этапе
-  buttonText }) {
+  buttonText,
+  typeReg }) {
 
   return (
     <form
@@ -15,7 +16,10 @@ function Form({
       onSubmit={onSubmit}
     >
       {children}
-      <button className="form__button" type="submit" aria-label={formName}>
+      <button 
+        className={`form__button ${typeReg && "form__button_type_reg"}`}
+        type="submit" 
+        aria-label={formName}>
         {buttonText}
       </button>
     </form>

@@ -23,11 +23,13 @@ function Login(props) {
 
           <Input
             type={"text"}
-            name={"name"}
+            name={"email"}
             minLength={"2"}
             maxLength={"40"}
-            labelText={"Имя"}
-            placeholder={"Анастасия"}
+            labelText={"E-mail"}
+            placeholder={"Введите E-mail"}
+            value={"mail@mail.com"}
+            
           />
 
           <Input
@@ -37,6 +39,7 @@ function Login(props) {
             maxLength={"20"}
             labelText={"Пароль"}
             placeholder={""}
+            
           />
 
         </Form>

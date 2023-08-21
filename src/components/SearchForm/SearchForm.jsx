@@ -3,7 +3,12 @@ import './SearchForm.css';
 
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ placeholder, handleChange }) {
+function SearchForm({ handleChange }) {
+
+  function handleChange() {
+    console.log('изменение значения инпута поиска фильмов')
+  }
+
   return (
     <section className="search-input">
       <div className="search-input__size-container size-container">
@@ -11,9 +16,11 @@ function SearchForm({ placeholder, handleChange }) {
             <input
               type="text"
               className="search-input__field"
-              placeholder="Фильм"//{placeholder}
+              value="Фильм"
+              placeholder="Введите название фильма"//{placeholder}
               onChange={handleChange}
-              aria-label="write key words for searching"
+              aria-label="write keywords for searching"
+              required
             />
             
             <button

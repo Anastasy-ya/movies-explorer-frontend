@@ -8,7 +8,8 @@ function Input({
   minLength,
   maxLength,
   labelText,
-  placeholder }) {
+  placeholder,
+  value }) {
 
   return (
     <label className="form__label form__label_type_profile">
@@ -18,6 +19,7 @@ function Input({
         name={name}
         className="form__input"
         placeholder={placeholder} //currentUser.name
+        value={value}
         required
         minLength={minLength}
         maxLength={maxLength}

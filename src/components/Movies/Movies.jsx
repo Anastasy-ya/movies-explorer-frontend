@@ -9,7 +9,8 @@ function Movies() {
   return (
     <>
       <SearchForm />
-      <MoviesCardList />
+      {/* <MoviesCardList /> */}
+      <MoviesCardList isMoviePage={true}/>
       <LearnMore />
     </>
   );

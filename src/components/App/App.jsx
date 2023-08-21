@@ -18,7 +18,7 @@ import { useLocation } from "react-router-dom";
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   // const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
@@ -166,6 +166,7 @@ function App() {
                     /> */}
                     <Profile
                       isLoggedIn={isLoggedIn}
+                      routTo={"/"}
                     />
                   </>
                 }
@@ -175,7 +176,7 @@ function App() {
             <Popup
               isOpen={isOpenPopup}
               isLoggedIn={isLoggedIn}
-            // handleOpenClosePopup={handleOpenClosePopup}
+              handleOpenClosePopup={handleOpenClosePopup}
             />
 
           </main>

@@ -3,16 +3,25 @@ import './MoviesCardList.css';
 
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList() {
+function MoviesCardList(props) {
   return (
     <section className="card-list">
       <ul className="card-list__size-container size-container">
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
+          <MoviesCard 
+            isMoviePage={props.isMoviePage}
+          /><MoviesCard 
+            isMoviePage={props.isMoviePage}
+          /><MoviesCard 
+            isMoviePage={props.isMoviePage}
+          /><MoviesCard 
+            isMoviePage={props.isMoviePage}
+          /><MoviesCard 
+            isMoviePage={props.isMoviePage}
+          /><MoviesCard 
+            isMoviePage={props.isMoviePage}
+          /><MoviesCard 
+            isMoviePage={props.isMoviePage}
+          />
     </ul>
     </section>
   );

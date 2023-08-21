@@ -32,7 +32,7 @@ function Profile(props) {
             required
             minLength="2"
             maxLength="20"
-            id="form__profile-name-input"
+            id="profile__profile-name-input"
           // onChange={(e) => handleChangeName(e)}
           // value={name || ""} //currentUser.name
           />
@@ -51,7 +51,7 @@ function Profile(props) {
             required
             minLength="2"
             maxLength="20"
-            id="form__profile-email-input`"
+            id="profile__profile-email-input`"
           // onChange={(e) => handleChangeName(e)}
           // value={name || ""} //currentUser.name
           />

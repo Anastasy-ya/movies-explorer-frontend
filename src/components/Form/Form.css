@@ -13,7 +13,7 @@
 
 @media screen and (max-width: 1200px) {
   .form__button {
-    margin: 128px 0 16px;
+    margin: 196px 0 16px;
   }
 }
 
@@ -22,5 +22,21 @@
     max-width: 260px;
     margin: 284px 0 14px;
     font-size: 12px;
+  }
+}
+
+.form__button_type_reg {
+  margin: 125px 0 16px;
+}
+
+@media screen and (max-width: 1200px) {
+  .form__button_type_reg {
+    margin: 126px 0 16px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .form__button_type_reg {
+    margin: 215px 0 16px;
   }
 }

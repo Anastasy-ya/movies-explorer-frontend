@@ -90,6 +90,7 @@ ul {
 
 .content {
   grid-area: content;
+  position: relative; /*задается поскольку дочерний элемент popup имеет position fixed*/
 }
 
 .size-container {

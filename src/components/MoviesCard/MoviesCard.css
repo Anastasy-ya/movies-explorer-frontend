@@ -84,9 +84,11 @@
   display: flex;
   padding: 14px;
   justify-content: space-between;
+  align-items: center;
   box-sizing: border-box;
   width: auto;
   height: auto;
+  flex-wrap: wrap;
 }
 
 @media screen and (max-width: 720px) {

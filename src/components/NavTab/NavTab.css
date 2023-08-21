@@ -34,7 +34,7 @@
   width: 67px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 720px) { /*этот стиль отключен, перенести свойства*/
   .navigation__text {
     font-size: 11px;
   }

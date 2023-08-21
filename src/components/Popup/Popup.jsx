@@ -43,9 +43,9 @@ function Popup({ isOpen, onLoading, isLoggedIn }) {
           ) : (
             <></> //ссылки для незарегистрированного пользователя для добавления в будущем
           )}
-
           <InfoAccount
             isLoggedIn={isLoggedIn}
+            isPopup={true}
           />
         </div>
       </section>

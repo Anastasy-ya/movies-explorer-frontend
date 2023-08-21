@@ -38,7 +38,8 @@ function Register(props) {
           formName={props.formName}
           onSubmit={props.onSubmit}
           // isLoading={props.isLoading} раскомментировать на 4 этапе
-          buttonText={props.buttonText}>
+          buttonText={props.buttonText}
+          typeReg={true}>
 
           <Input
             type={"text"}
@@ -46,7 +47,8 @@ function Register(props) {
             minLength={"2"}
             maxLength={"40"}
             labelText={"Имя"}
-            placeholder={"Анастасия"}
+            placeholder={"Введите имя"}
+            value={"Анастасия"}
           />
 
           <Input
@@ -55,7 +57,8 @@ function Register(props) {
             minLength={"2"}
             maxLength={"40"}
             labelText={"E-mail"}
-            placeholder={"mail@mail.com"}
+            placeholder={"Введите E-mail"}
+            value={"mail@mail.com"}
           />
 
           <Input
