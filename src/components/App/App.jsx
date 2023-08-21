@@ -6,19 +6,18 @@ import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
-import Popup from "../Popup/Popup";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import PageNotFound from "../PageNotFound/PageNotFound";
-import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+// import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
 // import * as auth from "../utils/auth";
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
@@ -45,18 +44,21 @@ function App() {
       <div className="page">
         <CurrentUserContext.Provider value={currentUser || ""}>
 
-          <main className="content">
+          <Routes>
 
-            <Routes>
+            <Route
+              path="*" //пользователь вошел на несуществующую страницу
+              element={
+                <main className="content">
+                  <PageNotFound />
+                </main>
+              }
+            />
 
-              <Route
-                path="*" //пользователь вошел на несуществующую страницу
-                element={<PageNotFound />}
-              />
-
-              <Route
-                path="/signup"
-                element={
+            <Route
+              path="/signup"
+              element={
+                <main className="content">
                   <Register
                     // onSubmit={handleRegister} раскомментировать на 4 этапе
                     // isLoading={isLoading}
@@ -68,12 +70,14 @@ function App() {
                     askToChangeFormLink={"Войти"}
                     routTo={"/signin"}
                   />
-                }
-              />
+                </main>
+              }
+            />
 
-              <Route
-                path="/signin"
-                element={
+            <Route
+              path="/signin"
+              element={
+                <main className="content">
                   <Login
                     // onSubmit={handleRegister} раскомментировать на 4 этапе
                     // isLoading={isLoading}
@@ -85,101 +89,104 @@ function App() {
                     askToChangeFormLink={"Регистрация"}
                     routTo={"/signup"}
                   />
-                }
-              />
+                </main>
+              }
+            />
 
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Header
-                      isLoggedIn={isLoggedIn}
-                      handleOpenClosePopup={handleOpenClosePopup}
-                      isOpenPopup={isOpenPopup}
-                      isMainPage={isMainPage}
-                    />
+            <Route
+              path="/"
+              element={
+                <>
+                  <Header
+                    isLoggedIn={isLoggedIn}
+                    handleOpenClosePopup={handleOpenClosePopup}
+                    isOpenPopup={isOpenPopup}
+                    isMainPage={isMainPage}
+                  />
+                  <main className="content">
                     <Main
                       isLoggedIn={isLoggedIn}
                     />
-                    <Footer />
-                  </>
-                }
-              />
+                  </main>
+                  <Footer />
+                </>
+              }
+            />
 
-              <Route
-                path="/movies"
-                element={
-                  <>
-                    <Header
-                      isLoggedIn={isLoggedIn}
-                      handleOpenClosePopup={handleOpenClosePopup}
-                      isOpenPopup={isOpenPopup}
-                      isMainPage={isMainPage}
-                    />
-                    {/* <ProtectedRoute
+            <Route
+              path="/movies"
+              element={
+                <>
+                  <Header
+                    isLoggedIn={isLoggedIn}
+                    handleOpenClosePopup={handleOpenClosePopup}
+                    isOpenPopup={isOpenPopup}
+                    isMainPage={isMainPage}
+                  />
+                  {/* <ProtectedRoute
                       isLoggedIn={isLoggedIn}
                       element={Movies}
                     /> */}
+                  <main className="content">
                     <Movies
                       isLoggedIn={isLoggedIn}
                     />
-                    <Footer />
-                  </>
-                }
-              />
+                  </main>
+                  <Footer />
+                </>
+              }
+            />
 
-              <Route
-                path="/saved-movies"
-                element={
-                  <>
-                    <Header
-                      isLoggedIn={isLoggedIn}
-                      handleOpenClosePopup={handleOpenClosePopup}
-                      isOpenPopup={isOpenPopup}
-                      isMainPage={isMainPage}
-                    />
-                    {/* <ProtectedRoute
+            <Route
+              path="/saved-movies"
+              element={
+                <>
+                  <Header
+                    isLoggedIn={isLoggedIn}
+                    handleOpenClosePopup={handleOpenClosePopup}
+                    isOpenPopup={isOpenPopup}
+                    isMainPage={isMainPage}
+                  />
+                  {/* <ProtectedRoute
                       isLoggedIn={isLoggedIn}
                       element={SavedMovies}
                     /> */}
+                  <main className="content">
                     <SavedMovies
                       isLoggedIn={isLoggedIn}
                     />
-                    <Footer />
-                  </>
-                }
-              />
+                  </main>
+                  <Footer />
+                </>
+              }
+            />
 
-              <Route
-                path="/profile"
-                element={
-                  <>
-                    <Header
-                      isLoggedIn={isLoggedIn}
-                      handleOpenClosePopup={handleOpenClosePopup}
-                      isOpenPopup={isOpenPopup}
-                      isMainPage={isMainPage}
-                    />
-                    {/* <ProtectedRoute
+            <Route
+              path="/profile"
+              element={
+                <>
+                  {/* <ProtectedRoute
                       element={Profile}
                       isLoggedIn={isLoggedIn}
                     /> */}
+                  <Header
+                    isLoggedIn={isLoggedIn}
+                    handleOpenClosePopup={handleOpenClosePopup}
+                    isOpenPopup={isOpenPopup}
+                    isMainPage={isMainPage}
+                  />
+                  <main className="content">
                     <Profile
                       isLoggedIn={isLoggedIn}
                       routTo={"/"}
                     />
-                  </>
-                }
-              />
-
-            </Routes>
-            <Popup
-              isOpen={isOpenPopup}
-              isLoggedIn={isLoggedIn}
-              handleOpenClosePopup={handleOpenClosePopup}
+                  </main>
+                </>
+              }
             />
 
-          </main>
+          </Routes>
+
         </CurrentUserContext.Provider>
       </div>
     </div>

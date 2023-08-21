@@ -8,8 +8,7 @@ import Input from "../Input/Input"
 function Login(props) {
 
   return (
-    <section className="signup signup__auth-container">
-      <div className="auth-container">
+      <section className="auth-container">
 
         <Logo />
         <h1 className="auth-container__wellcome">{props.wellcomeText}</h1>
@@ -44,18 +43,18 @@ function Login(props) {
 
         </Form>
         
+        <div className="auth-container__link-container">
         <p className="auth-container__change-form-text">
           {props.askToChangeForm}
-          
-          <Link
-            to={props.routTo}
-            className="auth-container__change-form-text auth-container__change-form-text_type_link"
-            aria-label={props.routTo}
-          >{props.askToChangeFormLink}</Link>
         </p>
-
+        <Link
+          to={props.routTo}
+          className="auth-container__change-form-text auth-container__change-form-text_type_link"
+          aria-label="login"
+        >{props.askToChangeFormLink}</Link>
       </div>
-    </section>
+
+      </section>
   );
 }
 

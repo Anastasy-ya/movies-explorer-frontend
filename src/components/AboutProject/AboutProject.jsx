@@ -3,8 +3,8 @@ import './AboutProject.css';
 
 function AboutProject() {
   return (
-    <section className="about-project">
-      <ul className="about-project__container" id="about-project">
+    <>
+      <ul className="about-project__container">
 
         <li className="about-project__column">
           <h3 className="about-project__subtitle">Дипломный проект включал 5 этапов</h3>
@@ -43,7 +43,7 @@ function AboutProject() {
           infographic__text_type_weight500 
         ">Front-end</p>
       </div>
-    </section>
+    </>
 
   );
 }

@@ -13,29 +13,30 @@ function InfoAccount({ isLoggedIn, isPopup }) {
           to="/profile"
           reloadDocument
           aria-label="navigate to profile data"
+          className="header__info-account"
         >
           <div className="info-account info-account_type_account">
             <p className={`info-account__authentification ${isPopup && "info-account__authentification_type_popup"}`}>Аккаунт</p>
-            <button className="info-account__account-button"
+            <div className="info-account__account-button"
               aria-label="profile"
-            ></button>
+            ></div>
           </div>
         </Link>
 
       ) : (
-        <div className="info-account">
+        <div className="header__info-account info-account">
 
           <Link
             to="/signup"
             reloadDocument
             aria-label="navigate to signin"
           >
-            <button
+            <div
               className="info-account__registration"
               aria-label="signin"
             >
               Регистрация
-            </button>
+            </div>
           </Link>
 
           <Link

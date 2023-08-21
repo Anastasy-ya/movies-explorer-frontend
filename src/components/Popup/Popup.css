@@ -12,13 +12,14 @@
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
   opacity: 0;
   visibility: hidden;
+  z-index: 1;
 }
 
 .popup__container {
   width: 520px;
   padding: 159px 90px 92px;
   background-color: var(--main-background);
-  z-index: 1;
+  z-index: 2;
   opacity: 1;
   position: relative;
   box-sizing: border-box;

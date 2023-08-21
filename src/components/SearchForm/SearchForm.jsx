@@ -10,7 +10,7 @@ function SearchForm({ handleChange }) {
   }
 
   return (
-    <section className="search-input">
+    <div className="search-input">
       <div className="search-input__size-container size-container">
         <div className="search-input__box">
             <input
@@ -30,7 +30,7 @@ function SearchForm({ handleChange }) {
         </div>
         <FilterCheckbox />
       </div>
-    </section>
+    </div>
 
   );
 }

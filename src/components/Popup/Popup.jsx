@@ -10,7 +10,7 @@ function Popup({ isOpen, onLoading, isLoggedIn }) {
 
   return (
     <>
-      <section
+      <div
         className={`popup ${isOpen ? "popup_opened" : ""
           }`}
       >
@@ -48,7 +48,7 @@ function Popup({ isOpen, onLoading, isLoggedIn }) {
             isPopup={true}
           />
         </div>
-      </section>
+      </div>
     </>
   );
 }

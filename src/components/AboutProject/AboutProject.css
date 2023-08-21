@@ -26,7 +26,7 @@
 @media screen and (max-width: 1200px) {
   .about-project__container {
     gap: 40px;
-    padding: 72px 0 93px; /*1010*/
+    padding: 72px 0 93px;
   }
 }
 

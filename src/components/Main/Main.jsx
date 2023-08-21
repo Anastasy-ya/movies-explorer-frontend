@@ -2,7 +2,6 @@ import React from 'react';
 import './Main.css';
 
 import Promo from '../Promo/Promo';
-import NavTab from '../NavTab/NavTab';
 import SectionFrame from '../SectionFrame/SectionFrame';
 import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
@@ -12,7 +11,6 @@ function Main() {
   return (
     <>
       <Promo></Promo>
-      <NavTab></NavTab>
 
       <SectionFrame
         content={<AboutProject></AboutProject>}

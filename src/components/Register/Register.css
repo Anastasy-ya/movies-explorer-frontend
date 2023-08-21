@@ -60,3 +60,9 @@
 .auth-container__change-form-text_type_link {
   color: var(--blue);
 }
+
+.auth-container__link-container {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}

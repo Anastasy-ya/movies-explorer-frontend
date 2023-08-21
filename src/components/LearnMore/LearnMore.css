@@ -1,8 +1,8 @@
-.block-learn-more {
-  padding: 50px 0 93px;
+.learn-more {
+  padding: 80px 0 93px;
 }
 
-.block-learn-more__button {
+.learn-more__button {
   width: 100%;
   margin: auto;
   background-color: var(--middle-grey);

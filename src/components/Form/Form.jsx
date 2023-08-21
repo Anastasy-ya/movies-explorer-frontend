@@ -11,7 +11,7 @@ function Form({
 
   return (
     <form
-      className="popup__form form"
+      className="form" /*popup__form  */
       name={formName}
       onSubmit={onSubmit}
     >

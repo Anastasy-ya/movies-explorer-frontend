@@ -8,8 +8,8 @@ function Footer(props) {
   return (
 
 
-    <footer className={`footer ${props.isSignInOrSignOut ? "footer_type_invisible" : ""}`}>
-      <div className="size-container footer__size-container">
+    <footer className="footer">
+      <div className="footer__size-container size-container">
 
         <div className="footer__info">
           <p className="footer__text footer__text_type_gray">Учебный проект Яндекс.Практикум х BeatFilm.</p>

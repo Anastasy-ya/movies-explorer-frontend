@@ -1,21 +1,27 @@
 .banner {
   background-color: var(--dark-turquoise);
   max-height: 524px;
-  padding: 82px 0px 122px;
+  padding: 82px 0 0; /*82px 0px 122px;*/
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 122px
 }
 
 @media screen and (max-width: 1200px) {
   .banner {
-    max-height: 570px;
-    padding: 224px 0px 240px;
+    max-height: 636px;
+    padding: 224px 0px 0;
+    gap: 240px;
   }
 }
 
 @media screen and (max-width: 720px) {
   .banner {
     max-height: 784px;
-    padding: 142px 0px 180px;
+    padding: 142px 0px 0;
+    gap: 180px;
   }
 }
 
@@ -27,6 +33,7 @@
   background-size: contain;
   display: flex;
   justify-content: center;
+
 }
 
 @media screen and (max-width: 720px) {

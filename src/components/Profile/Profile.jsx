@@ -9,25 +9,24 @@ function Profile(props) {
   //currentUser.name currentUser.email
   return (
     <section className="profile">
-      <div className="profile-container ">
+      <div className="profile__container">
 
         <h1 className="profile__wellcome">Привет, {currentUser.name}</h1>
 
         <form
-          className="profile__form profile-form"
+          className="profile__form"
           name="profile"
-        // onSubmit={onSubmit}
+          // onSubmit={onSubmit}
         >
-          <label className="profile-form__label label_type_grid1">
+          <label className="profile__label profile__label_type_grid1">
             Имя
           </label>
           <input
             type="text"
             name="profile-name"
             className="
-            profile__form 
-            profile-form__input 
-            profile-form__input_type_grid2"
+            profile__input 
+            profile__input_type_grid2"
             placeholder="Анастасия" //currentUser.name
             required
             minLength="2"
@@ -37,16 +36,15 @@ function Profile(props) {
           // value={name || ""} //currentUser.name
           />
 
-          <label className="profile-form__label label_type_grid3">
+          <label className="profile__label profile__label_type_grid3">
             E-mail
           </label>
           <input
             type="text"
             name="profile-email"
             className="
-            profile__form 
-            profile-form__input 
-            profile-form__input_type_grid4"
+            profile__input 
+            profile__input_type_grid4"
             placeholder="mail@mail.com" //currentUser.name
             required
             minLength="2"

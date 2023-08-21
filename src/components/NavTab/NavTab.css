@@ -3,6 +3,7 @@
   height: 66px;
   padding: 0;
   margin: 0;
+  /* justify-self: flex-end; */
 }
 
 .navigation__size-container {

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function NavTab() {
   return (
-    <section className="navigation">
+    <div className="navigation">
       <div className="navigation__size-container size-container ">
       
         <Link
@@ -29,7 +29,7 @@ function NavTab() {
         >Студент</Link>
 
       </div>
-    </section>
+    </div>
   );
 }
 

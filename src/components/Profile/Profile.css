@@ -1,4 +1,4 @@
-.profile-container {
+.profile__container {
   padding: 45px 0;
   max-width: 410px;
   max-height: 100vh;
@@ -6,13 +6,13 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .profile-container {
+  .profile__container {
     padding: 205px 0;
   }
 }
 
 @media screen and (max-width: 720px) {
-  .profile-container {
+  .profile__container {
     max-width: 260px;
     display: flex;
     align-items: center;
@@ -87,7 +87,7 @@
   }
 }
 
-.profile-form__input {
+.profile__input {
   border-left: none;
   border-right: none;
   border-top: none;
@@ -103,41 +103,14 @@
   font-weight: 400;
   line-height: normal;
   position: relative;
+  z-index: 0;
 }
 
-.profile-form__input:last-of-type {
+.profile__input:last-of-type {
   border-bottom: none;
 }
 
-.form__input:focus {
-  outline: none;
-}
-
-.form__input::placeholder {
-  color: #c4c4c4;
-}
-
-.form__input:invalid {
-  color: var(--pink);
-}
-
-.form__input_type_error {
-  border-bottom: 1px var(--pink) solid;
-  box-sizing: border-box;
-}
-
-.form__input-error {
-  /*текст ошибки*/
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  min-height: 30px;
-  color: var(--pink);
-  padding: 0;
-  margin: 5px 0 0;
-}
-
-.profile-form__label {
+.profile__label {
   max-height: 70px;
   width: 100%;
   display: flex;
@@ -152,23 +125,23 @@
   border-bottom: 1px var(--middle-grey) solid;
 }
 
-.profile-form__label:last-of-type {
+.profile__label:last-of-type {
   border-bottom: none;
 }
 
-.label_type_grid1 {
+.profile__label_type_grid1 {
   grid-area: labelName1;
 }
 
-.profile-form__input_type_grid2 {
+.profile__input_type_grid2 {
   grid-area: inputName2;
 }
 
-.label_type_grid3 {
+.profile__label_type_grid3 {
   grid-area: labelName3;
 }
 
-.profile-form__input_type_grid4 {
+.profile__input_type_grid4 {
   grid-area: inputName4;
 }
 
