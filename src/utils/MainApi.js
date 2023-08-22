@@ -1,4 +1,4 @@
-class Api {
+class MainApi {
   constructor( baseUrl, headers ) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -93,9 +93,9 @@ class Api {
 } //Api
 
 
-const api = new Api("https://s.anastasy-ya.pet-project.nomoredomains.work", {
+const mainApi = new MainApi("https://s.anastasy-ya.pet-project.nomoredomains.work", {
   // authorization: "d5c4048e-b7e4-4333-b5f6-798b19dce01c",
   "Content-Type": "application/json",
 });
 
-export default api;
+export default mainApi;
