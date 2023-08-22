@@ -1,0 +1,44 @@
+.header {
+  grid-area: header;
+  max-height: 74px;
+  width: 100%;
+}
+
+.header__size-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 74px;
+  margin: 0 auto;
+}
+
+.header__main_type_turquoise {
+  background-color: var(--dark-turquoise);
+}
+
+.header__navigation-box {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  width: 215px;
+  justify-content: center;
+}
+
+.header__link {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* @media screen and (max-width: 720px) {
+  .header__link {
+    font-size: 10px;
+  }
+} */
+
+.header__link_active {
+  font-weight: 500;
+  cursor: default;
+  pointer-events: none;
+}
