@@ -1,13 +1,15 @@
 import React from "react";
 import './Popup.css';
-// import usePopupClose from "../hooks/usePopupClose";
+import usePopupClose from "../hooks/usePopupClose";
 import { NavLink } from "react-router-dom";
 import InfoAccount from "../InfoAccount/InfoAccount";
 
-function Popup({ isOpen, onLoading, isLoggedIn }) {
+function Popup({ isOpen, onLoading, isLoggedIn, handleOpenClosePopup }) {
 
-  // usePopupClose(isOpen); для следующего этапа
+  // function 
 
+  usePopupClose({ isOpen, handleOpenClosePopup }); // , targetLink: "popup__link"
+  
   return (
     <>
       <div
@@ -22,6 +24,7 @@ function Popup({ isOpen, onLoading, isLoggedIn }) {
                 className={({ isActive }) => `popup__link ${isActive ? "popup__link_active" : ""}`}
                 aria-label="link to main page"
                 to="/"
+                onClick={handleOpenClosePopup}
               >
                 Главная
               </NavLink>
@@ -29,6 +32,7 @@ function Popup({ isOpen, onLoading, isLoggedIn }) {
                 className={({ isActive }) => `popup__link ${isActive ? "popup__link_active" : ""}`}
                 aria-label="link to main page"
                 to="/movies"
+                onClick={handleOpenClosePopup}
               >
                 Фильмы
               </NavLink>
@@ -36,6 +40,7 @@ function Popup({ isOpen, onLoading, isLoggedIn }) {
                 className={({ isActive }) => `popup__link ${isActive ? "popup__link_active" : ""}`}
                 aria-label="link to main page"
                 to="/saved-movies"
+                onClick={handleOpenClosePopup}
               >
                 Сохраненные фильмы
               </NavLink>

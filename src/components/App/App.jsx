@@ -10,25 +10,27 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import PageNotFound from "../PageNotFound/PageNotFound";
-// import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
+import { useResize } from "../../components/hooks/useResize";
 // import * as auth from "../utils/auth";
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   // const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
-
+  const { isWideScreen } = useResize(); //получение значения от кастомного хука
 
 
   const path = useLocation();
 
   function handleOpenClosePopup() {
     setIsOpenPopup(!isOpenPopup);
+    document.querySelector(".burger").classList.toggle('open');
   };
 
   useEffect(() => {
@@ -36,8 +38,6 @@ function App() {
       setIsMainPage(true) :
       setIsMainPage(false);
   }, [path]);
-
-
 
   return (
     <div className="root">
@@ -102,6 +102,7 @@ function App() {
                     handleOpenClosePopup={handleOpenClosePopup}
                     isOpenPopup={isOpenPopup}
                     isMainPage={isMainPage}
+                    isWideScreen={isWideScreen}
                   />
                   <main className="content">
                     <Main
@@ -122,6 +123,7 @@ function App() {
                     handleOpenClosePopup={handleOpenClosePopup}
                     isOpenPopup={isOpenPopup}
                     isMainPage={isMainPage}
+                    isWideScreen={isWideScreen}
                   />
                   {/* <ProtectedRoute
                       isLoggedIn={isLoggedIn}
@@ -146,6 +148,7 @@ function App() {
                     handleOpenClosePopup={handleOpenClosePopup}
                     isOpenPopup={isOpenPopup}
                     isMainPage={isMainPage}
+                    isWideScreen={isWideScreen}
                   />
                   {/* <ProtectedRoute
                       isLoggedIn={isLoggedIn}
@@ -174,6 +177,7 @@ function App() {
                     handleOpenClosePopup={handleOpenClosePopup}
                     isOpenPopup={isOpenPopup}
                     isMainPage={isMainPage}
+                    isWideScreen={isWideScreen}
                   />
                   <main className="content">
                     <Profile

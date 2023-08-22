@@ -6,7 +6,7 @@ import Portfolio from '../Portfolio/Portfolio';
 function AboutMe() {
   return (
     <>
-      <div className="about-me__student"> {/* id="about-me"*/}
+      <div className="about-me__student" id="about-me"> 
         <div className="about-me__box">
 
           <div className="about-me__colunm">

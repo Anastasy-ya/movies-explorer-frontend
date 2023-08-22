@@ -1,11 +1,10 @@
 import React from "react";
 import './Burger.css';
 
-function Burger(props) {
+function Burger({ handleOpenClosePopup }) { //isLoggedIn, isOpen, 
 
   function handler() {
-    document.querySelector(".burger").classList.toggle('open');
-    props.handleOpenClosePopup();
+    handleOpenClosePopup();
   }
 
   return (

@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
-import { useResize } from "../../components/hooks/useResize";
+
 import Burger from "../Burger/Burger";
 import InfoAccount from "../InfoAccount/InfoAccount";
 import Logo from "../Logo/Logo";
 import Popup from "../Popup/Popup";
 
-function Header({ isLoggedIn, isMainPage, isOpenPopup, handleOpenClosePopup }) {
+function Header({ 
+  isLoggedIn, 
+  isMainPage, 
+  isOpenPopup, 
+  handleOpenClosePopup, 
+  isWideScreen 
+}) {
 
-  const { isWideScreen } = useResize(); //получение значения от кастомного хука
+  
   const [headerView, setHeaderView] = useState(<p></p>);
 
   useEffect(() => {
@@ -17,8 +23,9 @@ function Header({ isLoggedIn, isMainPage, isOpenPopup, handleOpenClosePopup }) {
       setHeaderView(
         <div className="header__info-account">
           <Burger
-            isLoggedIn={isLoggedIn}
+            // isLoggedIn={isLoggedIn}
             handleOpenClosePopup={handleOpenClosePopup}
+            // isOpen={isOpenPopup}
           />
         </div>
       )
