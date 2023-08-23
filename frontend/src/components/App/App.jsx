@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom"; //, Navigate, useNavigate
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom"; //, Navigate, useNavigate
 import './App.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -14,23 +14,39 @@ import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
-// import * as auth from "../utils/auth";
+import * as auth from "../../utils/auth";
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
   const { isWideScreen } = useResize(); //получение значения от кастомного хука
 
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    auth
+      .checkToken()
+      .then((res) => {
+        if (res) {
+          setIsLoggedIn(true);
+          navigate("/", { replace: true });
+          setCurrentUser.email(res.email);
+          setCurrentUser(res);
+        }
+      })
+      .catch(console.error);
+}, []);
 
   const path = useLocation();
 
   function handleOpenClosePopup() {
     setIsOpenPopup(!isOpenPopup);
     document.querySelector(".burger").classList.toggle('open');
+    /*после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
   };
 
   useEffect(() => {
@@ -136,6 +152,30 @@ function App() {
                   </main>
                   <Footer />
                 </>
+              }
+            />
+
+            <Route /*не забыть удалить и защитить нужные роуты */
+              path="/2"
+              element={
+                <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
+                  element={() => (
+                    <>
+                      <Header
+                        isLoggedIn={isLoggedIn}
+                        handleOpenClosePopup={handleOpenClosePopup}
+                        isOpenPopup={isOpenPopup}
+                        isMainPage={isMainPage}
+                        isWideScreen={isWideScreen}
+                      />
+                      <Movies
+                        isLoggedIn={isLoggedIn}
+                      />
+                      <Footer />
+                    </>
+                  )}
+                />
               }
             />
 

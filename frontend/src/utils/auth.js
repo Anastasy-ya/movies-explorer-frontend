@@ -1,7 +1,6 @@
-export const baseUrl = "https://s.anastasy-ya.pet-project.nomoredomains.work";
+export const baseUrl = "http://localhost:3000/";
 
 function checkResponce(res) {
-  //повторяющийся кот (^˵◕ω◕˵^)(^˵◕ω◕˵^)(^˵◕ω◕˵^)
   if (res.ok) {
     return res.json();
   }
