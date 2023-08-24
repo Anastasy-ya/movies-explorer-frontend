@@ -9,7 +9,10 @@ function Input({
   maxLength,
   labelText,
   placeholder,
-  value }) {
+  value,
+  handleChange }) {
+
+    
 
   return (
     <label className="form__label form__label_type_profile">
@@ -19,13 +22,12 @@ function Input({
         name={name}
         className="form__input"
         placeholder={placeholder} //currentUser.name
-        value={value}
+        // value={value || ""} //currentUser.name
         required
         minLength={minLength}
         maxLength={maxLength}
         id={`form__${name}-input`}
-      // onChange={(e) => handleChangeName(e)}
-      // value={name || ""} //currentUser.name
+        onChange={(e) => handleChange(e)}
       />
       <span className="form__input-error form__name-input-error"></span>
     </label>

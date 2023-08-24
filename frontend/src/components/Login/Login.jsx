@@ -5,20 +5,44 @@ import Form from "../Form/Form";
 import { Link } from "react-router-dom";
 import Input from "../Input/Input"
 
-function Login(props) {
+function Login({
+  handleLogin,
+  formName,
+  className,
+  buttonText,
+  wellcomeText, //заголовок формы
+  askToChangeForm, // предложение изменить форму ввода
+  askToChangeFormLink,
+  routTo,
+  setCurrentUser,
+  currentUser
+}) {
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setCurrentUser({
+      ...currentUser,
+      [name]: value,
+    });
+  }
+
+  //отправка данных в ф-ю, сделающую запрос на сервер
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin(currentUser);
+  };
 
   return (
       <section className="auth-container">
 
         <Logo />
-        <h1 className="auth-container__wellcome">{props.wellcomeText}</h1>
+        <h1 className="auth-container__wellcome">{wellcomeText}</h1>
 
         <Form
-          className={props.className}
-          formName={props.formName}
-          onSubmit={props.onSubmit}
-          // isLoading={props.isLoading} раскомментировать на 4 этапе
-          buttonText={props.buttonText}>
+          className={className}
+          formName={formName}
+          buttonText={buttonText}
+          onSubmit={(e) => handleSubmit(e)}>
 
           <Input
             type={"text"}
@@ -27,7 +51,8 @@ function Login(props) {
             maxLength={"40"}
             labelText={"E-mail"}
             placeholder={"Введите E-mail"}
-            value={"mail@mail.com"}
+            // value={"mail@mail.com"}
+            handleChange={handleChange}
             
           />
 
@@ -38,6 +63,7 @@ function Login(props) {
             maxLength={"20"}
             labelText={"Пароль"}
             placeholder={""}
+            handleChange={handleChange}
             
           />
 
@@ -45,13 +71,13 @@ function Login(props) {
         
         <div className="auth-container__link-container">
         <p className="auth-container__change-form-text">
-          {props.askToChangeForm}
+          {askToChangeForm}
         </p>
         <Link
-          to={props.routTo}
+          to={routTo}
           className="auth-container__change-form-text auth-container__change-form-text_type_link"
           aria-label="login"
-        >{props.askToChangeFormLink}</Link>
+        >{askToChangeFormLink}</Link>
       </div>
 
       </section>

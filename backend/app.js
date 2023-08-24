@@ -37,10 +37,12 @@ mongoose.connect(DB_URL_DIPLOM, {
 
 app.use(cors({
   origin: [
-    'http://anastasy-ya.diplom.nomoredomains.xyz',
-    'http://api.anastasy-ya.diplom.nomoredomains.xyz',
-    'https://anastasy-ya.diplom.nomoredomains.xyz',
-    'https://api.anastasy-ya.diplom.nomoredomains.xyz',
+    // 'http://anastasy-ya.diplom.nomoredomains.xyz',
+    // 'http://api.anastasy-ya.diplom.nomoredomains.xyz',
+    // 'https://anastasy-ya.diplom.nomoredomains.xyz',
+    // 'https://api.anastasy-ya.diplom.nomoredomains.xyz',
+    'http://localhost:3000',
+    'http://localhost:3001',
   ],
   credentials: true,
 }));

@@ -12,7 +12,7 @@ function Header({
   isMainPage, 
   isOpenPopup, 
   handleOpenClosePopup, 
-  isWideScreen 
+  isWideScreen,
 }) {
 
   
@@ -55,7 +55,7 @@ function Header({
 
           <InfoAccount
             isLoggedIn={isLoggedIn}
-            isPopup={false}
+            isPopup={false} // стили для попапа
           />
         </>
       )

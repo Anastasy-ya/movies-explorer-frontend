@@ -10,6 +10,7 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import PageNotFound from "../PageNotFound/PageNotFound";
+import Preloader from "../Preloader/Preloader";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
@@ -19,35 +20,61 @@ import * as auth from "../../utils/auth";
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [showPreloader, setShowPreloader] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
+
   const { isWideScreen } = useResize(); //получение значения от кастомного хука
 
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    auth
-      .checkToken()
-      .then((res) => {
-        if (res) {
-          setIsLoggedIn(true);
-          navigate("/", { replace: true });
-          setCurrentUser.email(res.email);
-          setCurrentUser(res);
-        }
-      })
-      .catch(console.error);
-}, []);
-
   const path = useLocation();
 
+  console.log('currentUser:', currentUser, 'isLoggedIn:', isLoggedIn);
+
   function handleOpenClosePopup() {
-    setIsOpenPopup(!isOpenPopup);
+    // поменять значение на противоположное
+    setIsOpenPopup(!isOpenPopup); 
     document.querySelector(".burger").classList.toggle('open');
     /*после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
   };
+
+  function handleRegister({ name, email, password }) {
+    setShowPreloader(true);
+    auth
+      .register({ name, email, password })
+      .then((res) => {
+        // navigate("/movies", { replace: true });
+        //наверное нужно уведомление о удачной решгистрации
+      })
+      .catch((err) => {
+        console.log(err);
+        // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
+      })
+      .finally(() => {
+        setShowPreloader(false);
+      });
+  }
+
+  function handleLogin({ name, email }) {
+    setShowPreloader(true);
+    auth
+    .login({ name, email })
+    .then((res) => {
+      setIsLoggedIn(true);
+      navigate("/movies", { replace: true });
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsLoggedIn(false);
+      // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
+    })
+    .finally(() => {
+      setShowPreloader(false);
+    });
+}
+
 
   useEffect(() => {
     path.pathname === "/" ?
@@ -59,7 +86,7 @@ function App() {
     <div className="root">
       <div className="page">
         <CurrentUserContext.Provider value={currentUser || ""}>
-
+        {showPreloader && <Preloader />}
           <Routes>
 
             <Route
@@ -76,8 +103,7 @@ function App() {
               element={
                 <main className="content">
                   <Register
-                    // onSubmit={handleRegister} раскомментировать на 4 этапе
-                    // isLoading={isLoading}
+                    handleRegister={handleRegister}
                     formName={"signup"}
                     className={"auth-container__form"}
                     buttonText={"Зарегистрироваться"}
@@ -85,6 +111,8 @@ function App() {
                     askToChangeForm={"Уже зарегистрированы? "}
                     askToChangeFormLink={"Войти"}
                     routTo={"/signin"}
+                    setCurrentUser={setCurrentUser}
+                    currentUser={currentUser}
                   />
                 </main>
               }
@@ -95,8 +123,7 @@ function App() {
               element={
                 <main className="content">
                   <Login
-                    // onSubmit={handleRegister} раскомментировать на 4 этапе
-                    // isLoading={isLoading}
+                    handleLogin={handleLogin}
                     formName={"signin"}
                     className={"auth-container__form"}
                     buttonText={"Войти"}
@@ -104,6 +131,8 @@ function App() {
                     askToChangeForm={"Ещё не зарегистрированы? "}
                     askToChangeFormLink={"Регистрация"}
                     routTo={"/signup"}
+                    setCurrentUser={setCurrentUser}
+                    currentUser={currentUser}
                   />
                 </main>
               }
