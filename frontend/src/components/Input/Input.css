@@ -14,19 +14,10 @@
   width: 100%;
 }
 
-.form__label {
-  max-height: 70px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--grey);
-  font-size: 10px;
-  font-weight: 400;
-  line-height: normal;
-}
-
 .form__input:focus {
   outline: none;
+  background-color: transparent;
+  border-bottom: 1px var(--blue) solid;
 }
 
 /* .form__input::placeholder {
@@ -37,13 +28,8 @@
   color: var(--pink);
 }
 
-.form__input_type_error {
-  border-bottom: 1px var(--pink) solid;
-  box-sizing: border-box;
-}
-
-.form__input-error {
   /*текст ошибки*/
+.form__input-error {
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
@@ -51,4 +37,15 @@
   color: var(--pink);
   padding: 0;
   margin: 5px 0 0;
+}
+
+.form__label {
+  max-height: 70px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--grey);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
 }

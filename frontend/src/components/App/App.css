@@ -27,14 +27,17 @@ html {
 }
 
 /*стилизация кнопок при наведении*/
-
-button:enabled {
-  transition: opacity 0.6s linear;
+button:enabled { /*до модификации*/
+  transition: all 0.5s linear;
   cursor: pointer;
 }
-button:enabled:hover {
+
+button:enabled:hover { /*по наведению*/
   opacity: 0.8;
-  transition: opacity 0.2s linear;
+}
+
+button:disabled { /*не активна*/
+  background-color: gray;
 }
 
 /*стилизация линков при наведении*/

@@ -3,7 +3,8 @@ import './Login.css';
 import Logo from "../Logo/Logo";
 import Form from "../Form/Form";
 import { Link } from "react-router-dom";
-import Input from "../Input/Input"
+import Input from "../Input/Input";
+import useFormWithValidation from "../hooks/usevalidate";
 
 function Login({
   handleLogin,
@@ -18,19 +19,21 @@ function Login({
   currentUser
 }) {
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setCurrentUser({
-      ...currentUser,
-      [name]: value,
-    });
-  }
+  // function handleChange(e) {
+  //   const { name, value } = e.target;
+  //   setCurrentUser({
+  //     ...currentUser,
+  //     [name]: value,
+  //   });
+  // }
 
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(currentUser);
   };
+
+  // const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   return (
       <section className="auth-container">
@@ -42,6 +45,7 @@ function Login({
           className={className}
           formName={formName}
           buttonText={buttonText}
+          // isValid={isValid}
           onSubmit={(e) => handleSubmit(e)}>
 
           <Input
@@ -52,8 +56,8 @@ function Login({
             labelText={"E-mail"}
             placeholder={"Введите E-mail"}
             // value={"mail@mail.com"}
-            handleChange={handleChange}
-            
+            // handleChange={handleChange}
+            // errors={errors}
           />
 
           <Input
@@ -63,8 +67,8 @@ function Login({
             maxLength={"20"}
             labelText={"Пароль"}
             placeholder={""}
-            handleChange={handleChange}
-            
+            // handleChange={handleChange}
+            // errors={errors}
           />
 
         </Form>

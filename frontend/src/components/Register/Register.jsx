@@ -3,7 +3,8 @@ import './Register.css';
 import Logo from "../Logo/Logo";
 import Form from "../Form/Form";
 import { Link } from "react-router-dom";
-import Input from "../Input/Input"
+import Input from "../Input/Input";
+import useFormWithValidation from "../hooks/usevalidate";
 
 function Register({
   handleRegister,
@@ -31,22 +32,27 @@ function Register({
 
   //запишем данные таргета в соответствующие поля currentUser, 
   // неизмененные поля не меняем
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setCurrentUser({
-      ...currentUser,
-      [name]: value,
-    });
-  }
+  // function handleChange(e) {
+  //   const { name, value } = e.target;
+  //   setCurrentUser({
+  //     ...currentUser,
+  //     [name]: value,
+  //   });
+  // }
 
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister(currentUser);
+    handleRegister(currentUser); //currentUser
   };
 
+  //деструктурируем объект чтобы извлечь переменные
+  // const { name, email, password } = currentUser;
+  // console.log('name, email, password', name, email, password);
 
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
+  // console.log('isValid', JSON.stringify(isValid), 'values', values, 'errors', errors);
   return (
     <section className="auth-container">
 
@@ -58,7 +64,9 @@ function Register({
         formName={formName}
         buttonText={buttonText}
         typeReg={true}
-        onSubmit={(e) => handleSubmit(e)}>
+        isValid={isValid}
+        onSubmit={(e) => handleSubmit(e)}
+        >
 
         <Input
           type={"text"}
@@ -68,7 +76,8 @@ function Register({
           labelText={"Имя"}
           placeholder={"Введите имя"}
           value={"Анастасия"}
-          handleChange={handleChange}
+          handleChange={(e) => handleChange(e)}
+          errors={errors}
         />
 
         <Input
@@ -79,7 +88,8 @@ function Register({
           labelText={"E-mail"}
           placeholder={"Введите E-mail"}
           value={"mail@mail.com"}
-          handleChange={handleChange}
+          handleChange={(e) => handleChange(e)}
+          errors={errors}
         />
 
         <Input
@@ -89,7 +99,8 @@ function Register({
           maxLength={"20"}
           labelText={"Пароль"}
           placeholder={""}
-          handleChange={handleChange}
+          handleChange={(e) => handleChange(e)}
+          errors={errors}
         />
 
       </Form>

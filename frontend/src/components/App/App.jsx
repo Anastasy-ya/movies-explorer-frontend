@@ -21,7 +21,11 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPreloader, setShowPreloader] = useState(false);
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
 
@@ -31,7 +35,7 @@ function App() {
 
   const path = useLocation();
 
-  console.log('currentUser:', currentUser, 'isLoggedIn:', isLoggedIn);
+  // console.log('currentUser:', currentUser, 'isLoggedIn:', isLoggedIn);
 
   function handleOpenClosePopup() {
     // поменять значение на противоположное
