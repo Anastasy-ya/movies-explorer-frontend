@@ -15,25 +15,20 @@ function Login({
   askToChangeForm, // предложение изменить форму ввода
   askToChangeFormLink,
   routTo,
-  setCurrentUser,
-  currentUser
+  // setCurrentUser,
+  // currentUser
 }) {
 
-  // function handleChange(e) {
-  //   const { name, value } = e.target;
-  //   setCurrentUser({
-  //     ...currentUser,
-  //     [name]: value,
-  //   });
-  // }
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(currentUser);
+    handleLogin(values);
+    resetForm();
   };
 
-  // const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  
 
   return (
       <section className="auth-container">
@@ -45,7 +40,7 @@ function Login({
           className={className}
           formName={formName}
           buttonText={buttonText}
-          // isValid={isValid}
+          isValid={isValid}
           onSubmit={(e) => handleSubmit(e)}>
 
           <Input
@@ -55,10 +50,10 @@ function Login({
             maxLength={"40"}
             labelText={"E-mail"}
             placeholder={"Введите E-mail"}
-            
             // value={"mail@mail.com"}
-            // handleChange={handleChange}
-            // errors={errors}
+            handleChange={(e) => handleChange(e)}
+            errors={errors}
+            values={values}
           />
 
           <Input
@@ -68,8 +63,9 @@ function Login({
             maxLength={"20"}
             labelText={"Пароль"}
             placeholder={""}
-            // handleChange={handleChange}
-            // errors={errors}
+            handleChange={(e) => handleChange(e)}
+            errors={errors}
+            values={values}
           />
 
         </Form>

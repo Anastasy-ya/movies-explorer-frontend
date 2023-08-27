@@ -19,38 +19,16 @@ function Register({
   // currentUser
 }) {
 
-  // onSubmit = { handleRegister }
-  // // setShowPreloader={setShowPreloader}
-  // formName = { "signup"}
-  // className = { "auth-container__form"}
-  // buttonText = { "Зарегистрироваться"}
-  // wellcomeText = { "Добро пожаловать!"}
-  // askToChangeForm = { "Уже зарегистрированы? "}
-  // askToChangeFormLink = { "Войти"}
-  // routTo = { "/signin"}
-  // setCurrentUser = { setCurrentUser }
-
-  //запишем данные таргета в соответствующие поля currentUser, 
-  // неизмененные поля не меняем
-  // function handleChange(e) {
-  //   const { name, value } = e.target;
-  //   setCurrentUser({
-  //     ...currentUser,
-  //     [name]: value,
-  //   });
-  // }
-
-  const { values, handleChange, errors, isValid, resetForm, } = useFormWithValidation();
-  // console.log(values);
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister(values); //currentUser
+    handleRegister(values);
     resetForm();
   };
-
-  
+  console.log('errors', errors);
+    console.log('поля', values);
 
   return (
     <section className="auth-container">
@@ -74,10 +52,11 @@ function Register({
           maxLength={"40"}
           labelText={"Имя"}
           placeholder={"Введите имя"}
-          value={"Анастасия"}
+          // value={"Анастасия"}
           handleChange={(e) => handleChange(e)}
           errors={errors}
           values={values}
+          pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
         />
 
         <Input
@@ -87,10 +66,11 @@ function Register({
           maxLength={"40"}
           labelText={"E-mail"}
           placeholder={"Введите E-mail"}
-          value={"mail@mail.com"}
+          // value={"mail@mail.com"}
           handleChange={(e) => handleChange(e)}
           errors={errors}
           values={values}
+          pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
         />
 
         <Input

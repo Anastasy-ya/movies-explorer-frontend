@@ -12,7 +12,8 @@ function Input({
   value, //временная заглушка
   handleChange,
   errors,
-  currentUser //значения полей
+  // currentUser //значения полей
+  pattern
  }) {
 
   // function takePattern(name) {
@@ -55,48 +56,8 @@ function Input({
         minLength={minLength}
         maxLength={maxLength}
         id={`form__${name}-input`}
-        // pattern="[а-яА-Яa-zA-ZЁё\-\s]*$"
-        // pattern={
-        //   name === "name" ?
-        //   namePattern : 
-        //   name === "email" ? 
-        //   emailPattern :
-        //   name === "password" ?
-        //   passwordPattern : ""
-        //   }
-        // {
-        //   (name === "name" && "[а-яА-Яa-zA-ZЁё\-\s]*$") 
-        //   || (name === "email" && "([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+")
-        //   || (name === "password" && "[0-9а-яА-Яa-zA-ZЁё\-\s]*$")
-        // }
-        // pattern={(() => {
-        //   if (name === "name") {
-        //     return "[а-яА-Яa-zA-ZЁё\-\s]*$";
-        //   } else if (name === "email") {
-        //     return "([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+";
-        //   } else if (name === "password") {
-        //     return "[0-9а-яА-Яa-zA-ZЁё\-\s]*$";
-        //   }
-        // })()}
-
-        // {
-        //   () => {
-        //   if (name === "name") {
-        //     return pattern="[а-яА-Яa-zA-ZЁё\-\s]*$";
-        //   } else if (name === "email") {
-        //     return pattern="([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+";
-        //   } else (name === "password") {
-        //     return pattern="[0-9а-яА-Яa-zA-ZЁё\-\s]*$";
-        //   }
-        //   }
-        // }
-
-        // pattern="[а-яА-Яa-zA-ZЁё\-\s]*$"
+        pattern={pattern}
         onChange={(e) => handleChange(e)}
-        
-        // {takePattern(name)}
-        
-        
       />
 
       <span className={`form__input-error form__${name}-input-error`}>
