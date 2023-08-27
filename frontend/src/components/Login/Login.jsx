@@ -54,6 +54,7 @@ function Login({
             handleChange={(e) => handleChange(e)}
             errors={errors}
             values={values}
+            pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
           />
 
           <Input

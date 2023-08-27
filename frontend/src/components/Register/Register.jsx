@@ -27,8 +27,8 @@ function Register({
     handleRegister(values);
     resetForm();
   };
-  console.log('errors', errors);
-    console.log('поля', values);
+  // console.log('errors', errors);
+  //   console.log('поля', values);
 
   return (
     <section className="auth-container">

@@ -2,11 +2,27 @@ import React from 'react';
 import './Profile.css';
 // import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
+import useFormWithValidation from "../hooks/usevalidate";
 
 const currentUser = { name: "Анастасия", email: "mail@mail.com" }
 
-function Profile(props) {
-  //currentUser.name currentUser.email
+function Profile({
+  isLoggedIn,
+  routTo,
+  handleChangeProfile
+}) {
+
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleChangeProfile(values);
+    resetForm();
+  };
+
+    console.log('errors', errors);
+    console.log('поля', values);
+
   return (
     <section className="profile">
       <div className="profile__container">
@@ -16,7 +32,7 @@ function Profile(props) {
         <form
           className="profile__form"
           name="profile"
-          // onSubmit={onSubmit}
+          onSubmit={handleSubmit}
         >
           <label className="profile__label profile__label_type_grid1">
             Имя
@@ -32,9 +48,13 @@ function Profile(props) {
             minLength="2"
             maxLength="20"
             id="profile__profile-name-input"
-          // onChange={(e) => handleChangeName(e)}
+            onChange={(e) => handleChange(e)}
+            pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
           // value={name || ""} //currentUser.name
           />
+          <span className="profile__input-error">
+            {errors?.["name"]}
+          </span>
 
           <label className="profile__label profile__label_type_grid3">
             E-mail
@@ -50,21 +70,30 @@ function Profile(props) {
             minLength="2"
             maxLength="20"
             id="profile__profile-email-input`"
-          // onChange={(e) => handleChangeName(e)}
+            onChange={(e) => handleChange(e)}
+            pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
           // value={name || ""} //currentUser.name
           />
+          <span className="profile__input-error">
+            {errors?.["email"]}
+          </span>
 
-          <button className="profile__change-data" type="submit" aria-label="change data">
+          <button
+            className="profile__change-data"
+            type="submit"
+            aria-label="change data"
+            disabled={!isValid}
+          >
             Редактировать
           </button>
         </form>
 
         <Link
-          to={props.routTo}
+          to={routTo}
           aria-label="logout"
         >
           <p className="profile__change-data profile__change-data_type_link">
-          Выйти из аккаунта
+            Выйти из аккаунта
           </p></Link>
 
       </div>

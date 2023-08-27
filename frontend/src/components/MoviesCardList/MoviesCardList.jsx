@@ -5,38 +5,22 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import LearnMore from "../LearnMore/LearnMore";
 
 function MoviesCardList(props) {
+  // isMoviePage, movies, isLoggedIn, handleSaveMovie
   return (
     <section className="card-list">
 
       <SearchForm />
 
       <ul className="card-list__size-container size-container">
-        <MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        />
-        <MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        />
+        {props.movies.map((movie) => (
+          <MoviesCard
+            key={movie.id}
+            movie={movie}
+            isMoviePage={props.isMoviePage}
+            handleSaveMovie={props.handleSaveMovie}
+          />
+        ))}
+
       </ul>
 
       <LearnMore />

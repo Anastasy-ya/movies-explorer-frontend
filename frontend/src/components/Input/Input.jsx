@@ -15,33 +15,6 @@ function Input({
   // currentUser //значения полей
   pattern
  }) {
-
-  // function takePattern(name) {
-  //   switch (name) {
-  //     case "name":
-  //       return '[а-яА-Яa-zA-ZЁё\-\s]*$';
-  //     case "email":
-  //       return "([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+";
-  //     case "password":
-  //       return '[0-9а-яА-Яa-zA-ZЁё\-\s]*$';
-  //       default: return "";
-  //   }
-  // }; //
-
-  // let a = takePattern("name");
-
-  // console.log(a)
-
-  // function getPattern() {
-  //   if (name === "name") {
-  //     return "[а-яА-Яa-zA-ZЁё\-\s]*$";
-  //   } else if (name === "email") {
-  //     return "([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+";
-  //   } else if (name === "password") {
-  //     return "[0-9а-яА-Яa-zA-ZЁё\-\s]*$";
-  //   }
-  // };
-
   
   return (
     <label className="form__label form__label_type_profile">
@@ -60,8 +33,7 @@ function Input({
         onChange={(e) => handleChange(e)}
       />
 
-      <span className={`form__input-error form__${name}-input-error`}>
-        {/* {JSON.stringify(errors?.[name])} */}
+      <span className="form__input-error">
         {errors?.[name]}
       </span>
     </label>

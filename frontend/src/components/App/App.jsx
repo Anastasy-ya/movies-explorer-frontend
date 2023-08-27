@@ -16,6 +16,8 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
 import * as auth from "../../utils/auth";
+import { moviesToDelete } from "../../utils/consts"; //удалить
+import moviesApi from "../../utils/MoviesApi";
 
 function App() {
 
@@ -28,6 +30,7 @@ function App() {
   });
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
+  const [movies, setMovies] = React.useState([]);
 
   const { isWideScreen } = useResize(); //получение значения от кастомного хука
 
@@ -35,11 +38,33 @@ function App() {
 
   const path = useLocation();
 
-  // console.log('currentUser:', currentUser, 'isLoggedIn:', isLoggedIn);
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      moviesApi
+        .getMovies()
+        .then((movies) => {
+          setMovies(moviesToDelete); // тут заменить на movies
+        })
+        .catch(console.error);
+    }
+  }, [isLoggedIn]);
+
+  function handleSaveMovie(movie) {
+    const isLiked = movie.likes.some((i) => {
+      return i === currentUser._id});
+    // api
+    //   .changeLikeCardStatus(card._id, isLiked)
+    //   .then((newCard) => {
+    //     setCards((state) =>
+    //       state.map((c) => (c._id === card._id ? newCard : c))
+    //     );
+    //   })
+    //   .catch(console.error);
+  }
 
   function handleOpenClosePopup() {
     // поменять значение на противоположное
-    setIsOpenPopup(!isOpenPopup); 
+    setIsOpenPopup(!isOpenPopup);
     document.querySelector(".burger").classList.toggle('open');
     /*после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
   };
@@ -64,20 +89,32 @@ function App() {
   function handleLogin({ name, email }) {
     setShowPreloader(true);
     auth
-    .login({ name, email })
-    .then((res) => {
-      setIsLoggedIn(true);
-      navigate("/movies", { replace: true });
-    })
-    .catch((err) => {
-      console.log(err);
-      setIsLoggedIn(false);
-      // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
-    })
-    .finally(() => {
-      setShowPreloader(false);
-    });
-}
+      .login({ name, email })
+      .then((res) => {
+        setIsLoggedIn(true);
+        navigate("/movies", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoggedIn(false);
+        // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
+      })
+      .finally(() => {
+        setShowPreloader(false);
+      });
+  }
+
+  function handleChangeProfile() { //изменить данные профиля
+    console.log();
+  }
+
+
+
+  // function handleChangeProfile() { //изменить данные профиля
+  //   console.log();
+  // }
+
+
 
 
   useEffect(() => {
@@ -90,7 +127,7 @@ function App() {
     <div className="root">
       <div className="page">
         <CurrentUserContext.Provider value={currentUser || ""}>
-        {showPreloader && <Preloader />}
+          {showPreloader && <Preloader />}
           <Routes>
 
             <Route
@@ -115,8 +152,8 @@ function App() {
                     askToChangeForm={"Уже зарегистрированы? "}
                     askToChangeFormLink={"Войти"}
                     routTo={"/signin"}
-                    setCurrentUser={setCurrentUser}
-                    currentUser={currentUser}
+                  // setCurrentUser={setCurrentUser}
+                  // currentUser={currentUser}
                   />
                 </main>
               }
@@ -135,8 +172,8 @@ function App() {
                     askToChangeForm={"Ещё не зарегистрированы? "}
                     askToChangeFormLink={"Регистрация"}
                     routTo={"/signup"}
-                    setCurrentUser={setCurrentUser}
-                    currentUser={currentUser}
+                  // setCurrentUser={setCurrentUser}
+                  // currentUser={currentUser}
                   />
                 </main>
               }
@@ -181,6 +218,9 @@ function App() {
                   <main className="content">
                     <Movies
                       isLoggedIn={isLoggedIn}
+                      movies={movies}
+                      handleSaveMovie={handleSaveMovie} //переключатель состояния карточки
+                      // handleCardClick={handleCardClick} //открыть трейлер (не факт, что это нужно здесь)
                     />
                   </main>
                   <Footer />
@@ -256,6 +296,7 @@ function App() {
                     <Profile
                       isLoggedIn={isLoggedIn}
                       routTo={"/"}
+                      handleChangeProfile={handleChangeProfile}
                     />
                   </main>
                 </>

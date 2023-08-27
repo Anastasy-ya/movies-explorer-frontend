@@ -106,8 +106,17 @@
   z-index: 0;
 }
 
+.profile__input:focus {
+  outline: none;
+  background-color: transparent;
+}
+
 .profile__input:last-of-type {
   border-bottom: none;
+}
+
+.profile__input:invalid {
+  color: var(--pink);
 }
 
 .profile__label {
@@ -155,4 +164,14 @@
     "labelName3 inputName4"
     "button button";
   grid-row-gap: 12px;
+}
+
+.profile__input-error {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  min-height: 30px;
+  color: var(--pink);
+  padding: 0;
+  margin: 5px 0 0;
 }

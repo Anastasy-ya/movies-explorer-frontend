@@ -3,10 +3,15 @@ import './Movies.css';
 
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies() {
+function Movies({ movies, isLoggedIn, handleSaveMovie }) {
   return (
     <>
-      <MoviesCardList isMoviePage={true}/>
+      <MoviesCardList 
+        isMoviePage={true}
+        movies={movies}
+        isLoggedIn={isLoggedIn}
+        handleSaveMovie={handleSaveMovie}
+      />
     </>
   );
 }

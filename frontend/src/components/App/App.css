@@ -38,6 +38,7 @@ button:enabled:hover { /*по наведению*/
 
 button:disabled { /*не активна*/
   background-color: gray;
+  color: var(--middle-grey);
 }
 
 /*стилизация линков при наведении*/
