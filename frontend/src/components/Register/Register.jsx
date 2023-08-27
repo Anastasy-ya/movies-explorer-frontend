@@ -15,8 +15,8 @@ function Register({
   askToChangeForm, // предложение изменить форму ввода
   askToChangeFormLink,
   routTo,
-  setCurrentUser,
-  currentUser
+  // setCurrentUser,
+  // currentUser
 }) {
 
   // onSubmit = { handleRegister }
@@ -40,19 +40,18 @@ function Register({
   //   });
   // }
 
+  const { values, handleChange, errors, isValid, resetForm, } = useFormWithValidation();
+  // console.log(values);
+
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister(currentUser); //currentUser
+    handleRegister(values); //currentUser
+    resetForm();
   };
 
-  //деструктурируем объект чтобы извлечь переменные
-  // const { name, email, password } = currentUser;
-  // console.log('name, email, password', name, email, password);
+  
 
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-
-  // console.log('isValid', JSON.stringify(isValid), 'values', values, 'errors', errors);
   return (
     <section className="auth-container">
 
@@ -78,6 +77,7 @@ function Register({
           value={"Анастасия"}
           handleChange={(e) => handleChange(e)}
           errors={errors}
+          values={values}
         />
 
         <Input
@@ -90,6 +90,7 @@ function Register({
           value={"mail@mail.com"}
           handleChange={(e) => handleChange(e)}
           errors={errors}
+          values={values}
         />
 
         <Input
@@ -101,6 +102,7 @@ function Register({
           placeholder={""}
           handleChange={(e) => handleChange(e)}
           errors={errors}
+          values={values}
         />
 
       </Form>
@@ -121,3 +123,6 @@ function Register({
 }
 
 export default Register;
+
+
+

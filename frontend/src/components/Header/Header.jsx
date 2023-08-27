@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
-
 import Burger from "../Burger/Burger";
 import InfoAccount from "../InfoAccount/InfoAccount";
 import Logo from "../Logo/Logo";
@@ -33,7 +32,7 @@ function Header({
     else {
       setHeaderView(
         <>
-          {isLoggedIn && !isMainPage && (<nav className="header__navigation-box">
+          {isLoggedIn && !isMainPage &&  (<nav className="header__navigation-box"> {/*!isMainPage &&  */}
 
             <NavLink
               className={({ isActive }) => `header__link ${isActive ? "header__link_active" : ""}`}

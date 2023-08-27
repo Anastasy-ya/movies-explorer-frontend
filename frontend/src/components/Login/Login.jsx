@@ -55,6 +55,7 @@ function Login({
             maxLength={"40"}
             labelText={"E-mail"}
             placeholder={"Введите E-mail"}
+            
             // value={"mail@mail.com"}
             // handleChange={handleChange}
             // errors={errors}
