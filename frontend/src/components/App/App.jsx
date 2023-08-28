@@ -16,7 +16,6 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useLocation } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
 import * as auth from "../../utils/auth";
-import { moviesToDelete } from "../../utils/consts"; //удалить
 import moviesApi from "../../utils/MoviesApi";
 
 function App() {
@@ -31,6 +30,8 @@ function App() {
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
   const [movies, setMovies] = React.useState([]);
+  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [isLiked, setIsLiked] = React.useState(false);
 
   const { isWideScreen } = useResize(); //получение значения от кастомного хука
 
@@ -38,20 +39,25 @@ function App() {
 
   const path = useLocation();
 
+  // получить основные фильмы
   React.useEffect(() => {
     if (isLoggedIn) {
       moviesApi
         .getMovies()
         .then((movies) => {
-          setMovies(moviesToDelete); // тут заменить на movies
+          const films = JSON.parse(localStorage.getItem("movies")) || [];
+          if (!films.length === 0) {
+            localStorage.setItem('movies', JSON.stringify(movies)) //тут не добавляется
+          }
+          setMovies(movies); // тут заменить на movies
         })
         .catch(console.error);
     }
   }, [isLoggedIn]);
 
   function handleSaveMovie(movie) {
-    const isLiked = movie.likes.some((i) => {
-      return i === currentUser._id});
+    // const isLiked = movie.likes.some((i) => {
+    //   return i === currentUser._id});
     // api
     //   .changeLikeCardStatus(card._id, isLiked)
     //   .then((newCard) => {
@@ -107,6 +113,18 @@ function App() {
   function handleChangeProfile() { //изменить данные профиля
     console.log();
   }
+
+  //проверка локал сторадж 
+  // function a() { 
+  //   const films = JSON.parse(localStorage.getItem("films")) || [];
+  //   if (!films.include('theFilm')) { //нужны ли кавычки
+  //     localStorage.setItem('films', JSON.stringify([{ theFilm }]))
+  //   }
+  // }
+
+
+
+
 
 
 
@@ -200,7 +218,7 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
               path="/movies"
               element={
                 <>
@@ -215,21 +233,21 @@ function App() {
                       isLoggedIn={isLoggedIn}
                       element={Movies}
                     /> */}
-                  <main className="content">
+            {/* <main className="content">
                     <Movies
                       isLoggedIn={isLoggedIn}
                       movies={movies}
                       handleSaveMovie={handleSaveMovie} //переключатель состояния карточки
                       // handleCardClick={handleCardClick} //открыть трейлер (не факт, что это нужно здесь)
                     />
-                  </main>
-                  <Footer />
-                </>
-              }
-            />
+                  </main> */}
+            {/* <Footer /> */}
+            {/* </> */}
+            {/* } */}
+            {/* /> */}
 
             <Route /*не забыть удалить и защитить нужные роуты */
-              path="/2"
+              path="/movies"
               element={
                 <ProtectedRoute
                   isLoggedIn={isLoggedIn}
@@ -242,9 +260,13 @@ function App() {
                         isMainPage={isMainPage}
                         isWideScreen={isWideScreen}
                       />
-                      <Movies
-                        isLoggedIn={isLoggedIn}
-                      />
+                      <main className="content">
+                        <Movies
+                          isLoggedIn={isLoggedIn}
+                          movies={movies}
+                          handleSaveMovie={handleSaveMovie}
+                        />
+                      </main>
                       <Footer />
                     </>
                   )}
@@ -253,6 +275,34 @@ function App() {
             />
 
             <Route
+              path="/saved-movies"
+              element={
+                <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
+                  element={() => (
+                    <>
+                      <Header
+                        isLoggedIn={isLoggedIn}
+                        handleOpenClosePopup={handleOpenClosePopup}
+                        isOpenPopup={isOpenPopup}
+                        isMainPage={isMainPage}
+                        isWideScreen={isWideScreen}
+                      />
+                      <main className="content">
+                        <SavedMovies
+                          isLoggedIn={isLoggedIn}
+                          movies={movies}
+                          handleSaveMovie={handleSaveMovie}
+                        />
+                      </main>
+                      <Footer />
+                    </>
+                  )}
+                />
+              }
+            />
+
+            {/* <Route
               path="/saved-movies"
               element={
                 <>
@@ -267,24 +317,22 @@ function App() {
                       isLoggedIn={isLoggedIn}
                       element={SavedMovies}
                     /> */}
-                  <main className="content">
+            {/* <main className="content">
                     <SavedMovies
                       isLoggedIn={isLoggedIn}
-                    />
-                  </main>
-                  <Footer />
-                </>
-              }
-            />
+                      movies={movies} /*сюда надо передавать другой массив */}
+            {/* handleSaveMovie={handleSaveMovie} */}
+            {/* /> */}
+            {/* </main> */}
+            {/* <Footer /> */}
+            {/* </> */}
+            {/* } */}
+            {/* /> */}
 
-            <Route
+            {/* <Route
               path="/profile"
               element={
                 <>
-                  {/* <ProtectedRoute
-                      element={Profile}
-                      isLoggedIn={isLoggedIn}
-                    /> */}
                   <Header
                     isLoggedIn={isLoggedIn}
                     handleOpenClosePopup={handleOpenClosePopup}
@@ -300,6 +348,33 @@ function App() {
                     />
                   </main>
                 </>
+              }
+            /> */}
+
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
+                  element={() => (
+                    <>
+                      <Header
+                        isLoggedIn={isLoggedIn}
+                        handleOpenClosePopup={handleOpenClosePopup}
+                        isOpenPopup={isOpenPopup}
+                        isMainPage={isMainPage}
+                        isWideScreen={isWideScreen}
+                      />
+                      <main className="content">
+                        <Profile
+                          isLoggedIn={isLoggedIn}
+                          routTo={"/"}
+                          handleChangeProfile={handleChangeProfile}
+                        />
+                      </main>
+                    </>
+                  )}
+                />
               }
             />
 

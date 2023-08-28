@@ -20,8 +20,8 @@ function Profile({
     resetForm();
   };
 
-    console.log('errors', errors);
-    console.log('поля', values);
+    // console.log('errors', errors);
+    // console.log('поля', values);
 
   return (
     <section className="profile">

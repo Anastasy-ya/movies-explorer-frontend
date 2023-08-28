@@ -6,6 +6,8 @@ import LearnMore from "../LearnMore/LearnMore";
 
 function MoviesCardList(props) {
   // isMoviePage, movies, isLoggedIn, handleSaveMovie
+
+  console.log(props.movies)
   return (
     <section className="card-list">
 
@@ -17,7 +19,7 @@ function MoviesCardList(props) {
             key={movie.id}
             movie={movie}
             isMoviePage={props.isMoviePage}
-            handleSaveMovie={props.handleSaveMovie}
+            handleSaveMovie={(movie) => props.handleSaveMovie(movie)}
           />
         ))}
 

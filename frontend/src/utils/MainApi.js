@@ -93,8 +93,7 @@ class MainApi {
 } //Api
 
 
-const mainApi = new MainApi("https://s.anastasy-ya.pet-project.nomoredomains.work", {
-  // authorization: "d5c4048e-b7e4-4333-b5f6-798b19dce01c",
+const mainApi = new MainApi("https://api.anastasy-ya.diplom.nomoredomains.xyz", {
   "Content-Type": "application/json",
 });
 

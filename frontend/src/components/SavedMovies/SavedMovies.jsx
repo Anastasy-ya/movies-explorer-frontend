@@ -2,10 +2,15 @@ import React from 'react';
 import './SavedMovies.css';
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function SavedMovies() {
+function SavedMovies({ movies, isLoggedIn, handleSaveMovie }) {
   return (
     <>
-      <MoviesCardList isMoviePage={false}/>
+      <MoviesCardList 
+        isMoviePage={false}
+        movies={movies}
+        isLoggedIn={isLoggedIn}
+        handleSaveMovie={handleSaveMovie}
+      />
     </>
   );
 }

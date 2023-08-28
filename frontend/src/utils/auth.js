@@ -1,4 +1,4 @@
-export const baseUrl = "http://localhost:3000";
+export const baseUrl = "https://api.anastasy-ya.diplom.nomoredomains.xyz";
 
 function checkResponce(res) {
   if (res.ok) {
