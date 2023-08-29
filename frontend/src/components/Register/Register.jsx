@@ -5,6 +5,7 @@ import Form from "../Form/Form";
 import { Link } from "react-router-dom";
 import Input from "../Input/Input";
 import useFormWithValidation from "../hooks/usevalidate";
+import RequestMessage from "../RequestMessage/RequestMessage";
 
 function Register({
   handleRegister,
@@ -15,6 +16,7 @@ function Register({
   askToChangeForm, // предложение изменить форму ввода
   askToChangeFormLink,
   routTo,
+  requestMessage
   // setCurrentUser,
   // currentUser
 }) {
@@ -84,6 +86,11 @@ function Register({
           errors={errors}
           values={values}
         />
+
+        <RequestMessage
+            requestMessage={requestMessage}
+            parent={"profile"}
+          />
 
       </Form>
 

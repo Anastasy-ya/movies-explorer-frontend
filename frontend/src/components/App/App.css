@@ -60,7 +60,8 @@ h4,
 article,
 button,
 input,
-label {
+label,
+span {
   color: white;
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;

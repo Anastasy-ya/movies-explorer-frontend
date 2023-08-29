@@ -3,6 +3,7 @@ import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import useFormWithValidation from "../hooks/usevalidate";
+import RequestMessage from "../RequestMessage/RequestMessage";
 
 
 // const currentUser = { name: "Анастасия", email: "mail@mail.com" }
@@ -11,7 +12,8 @@ function Profile({
   isLoggedIn,
   routTo,
   handleChangeProfile,
-  handleDeleteToken
+  handleDeleteToken,
+  requestMessage
 }) {
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
@@ -24,8 +26,8 @@ function Profile({
     resetForm();
   };
 
-    // console.log(errors);
-    // console.log('поля', values);
+  // console.log(errors);
+  // console.log('requestMessage', requestMessage);
 
   return (
     <section className="profile">
@@ -82,6 +84,11 @@ function Profile({
             {errors["profile-email"] && "E-mail: "}{errors?.["profile-email"]}
           </span>
 
+          <RequestMessage
+            requestMessage={requestMessage}
+            parent={"profile"}
+          />
+
           <button
             className="profile__change-data"
             type="submit"
@@ -96,6 +103,8 @@ function Profile({
           to={routTo}
           aria-label="logout"
           onClick={handleDeleteToken}
+          className="profile__change-data profile__change-data_type_link"
+          /*поправить нижний отступ */
         >
           <p className="profile__change-data profile__change-data_type_link">
             Выйти из аккаунта

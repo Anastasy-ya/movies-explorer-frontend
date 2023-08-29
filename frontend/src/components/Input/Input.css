@@ -31,8 +31,8 @@
   /*текст ошибки*/
 .form__input-error {
   font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
+  font-size: 11px;
+  line-height: 11px;
   min-height: 30px;
   color: var(--pink);
   padding: 0;

@@ -32,6 +32,9 @@ function App() {
   const [movies, setMovies] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [isLiked, setIsLiked] = React.useState(false);
+  //сообщения об ошибках
+  //на страницах регистрации и авторизации
+  const [requestMessage, setRequestMessage] = React.useState("");
 
   const { isWideScreen } = useResize(); //получение значения от кастомного хука
 
@@ -43,6 +46,7 @@ function App() {
 
   // после авторизации получить фильмы и данные пользователя
   // наверное сюда же нужно добавить сохраненные фильмы
+  //checkToken заменить на получение сохраненных фильмов
   React.useEffect(() => {
     if (isLoggedIn) {
       setShowPreloader(true);
@@ -73,22 +77,18 @@ function App() {
       setIsMainPage(false);
   }, [path]);
 
+  //удалить сообщение от сервера по таймеру
+  useEffect(() => {
+    if (requestMessage) {
+      setTimeout(() => {
+        setRequestMessage("")
+      }, 5000);
+    }
+    
+  }, [requestMessage]);
+
   //////////////////useEffects//////////////////////////////////
   ///////////////////handlers///////////////////////////////////
-
-  //функция сохранения фильма
-  function handleSaveMovie(movie) {
-    // const isLiked = movie.likes.some((i) => {
-    //   return i === currentUser._id});
-    // api
-    //   .changeLikeCardStatus(card._id, isLiked)
-    //   .then((newCard) => {
-    //     setCards((state) =>
-    //       state.map((c) => (c._id === card._id ? newCard : c))
-    //     );
-    //   })
-    //   .catch(console.error);
-  }
 
   //функция открытия/закрытия попапа
   function handleOpenClosePopup() {
@@ -101,6 +101,25 @@ function App() {
   
 ///////////////////handlers auth///////////////////////////////////
 
+  function checkToken() {
+    setShowPreloader(true);
+    auth
+      .checkToken()
+      .then((user) => { //проверить что пришло
+        setCurrentUser(user);
+        //записать в сторадж
+      })
+      .catch((err) => {
+        console.log(err);
+
+      })
+      .finally(() => {
+
+        setShowPreloader(false);
+      });
+
+  }
+
   //регистрация 
   function handleRegister({ name, email, password }) {
     setShowPreloader(true);
@@ -109,15 +128,19 @@ function App() {
       .then((res) => {
         handleLogin({ name, email }) // совместить с авторизацией
         
-        //уведомление о удачной регистрации на странице с фильмами
+        //уведомление о удачной регистрации не нужно
+      })
+      .then((res) => {
+        // navigate("/movies", { replace: true }); //подумать почему здесь происходит перенаправление в любом случае
+      console.log()
       })
       .catch((err) => {
         console.log(err);
-        // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
-        //уведомление о неудачной регистрации на странице с фильмами
+        setRequestMessage(err);
+        //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
-        navigate("/movies", { replace: true }); 
+         
         //навигация после авторизации потому что функция авторизации асинхронная 
         // и если пользователь попадет на сайт раньше, чем произойдет авторизация, 
         // он снова будет перенаправлен на главную
@@ -132,12 +155,16 @@ function App() {
       .login({ name, email })
       .then((res) => {
         setIsLoggedIn(true);
-        // navigate("/movies", { replace: true }); повтор
+        setCurrentUser(res) //проверить что там сохраняется
+      })
+      .then((res) => {
+        navigate("/movies", { replace: true });
       })
       .catch((err) => {
         console.log(err);
         setIsLoggedIn(false);
-        // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
+        setRequestMessage(err);
+        //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
         setShowPreloader(false);
@@ -151,13 +178,15 @@ function App() {
     auth
       .updateUser({ name, email })
       .then((res) => {
-        setCurrentUser({ name, email })
+        setCurrentUser(res)//проверить что пришло
+        setRequestMessage(res);
         // уведомление в профиле
       })
       .catch((err) => {
         console.log(err);
-        // setIsLoggedIn(false);
+        setRequestMessage(err);
         // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
+        // уведомление в профиле
       })
       .finally(() => {
         setShowPreloader(false);
@@ -184,10 +213,22 @@ function App() {
   ///////////////////handlers auth///////////////////////////////////
   ///////////////////handlers movies/////////////////////////////////
 
-
+      //функция сохранения фильма
+  function handleSaveMovie(movie) {
+    // const isLiked = movie.likes.some((i) => {
+    //   return i === currentUser._id});
+    // api
+    //   .changeLikeCardStatus(card._id, isLiked)
+    //   .then((newCard) => {
+    //     setCards((state) =>
+    //       state.map((c) => (c._id === card._id ? newCard : c))
+    //     );
+    //   })
+    //   .catch(console.error);
+  }
 
   ///////////////////handlers movies/////////////////////////////////
-  ///////////////////handlers////////////////////////////////////////
+  
 
   return (
     <div className="root">
@@ -218,6 +259,8 @@ function App() {
                     askToChangeForm={"Уже зарегистрированы? "}
                     askToChangeFormLink={"Войти"}
                     routTo={"/signin"}
+                    requestMessage={requestMessage}
+                    // setAuthRequestError={setAuthRequestError}
                   // setCurrentUser={setCurrentUser}
                   // currentUser={currentUser}
                   />
@@ -238,6 +281,8 @@ function App() {
                     askToChangeForm={"Ещё не зарегистрированы? "}
                     askToChangeFormLink={"Регистрация"}
                     routTo={"/signup"}
+                    requestMessage={requestMessage}
+                    // setAuthRequestError={setAuthRequestError}
                   // setCurrentUser={setCurrentUser}
                   // currentUser={currentUser}
                   />
@@ -342,6 +387,7 @@ function App() {
                           routTo={"/"}
                           handleChangeProfile={handleChangeProfile}
                           handleDeleteToken={handleDeleteToken}
+                          requestMessage={requestMessage}
                         />
                       </main>
                     </>
