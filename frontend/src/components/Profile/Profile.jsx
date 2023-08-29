@@ -1,18 +1,22 @@
 import React from 'react';
 import './Profile.css';
-// import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import useFormWithValidation from "../hooks/usevalidate";
 
-const currentUser = { name: "Анастасия", email: "mail@mail.com" }
+
+// const currentUser = { name: "Анастасия", email: "mail@mail.com" }
 
 function Profile({
   isLoggedIn,
   routTo,
-  handleChangeProfile
+  handleChangeProfile,
+  handleDeleteToken
 }) {
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+
+  const currentUser = React.useContext(CurrentUserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +24,7 @@ function Profile({
     resetForm();
   };
 
-    // console.log('errors', errors);
+    // console.log(errors);
     // console.log('поля', values);
 
   return (
@@ -43,7 +47,7 @@ function Profile({
             className="
             profile__input 
             profile__input_type_grid2"
-            placeholder="Анастасия" //currentUser.name
+            placeholder="Введите имя" //currentUser.name
             required
             minLength="2"
             maxLength="20"
@@ -53,7 +57,7 @@ function Profile({
           // value={name || ""} //currentUser.name
           />
           <span className="profile__input-error">
-            {errors?.["name"]}
+            {errors["profile-name"] && "Имя: "}{errors?.["profile-name"]}
           </span>
 
           <label className="profile__label profile__label_type_grid3">
@@ -65,7 +69,7 @@ function Profile({
             className="
             profile__input 
             profile__input_type_grid4"
-            placeholder="mail@mail.com" //currentUser.name
+            placeholder="Введите E-mail" //currentUser.name
             required
             minLength="2"
             maxLength="20"
@@ -74,8 +78,8 @@ function Profile({
             pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
           // value={name || ""} //currentUser.name
           />
-          <span className="profile__input-error">
-            {errors?.["email"]}
+          <span className="profile__input-error profile__input-error_type_bottom">
+            {errors["profile-email"] && "E-mail: "}{errors?.["profile-email"]}
           </span>
 
           <button
@@ -91,6 +95,7 @@ function Profile({
         <Link
           to={routTo}
           aria-label="logout"
+          onClick={handleDeleteToken}
         >
           <p className="profile__change-data profile__change-data_type_link">
             Выйти из аккаунта

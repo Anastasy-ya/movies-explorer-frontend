@@ -39,22 +39,44 @@ function App() {
 
   const path = useLocation();
 
-  // получить основные фильмы
+  //////////////////useEffects//////////////////////////////////
+
+  // после авторизации получить фильмы и данные пользователя
+  // наверное сюда же нужно добавить сохраненные фильмы
   React.useEffect(() => {
     if (isLoggedIn) {
-      moviesApi
-        .getMovies()
-        .then((movies) => {
+      setShowPreloader(true);
+      Promise.all([moviesApi.getMovies(), auth.checkToken()])
+      // moviesApi
+      //   .getMovies()
+        .then(({movies, user}) => { 
           const films = JSON.parse(localStorage.getItem("movies")) || [];
           if (!films.length === 0) {
             localStorage.setItem('movies', JSON.stringify(movies)) //тут не добавляется
           }
-          setMovies(movies); // тут заменить на movies
+          setMovies(movies);
+          //данные пользователя записать в currentUser
+          setCurrentUser(user);
+          //и наверное в сторадж
         })
-        .catch(console.error);
+        .catch(console.error)
+        .finally(() => {
+          setShowPreloader(false);
+        });;
     }
   }, [isLoggedIn]);
 
+  //проверка главная ли страница для функции отображения хэдера
+  useEffect(() => {
+    path.pathname === "/" ?
+      setIsMainPage(true) :
+      setIsMainPage(false);
+  }, [path]);
+
+  //////////////////useEffects//////////////////////////////////
+  ///////////////////handlers///////////////////////////////////
+
+  //функция сохранения фильма
   function handleSaveMovie(movie) {
     // const isLiked = movie.likes.some((i) => {
     //   return i === currentUser._id});
@@ -68,6 +90,7 @@ function App() {
     //   .catch(console.error);
   }
 
+  //функция открытия/закрытия попапа
   function handleOpenClosePopup() {
     // поменять значение на противоположное
     setIsOpenPopup(!isOpenPopup);
@@ -75,30 +98,41 @@ function App() {
     /*после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
   };
 
+  
+///////////////////handlers auth///////////////////////////////////
+
+  //регистрация 
   function handleRegister({ name, email, password }) {
     setShowPreloader(true);
     auth
       .register({ name, email, password })
       .then((res) => {
-        // navigate("/movies", { replace: true });
-        //наверное нужно уведомление о удачной решгистрации
+        handleLogin({ name, email }) // совместить с авторизацией
+        
+        //уведомление о удачной регистрации на странице с фильмами
       })
       .catch((err) => {
         console.log(err);
         // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
+        //уведомление о неудачной регистрации на странице с фильмами
       })
       .finally(() => {
+        navigate("/movies", { replace: true }); 
+        //навигация после авторизации потому что функция авторизации асинхронная 
+        // и если пользователь попадет на сайт раньше, чем произойдет авторизация, 
+        // он снова будет перенаправлен на главную
         setShowPreloader(false);
       });
   }
 
+  //авторизация
   function handleLogin({ name, email }) {
     setShowPreloader(true);
     auth
       .login({ name, email })
       .then((res) => {
         setIsLoggedIn(true);
-        navigate("/movies", { replace: true });
+        // navigate("/movies", { replace: true }); повтор
       })
       .catch((err) => {
         console.log(err);
@@ -110,36 +144,50 @@ function App() {
       });
   }
 
-  function handleChangeProfile() { //изменить данные профиля
-    console.log();
+  //изменить данные профиля
+  // проверить после регистрации и авторизации
+  function handleChangeProfile({ name, email }) {
+    setShowPreloader(true);
+    auth
+      .updateUser({ name, email })
+      .then((res) => {
+        setCurrentUser({ name, email })
+        // уведомление в профиле
+      })
+      .catch((err) => {
+        console.log(err);
+        // setIsLoggedIn(false);
+        // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
+      })
+      .finally(() => {
+        setShowPreloader(false);
+      });
   }
 
-  //проверка локал сторадж 
-  // function a() { 
-  //   const films = JSON.parse(localStorage.getItem("films")) || [];
-  //   if (!films.include('theFilm')) { //нужны ли кавычки
-  //     localStorage.setItem('films', JSON.stringify([{ theFilm }]))
-  //   }
-  // }
+  //выйти дописать удаление из сторадж
+  function handleDeleteToken() {
+    setShowPreloader(true);
+    auth.logOut()
+      .then(() => setCurrentUser({
+        name: "",
+        email: "",
+        password: "",
+      }))
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setShowPreloader(false);
+      });
+    };
+
+  ///////////////////handlers auth///////////////////////////////////
+  ///////////////////handlers movies/////////////////////////////////
 
 
 
-
-
-
-
-  // function handleChangeProfile() { //изменить данные профиля
-  //   console.log();
-  // }
-
-
-
-
-  useEffect(() => {
-    path.pathname === "/" ?
-      setIsMainPage(true) :
-      setIsMainPage(false);
-  }, [path]);
+  ///////////////////handlers movies/////////////////////////////////
+  ///////////////////handlers////////////////////////////////////////
 
   return (
     <div className="root">
@@ -218,35 +266,7 @@ function App() {
               }
             />
 
-            {/* <Route
-              path="/movies"
-              element={
-                <>
-                  <Header
-                    isLoggedIn={isLoggedIn}
-                    handleOpenClosePopup={handleOpenClosePopup}
-                    isOpenPopup={isOpenPopup}
-                    isMainPage={isMainPage}
-                    isWideScreen={isWideScreen}
-                  />
-                  {/* <ProtectedRoute
-                      isLoggedIn={isLoggedIn}
-                      element={Movies}
-                    /> */}
-            {/* <main className="content">
-                    <Movies
-                      isLoggedIn={isLoggedIn}
-                      movies={movies}
-                      handleSaveMovie={handleSaveMovie} //переключатель состояния карточки
-                      // handleCardClick={handleCardClick} //открыть трейлер (не факт, что это нужно здесь)
-                    />
-                  </main> */}
-            {/* <Footer /> */}
-            {/* </> */}
-            {/* } */}
-            {/* /> */}
-
-            <Route /*не забыть удалить и защитить нужные роуты */
+            <Route
               path="/movies"
               element={
                 <ProtectedRoute
@@ -302,55 +322,6 @@ function App() {
               }
             />
 
-            {/* <Route
-              path="/saved-movies"
-              element={
-                <>
-                  <Header
-                    isLoggedIn={isLoggedIn}
-                    handleOpenClosePopup={handleOpenClosePopup}
-                    isOpenPopup={isOpenPopup}
-                    isMainPage={isMainPage}
-                    isWideScreen={isWideScreen}
-                  />
-                  {/* <ProtectedRoute
-                      isLoggedIn={isLoggedIn}
-                      element={SavedMovies}
-                    /> */}
-            {/* <main className="content">
-                    <SavedMovies
-                      isLoggedIn={isLoggedIn}
-                      movies={movies} /*сюда надо передавать другой массив */}
-            {/* handleSaveMovie={handleSaveMovie} */}
-            {/* /> */}
-            {/* </main> */}
-            {/* <Footer /> */}
-            {/* </> */}
-            {/* } */}
-            {/* /> */}
-
-            {/* <Route
-              path="/profile"
-              element={
-                <>
-                  <Header
-                    isLoggedIn={isLoggedIn}
-                    handleOpenClosePopup={handleOpenClosePopup}
-                    isOpenPopup={isOpenPopup}
-                    isMainPage={isMainPage}
-                    isWideScreen={isWideScreen}
-                  />
-                  <main className="content">
-                    <Profile
-                      isLoggedIn={isLoggedIn}
-                      routTo={"/"}
-                      handleChangeProfile={handleChangeProfile}
-                    />
-                  </main>
-                </>
-              }
-            /> */}
-
             <Route
               path="/profile"
               element={
@@ -370,6 +341,7 @@ function App() {
                           isLoggedIn={isLoggedIn}
                           routTo={"/"}
                           handleChangeProfile={handleChangeProfile}
+                          handleDeleteToken={handleDeleteToken}
                         />
                       </main>
                     </>

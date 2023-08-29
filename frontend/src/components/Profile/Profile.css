@@ -60,7 +60,6 @@
 
 @media screen and (max-width: 1200px) {
   .profile__change-data {
-    font-size: 12px;
     margin: 186px 0 0;
   }
 }
@@ -73,17 +72,19 @@
 
 .profile__change-data_type_link {
   color: var(--pink);
+  margin: 112px 0 0;
 }
 
 @media screen and (max-width: 1200px) {
   .profile__change-data_type_link {
-    margin: 180px 0 0;
+    margin: 100px 0 0;
+    font-size: 12px;
   }
 }
 
 @media screen and (max-width: 720px) {
   .profile__change-data_type_link {
-    margin: 345px 0 0;
+    margin: 250px 0 0;
   }
 }
 
@@ -162,8 +163,10 @@
   grid-template-areas:
     "labelName1 inputName2"
     "labelName3 inputName4"
-    "button button";
+    "button button"
+    "message message";
   grid-row-gap: 12px;
+  /* position: absolute; */
 }
 
 .profile__input-error {
@@ -174,4 +177,17 @@
   color: var(--pink);
   padding: 0;
   margin: 5px 0 0;
+  grid-area: message;
+  /* position: relative; */
+  /* background-color: #fff; */
+}
+
+.profile__input-error_type_bottom {
+  padding-top: 30px;
+}
+
+@media screen and (max-width: 720px) {
+  .profile__input-error_type_bottom {
+    padding-top: 50px;
+  }
 }

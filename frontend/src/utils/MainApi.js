@@ -5,7 +5,6 @@ class MainApi {
   }
 
   _checkResponce(res) {
-    //повторяющийся кот (^˵◕ω◕˵^)(^˵◕ω◕˵^)(^˵◕ω◕˵^)
     if (res.ok) {
       return res.json();
     }

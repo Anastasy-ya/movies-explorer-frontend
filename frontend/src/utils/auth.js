@@ -7,7 +7,7 @@ function checkResponce(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-export const register = ({ email, password }) => {
+export const register = ({ name, email, password }) => {
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     credentials: "include",
@@ -15,13 +15,13 @@ export const register = ({ email, password }) => {
       "Accept": "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ name, email, password }),
   }).then((res) => {
     checkResponce(res);
   });
 };
 
-export const login = ({ email, password }) => {
+export const login = ({ name, email, password }) => {
   return fetch(`${baseUrl}/signin`, {
     method: "POST",
     credentials: "include",
@@ -29,7 +29,7 @@ export const login = ({ email, password }) => {
       "Accept": "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ name, email, password }),
   }).then((res) => checkResponce(res));
 };
 
@@ -47,14 +47,31 @@ export const checkToken = () => {
   });
 };
 
-  export const logOut = () => {
-    return fetch(`${baseUrl}/signout`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      },
-    }).then((res) => checkResponce(res));
-  };
+export const updateUser = ({ name, email }) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      // "Authorization": `Bearer ${localStorage.getItem("jwt")}`, //?
+    },
+    body: JSON.stringify({
+      name, email
+    }),
+  }).then((res) => {
+    return checkResponce(res);
+  });
+};
+
+export const logOut = () => {
+  return fetch(`${baseUrl}/signout`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => checkResponce(res));
+};
 
