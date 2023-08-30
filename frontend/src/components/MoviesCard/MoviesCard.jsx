@@ -7,7 +7,6 @@ function MoviesCard({
   key,
   movie,
   isMoviePage,
-  handleSaveMovie,
 }) { //pageMovie(true/false)
 
   const saveOrDeleteText = isMoviePage ? "save movie" : "delete movie from saved";

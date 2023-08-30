@@ -17,15 +17,6 @@ class MoviesApi {
       // credentials: "include",
     }).then((res) => this._checkResponce(res));
   }
-
-  // changeLikeCardStatus(_id, isLiked) {
-  //   return fetch(`${this._baseUrl}/movies/${_id}/likes`, {
-  //     method: isLiked ? "DELETE" : "PUT",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //   }).then((res) => this._checkResponce(res));
-  // }
-
 }
 
 const moviesApi = new MoviesApi("https://api.nomoreparties.co/beatfilm-movies", {

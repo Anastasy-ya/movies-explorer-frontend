@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Input from "../Input/Input";
 import useFormWithValidation from "../hooks/usevalidate";
 import RequestMessage from "../RequestMessage/RequestMessage";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Register({
   handleRegister,
@@ -17,9 +18,9 @@ function Register({
   askToChangeFormLink,
   routTo,
   requestMessage
-  // setCurrentUser,
-  // currentUser
 }) {
+
+  const currentUser = React.useContext(CurrentUserContext);
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
@@ -72,7 +73,7 @@ function Register({
           handleChange={(e) => handleChange(e)}
           errors={errors}
           values={values}
-          pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
+          pattern="^[a-zA-Z0-9/-/_]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
         />
 
         <Input

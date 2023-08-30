@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Input from "../Input/Input";
 import useFormWithValidation from "../hooks/usevalidate";
 import RequestMessage from "../RequestMessage/RequestMessage";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Login({
   handleLogin,
@@ -20,6 +21,8 @@ function Login({
   // setCurrentUser,
   // currentUser
 }) {
+
+  const currentUser = React.useContext(CurrentUserContext);
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 

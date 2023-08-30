@@ -5,7 +5,13 @@ export const useResize = () => {
 
   useEffect(() => {
     const handleResize = (event) => {
-      setWidth(event.target.innerWidth);
+      // самовызывающаяся функция throttle для уменьшения 
+      // количества срабатываний resize
+      (function throttle() { 
+        setTimeout(() => {
+          setWidth(event.target.innerWidth)
+      }, 5000);
+      }())
     };
     window.addEventListener('resize', handleResize);
     return () => {
@@ -14,6 +20,8 @@ export const useResize = () => {
   }, []);
 
   return {
-    isWideScreen: width >= 850,
+    isWideScreen: width >= 1200,
+    isMiddleScreen: width >= 720 && width <= 1199,
+    isNarrowScreen: width <= 719,
   };
 };

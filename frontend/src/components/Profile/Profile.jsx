@@ -26,7 +26,7 @@ function Profile({
     resetForm();
   };
 
-  // console.log(errors);
+  // console.log(values);
   // console.log('requestMessage', requestMessage);
 
   return (
@@ -56,7 +56,7 @@ function Profile({
             id="profile__profile-name-input"
             onChange={(e) => handleChange(e)}
             pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
-          // value={name || ""} //currentUser.name
+            value={values.name} //currentUser.name
           />
           <span className="profile__input-error">
             {errors["profile-name"] && "Имя: "}{errors?.["profile-name"]}
@@ -78,7 +78,7 @@ function Profile({
             id="profile__profile-email-input`"
             onChange={(e) => handleChange(e)}
             pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
-          // value={name || ""} //currentUser.name
+            value={values.email ?? currentUser.email} //currentUser.name
           />
           <span className="profile__input-error profile__input-error_type_bottom">
             {errors["profile-email"] && "E-mail: "}{errors?.["profile-email"]}

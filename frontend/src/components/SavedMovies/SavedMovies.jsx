@@ -1,8 +1,16 @@
 import React from 'react';
 import './SavedMovies.css';
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import LearnMore from "../LearnMore/LearnMore";
 
-function SavedMovies({ movies, isLoggedIn, handleSaveMovie }) {
+function SavedMovies({ 
+  movies, 
+  isLoggedIn, 
+  handleSaveMovie, 
+  handleSearchMovie,
+  requestMessage 
+}) {
+
   return (
     <>
       <MoviesCardList 
@@ -10,6 +18,8 @@ function SavedMovies({ movies, isLoggedIn, handleSaveMovie }) {
         movies={movies}
         isLoggedIn={isLoggedIn}
         handleSaveMovie={handleSaveMovie}
+        handleSearchMovie={handleSearchMovie}
+        requestMessage={requestMessage}
       />
     </>
   );

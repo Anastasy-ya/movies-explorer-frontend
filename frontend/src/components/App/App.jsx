@@ -36,31 +36,35 @@ function App() {
   //на страницах регистрации и авторизации
   const [requestMessage, setRequestMessage] = React.useState("");
 
-  const { isWideScreen } = useResize(); //получение значения от кастомного хука
+  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize(); //получение значения от кастомного хука
+  // console.log('>1200', isWideScreen, '720-1199', isMiddleScreen, '<719', isNarrowScreen);
 
   const navigate = useNavigate();
 
   const path = useLocation();
+
+  
 
   //////////////////useEffects//////////////////////////////////
 
   // после авторизации получить фильмы и данные пользователя
   // наверное сюда же нужно добавить сохраненные фильмы
   //checkToken заменить на получение сохраненных фильмов
-  React.useEffect(() => {
+  React.useEffect(() => { // это не юзэффект а функция по поиску фильмов
     if (isLoggedIn) {
       setShowPreloader(true);
-      Promise.all([moviesApi.getMovies(), auth.checkToken()])
-      // moviesApi
-      //   .getMovies()
-        .then(({movies, user}) => { 
+      // Promise.all([moviesApi.getMovies() ])
+      moviesApi
+        .getMovies()
+        .then((movies) => { 
           const films = JSON.parse(localStorage.getItem("movies")) || [];
           if (!films.length === 0) {
             localStorage.setItem('movies', JSON.stringify(movies)) //тут не добавляется
           }
-          setMovies(movies);
+          setMovies(movies || []);
+          setCurrentUser({ name: "Анастасия", email: "mail@mail.com" }); //удалить костыль
           //данные пользователя записать в currentUser
-          setCurrentUser(user);
+          // setCurrentUser(user);
           //и наверное в сторадж
         })
         .catch(console.error)
@@ -227,6 +231,10 @@ function App() {
     //   .catch(console.error);
   }
 
+  // function handleSearchMovie(string) {
+
+  // }
+
   ///////////////////handlers movies/////////////////////////////////
   
 
@@ -330,6 +338,8 @@ function App() {
                           isLoggedIn={isLoggedIn}
                           movies={movies}
                           handleSaveMovie={handleSaveMovie}
+                          handleSearchMovie={handleSearchMovie}
+                          requestMessage={requestMessage}
                         />
                       </main>
                       <Footer />
@@ -356,8 +366,10 @@ function App() {
                       <main className="content">
                         <SavedMovies
                           isLoggedIn={isLoggedIn}
-                          movies={movies}
+                          movies={movies} /*заменить на результаты сохранения */
                           handleSaveMovie={handleSaveMovie}
+                          handleSearchMovie={handleSearchMovie}
+                          requestMessage={requestMessage}
                         />
                       </main>
                       <Footer />

@@ -1,9 +1,15 @@
 import React from 'react';
 import './Movies.css';
-
+import LearnMore from "../LearnMore/LearnMore";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies({ movies, isLoggedIn, handleSaveMovie }) {
+function Movies({ 
+  movies, 
+  isLoggedIn, 
+  handleSaveMovie,  
+  requestMessage,
+  handleSearchMovie }) {
+
   return (
     <>
       <MoviesCardList 
@@ -11,6 +17,11 @@ function Movies({ movies, isLoggedIn, handleSaveMovie }) {
         movies={movies}
         isLoggedIn={isLoggedIn}
         handleSaveMovie={handleSaveMovie}
+        handleSearchMovie={handleSearchMovie}
+        requestMessage={requestMessage}
+      />
+      <LearnMore 
+        movies={movies}
       />
     </>
   );
