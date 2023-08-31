@@ -21,7 +21,6 @@ function Register({
 }) {
 
   const currentUser = React.useContext(CurrentUserContext);
-
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   //отправка данных в ф-ю, сделающую запрос на сервер
@@ -31,7 +30,7 @@ function Register({
     resetForm();
   };
   // console.log('errors', errors);
-  //   console.log('поля', values);
+    console.log('поля', values, currentUser);
 
   return (
     <section className="auth-container">
@@ -55,10 +54,9 @@ function Register({
           maxLength={"40"}
           labelText={"Имя"}
           placeholder={"Введите имя"}
-          // value={"Анастасия"}
+          value={values.name ?? currentUser.name}
           handleChange={(e) => handleChange(e)}
           errors={errors}
-          values={values}
           pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
         />
 
@@ -69,10 +67,9 @@ function Register({
           maxLength={"40"}
           labelText={"E-mail"}
           placeholder={"Введите E-mail"}
-          // value={"mail@mail.com"}
+          value={values.email ?? currentUser.email}
           handleChange={(e) => handleChange(e)}
           errors={errors}
-          values={values}
           pattern="^[a-zA-Z0-9/-/_]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
         />
 
@@ -82,10 +79,9 @@ function Register({
           minLength={"2"}
           maxLength={"20"}
           labelText={"Пароль"}
-          placeholder={""}
+          placeholder={"Введите пароль"}
           handleChange={(e) => handleChange(e)}
           errors={errors}
-          values={values}
         />
 
         <RequestMessage

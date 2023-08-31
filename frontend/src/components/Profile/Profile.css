@@ -181,27 +181,6 @@
   text-align: center;
 }
 
-/* .profile__input-error_type_animated {
-  text-align: right;
-  animation: text 5s infinite ease-in-out;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  min-height: 30px;
-  color: var(--pink);
-  padding: 0;
-}
-
-@keyframes text {
-  0%{
-    transform: translate(0, 0);
-  }
-  
-  100%{
-    transform: translate(-75%, 0);
-  }
-} */
-
 .profile__input-error_type_bottom {
   padding-top: 30px;
 }
@@ -210,4 +189,8 @@
   .profile__input-error_type_bottom {
     padding-top: 50px;
   }
+}
+
+.profile__request-message {
+  grid-area: message;
 }

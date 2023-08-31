@@ -35,42 +35,71 @@ function App() {
   //сообщения об ошибках
   //на страницах регистрации и авторизации
   const [requestMessage, setRequestMessage] = React.useState("");
-
-  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize(); //получение значения от кастомного хука
-  // console.log('>1200', isWideScreen, '720-1199', isMiddleScreen, '<719', isNarrowScreen);
+  const [isShortMovies, setIsShortMovies] = React.useState(false);
+  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false);
+  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize(); 
+  //получение значения от кастомного хука
+  
 
   const navigate = useNavigate();
 
   const path = useLocation();
 
-  
 
   //////////////////useEffects//////////////////////////////////
 
   // после авторизации получить фильмы и данные пользователя
   // наверное сюда же нужно добавить сохраненные фильмы
   //checkToken заменить на получение сохраненных фильмов
-  React.useEffect(() => { // это не юзэффект а функция по поиску фильмов
-    if (isLoggedIn) {
-      setShowPreloader(true);
-      // Promise.all([moviesApi.getMovies() ])
-      moviesApi
-        .getMovies()
-        .then((movies) => { 
-          const films = JSON.parse(localStorage.getItem("movies")) || [];
-          if (!films.length === 0) {
-            localStorage.setItem('movies', JSON.stringify(movies)) //тут не добавляется
-          }
-          setMovies(movies || []);
-          setCurrentUser({ name: "Анастасия", email: "mail@mail.com" }); //удалить костыль
-          //данные пользователя записать в currentUser
-          // setCurrentUser(user);
-          //и наверное в сторадж
+
+  function handleSearchMovie(string) {
+    // console.log('запущена функция handleSearchMovie')
+    setShowPreloader(true);
+    moviesApi
+      .getMovies()
+      .then((allMovies) => {
+        // const d = ["nameRU", "nameEn"];
+        //в идеале надо определять язык и и скать на этом языке, подумаю об этом после сдачи диплома
+        const films = allMovies.filter((movie) => {
+          return (
+          movie.nameRU.toLowerCase().includes(string.toLowerCase())
+          )
         })
-        .catch(console.error)
-        .finally(() => {
-          setShowPreloader(false);
-        });;
+        setMovies(films);
+        // console.log(films.length)
+        
+        // localStorage.setItem()
+      })
+      .catch(console.error)
+      .finally(() => {
+        setShowPreloader(false);
+      });
+  }
+  // console.log(movies.length)
+
+  React.useEffect(() => { // получение currentuser
+    if (isLoggedIn) {
+      //     setShowPreloader(true);
+      //     // Promise.all([moviesApi.getMovies() ])
+      //     moviesApi
+      //       .getMovies()
+      //       .then((movies) => { 
+      //         const films = JSON.parse(localStorage.getItem("movies")) || [];
+      //         if (!films.length === 0) {
+      //           localStorage.setItem('movies', JSON.stringify(movies)) //тут не добавляется
+      //         }
+      //         setMovies(movies || []);
+      setCurrentUser({ name: "Анастасия", email: "mail@mail.com" }); 
+      //зарегистрированному пользователю в инпутах форм будут показаны его данные
+
+      //         //данные пользователя записать в currentUser
+      //         // setCurrentUser(user);
+      //         //и наверное в сторадж
+      //       })
+      //       .catch(console.error)
+      //       .finally(() => {
+      //         setShowPreloader(false);
+      //       });
     }
   }, [isLoggedIn]);
 
@@ -88,7 +117,7 @@ function App() {
         setRequestMessage("")
       }, 5000);
     }
-    
+
   }, [requestMessage]);
 
   //////////////////useEffects//////////////////////////////////
@@ -102,8 +131,8 @@ function App() {
     /*после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
   };
 
-  
-///////////////////handlers auth///////////////////////////////////
+
+  ///////////////////handlers auth///////////////////////////////////
 
   function checkToken() {
     setShowPreloader(true);
@@ -131,12 +160,12 @@ function App() {
       .register({ name, email, password })
       .then((res) => {
         handleLogin({ name, email }) // совместить с авторизацией
-        
+
         //уведомление о удачной регистрации не нужно
       })
       .then((res) => {
         // navigate("/movies", { replace: true }); //подумать почему здесь происходит перенаправление в любом случае
-      console.log()
+        console.log()
       })
       .catch((err) => {
         console.log(err);
@@ -144,7 +173,7 @@ function App() {
         //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
-         
+
         //навигация после авторизации потому что функция авторизации асинхронная 
         // и если пользователь попадет на сайт раньше, чем произойдет авторизация, 
         // он снова будет перенаправлен на главную
@@ -212,12 +241,12 @@ function App() {
       .finally(() => {
         setShowPreloader(false);
       });
-    };
+  };
 
   ///////////////////handlers auth///////////////////////////////////
   ///////////////////handlers movies/////////////////////////////////
 
-      //функция сохранения фильма
+  //функция сохранения фильма
   function handleSaveMovie(movie) {
     // const isLiked = movie.likes.some((i) => {
     //   return i === currentUser._id});
@@ -231,12 +260,39 @@ function App() {
     //   .catch(console.error);
   }
 
-  // function handleSearchMovie(string) {
 
+  function handlerChangeTumblerSavedMovies() {
+    setIsShortSavedMovies(!isShortSavedMovies);
+  }
+
+  // console.log(isShortSavedMovies)
+
+  // function handlerChangeTumbler(e) {
+  //   e.preventDefault();
+  //   console.log('сработала handlerChangeTumbler')
+  //   setIsShortMovies(!isShortMovies);
   // }
 
+  // console.log(isShortMovies,'isShortMovies')
+
+
+  // useEffect((isShortMovies) => {
+  //   // console.log('сработал юзэффект', isShortMovies, 'isShortMovies')
+
+  //   if (isShortMovies && movies.length > 0) { // && movies.length > 0
+  //     const shortFilteredFilms = movies.filter((movie) => {
+  //       return (
+  //         movie.duration <= 40
+  //       )
+  //     })
+  //     setMovies(shortFilteredFilms);
+  //     console.log(shortFilteredFilms)
+  //   }
+  // }, [isShortMovies, movies]);
+
+
   ///////////////////handlers movies/////////////////////////////////
-  
+
 
   return (
     <div className="root">
@@ -268,7 +324,7 @@ function App() {
                     askToChangeFormLink={"Войти"}
                     routTo={"/signin"}
                     requestMessage={requestMessage}
-                    // setAuthRequestError={setAuthRequestError}
+                  // setAuthRequestError={setAuthRequestError}
                   // setCurrentUser={setCurrentUser}
                   // currentUser={currentUser}
                   />
@@ -290,7 +346,7 @@ function App() {
                     askToChangeFormLink={"Регистрация"}
                     routTo={"/signup"}
                     requestMessage={requestMessage}
-                    // setAuthRequestError={setAuthRequestError}
+                  // setAuthRequestError={setAuthRequestError}
                   // setCurrentUser={setCurrentUser}
                   // currentUser={currentUser}
                   />
@@ -340,6 +396,9 @@ function App() {
                           handleSaveMovie={handleSaveMovie}
                           handleSearchMovie={handleSearchMovie}
                           requestMessage={requestMessage}
+                          isShortMovies={isShortMovies}
+                          // handlerChangeTumbler={handlerChangeTumbler}
+                          setIsShortMovies={setIsShortMovies}
                         />
                       </main>
                       <Footer />
@@ -366,10 +425,13 @@ function App() {
                       <main className="content">
                         <SavedMovies
                           isLoggedIn={isLoggedIn}
-                          movies={movies} /*заменить на результаты сохранения */
+                          movies={savedMovies}
                           handleSaveMovie={handleSaveMovie}
                           handleSearchMovie={handleSearchMovie}
                           requestMessage={requestMessage}
+                          // isShortSavedMovies={isShortSavedMovies}
+                          // setIsShortSavedMovies={setIsShortSavedMovies}
+                          handlerChangeTumblerSavedMovies={handlerChangeTumblerSavedMovies}
                         />
                       </main>
                       <Footer />

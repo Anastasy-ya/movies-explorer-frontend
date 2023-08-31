@@ -26,7 +26,7 @@ function Profile({
     resetForm();
   };
 
-  // console.log(values);
+  console.log(values);
   // console.log('requestMessage', requestMessage);
 
   return (
@@ -45,18 +45,18 @@ function Profile({
           </label>
           <input
             type="text"
-            name="profile-name"
+            name="profileName"
             className="
             profile__input 
             profile__input_type_grid2"
-            placeholder="Введите имя" //currentUser.name
+            placeholder="Введите имя"
             required
             minLength="2"
             maxLength="20"
             id="profile__profile-name-input"
             onChange={(e) => handleChange(e)}
             pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
-            value={values.name} //currentUser.name
+            value={values.profileName ?? currentUser.name}
           />
           <span className="profile__input-error">
             {errors["profile-name"] && "Имя: "}{errors?.["profile-name"]}
@@ -67,18 +67,18 @@ function Profile({
           </label>
           <input
             type="text"
-            name="profile-email"
+            name="profileEmail"
             className="
             profile__input 
             profile__input_type_grid4"
-            placeholder="Введите E-mail" //currentUser.name
+            placeholder="Введите E-mail"
             required
             minLength="2"
             maxLength="20"
             id="profile__profile-email-input`"
             onChange={(e) => handleChange(e)}
             pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
-            value={values.email ?? currentUser.email} //currentUser.name
+            value={values.profileEmail ?? currentUser.email}
           />
           <span className="profile__input-error profile__input-error_type_bottom">
             {errors["profile-email"] && "E-mail: "}{errors?.["profile-email"]}

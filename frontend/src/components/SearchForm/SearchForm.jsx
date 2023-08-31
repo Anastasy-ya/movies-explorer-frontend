@@ -7,7 +7,12 @@ import RequestMessage from "../RequestMessage/RequestMessage";
 function SearchForm({
   handleSearchMovie,
   requestMessage,
-  movies
+  // handlerChangeTumbler,
+  setIsShortMovies,
+  isShortMovies
+  // movies,
+  // setIsShort,
+  // isShort
 }) {
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
@@ -18,20 +23,22 @@ function SearchForm({
     resetForm();
   };
 
-  console.log(values['search'])
+  // console.log(values['search'])
 
   return (
     <div className="search-input">
       <div className="search-input__size-container size-container">
 
-        <form className="search-input__form form">
+        <form
+          className="search-input__form form"
+          onSubmit={(e) => handleSubmit(e)}>
 
           <input
             type="text"
             name="search"
             className="search-input__field"
-            // value="Фильм"
-            placeholder="Введите название фильма"//{placeholder}
+            // value={values.search || "Фильм"}
+            placeholder="Фильм"//{placeholder}
             onChange={handleChange}
             aria-label="write keywords for searching"
             required
@@ -40,20 +47,24 @@ function SearchForm({
           <button
             className="search-input__button"
             aria-label="search films"
-            onSubmit={(e) => handleSubmit(e)}
             disabled={!isValid}
           >Найти
           </button>
 
-          </form>
+        </form>
 
-          <RequestMessage
-            requestMessage={requestMessage}
-            parent={"search-input"}
-          />
+        <RequestMessage
+          requestMessage={requestMessage}
+          parent={"search-input"}
+        />
 
-        <FilterCheckbox 
-          movies={movies}
+        <FilterCheckbox
+          // handlerChangeTumbler={handlerChangeTumbler}
+          setIsShortMovies={setIsShortMovies}
+          isShortMovies={isShortMovies}
+        // movies={movies}
+        // setIsShort={setIsShort}
+        // isShort={isShort}
         />
       </div>
     </div>

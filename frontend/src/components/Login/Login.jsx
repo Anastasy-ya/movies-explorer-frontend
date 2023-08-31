@@ -18,8 +18,6 @@ function Login({
   askToChangeFormLink,
   routTo,
   requestMessage
-  // setCurrentUser,
-  // currentUser
 }) {
 
   const currentUser = React.useContext(CurrentUserContext);
@@ -32,8 +30,6 @@ function Login({
     handleLogin(values);
     resetForm();
   };
-
-
 
   return (
     <section className="auth-container">
@@ -55,7 +51,7 @@ function Login({
           maxLength={"40"}
           labelText={"E-mail"}
           placeholder={"Введите E-mail"}
-          // value={"mail@mail.com"}
+          value={values.email ?? currentUser.email}
           handleChange={(e) => handleChange(e)}
           errors={errors}
           values={values}
@@ -68,7 +64,7 @@ function Login({
           minLength={"2"}
           maxLength={"20"}
           labelText={"Пароль"}
-          placeholder={""}
+          placeholder={"Введите пароль"}
           handleChange={(e) => handleChange(e)}
           errors={errors}
           values={values}

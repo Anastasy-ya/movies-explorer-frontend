@@ -72,10 +72,10 @@
   }
 }
 
-input:checked + .tumbl__slider {
+.tumbl__checker:checked ~ .tumbl__slider {
   background-color: var(--green);
 }
 
-input:checked + .tumbl__slider:before {
+.tumbl__checker:checked ~ .tumbl__slider:before {
   transform: translateX(15px);
 }
