@@ -11,7 +11,10 @@ function MoviesCardList({
   isLoggedIn,
   handleSaveMovie,
   handleSearchMovie,
-  requestMessage, }) {
+  requestMessage,
+  handleDeleteMovie
+
+}) {
 
   // function isSavedMovie(movie) {
   //   return savedMovies.some((savedMovie) => savedMovie.movieId === movie.movieId);
@@ -29,7 +32,9 @@ function MoviesCardList({
             isMoviePage={isMoviePage}
             handleSearchMovie={handleSearchMovie}
             requestMessage={requestMessage}
-            // isSavedMovie={isSavedMovie}
+            handleSaveMovie={handleSaveMovie} //попадает из movies
+            handleDeleteMovie={handleDeleteMovie} //попадает из saved-movies
+
           />
 
         ))}

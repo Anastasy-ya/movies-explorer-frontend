@@ -70,7 +70,7 @@ function Register({
           value={values.email ?? currentUser.email}
           handleChange={(e) => handleChange(e)}
           errors={errors}
-          pattern="^[a-zA-Z0-9/-/_]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
+          pattern="^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
         />
 
         <Input
@@ -80,6 +80,7 @@ function Register({
           maxLength={"20"}
           labelText={"Пароль"}
           placeholder={"Введите пароль"}
+          value={values.password ?? currentUser.password}
           handleChange={(e) => handleChange(e)}
           errors={errors}
         />

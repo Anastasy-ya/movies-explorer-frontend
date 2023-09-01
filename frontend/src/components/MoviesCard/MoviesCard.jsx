@@ -6,16 +6,28 @@ import { Link } from 'react-router-dom';
 function MoviesCard({
   movie,
   isMoviePage,
+  handleSaveMovie,
+  handleDeleteMovie
 }) {
 
 
   const saveOrDeleteText = isMoviePage ? "save movie" : "delete movie from saved";
-  const { nameRU, duration, trailerLink } = movie;
+  const { id, nameRU, duration, trailerLink } = movie;
   let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`
-  
+ 
 
   function saveOrDeleteHandler(id) {
-    console.log('id', id)
+    isMoviePage ? handleSaveMovie(id) : handleDeleteMovie(id)
+    // const isLiked = card.likes.some((i) => {
+    //   return i === currentUser._id});
+    // api
+    //   .changeLikeCardStatus(card._id, isLiked)
+    //   .then((newCard) => {
+    //     setCards((state) =>
+    //       state.map((c) => (c._id === card._id ? newCard : c))
+    //     );
+    //   })
+      // .catch(console.error);
   }
 
   return (

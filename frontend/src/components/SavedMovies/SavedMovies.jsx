@@ -8,7 +8,7 @@ import { useResize } from "../../components/hooks/useResize";
 function SavedMovies({
   movies,
   isLoggedIn,
-  handleSaveMovie,
+  handleDeleteMovie,
   handleSearchMovie, //тут должна быть другая функция
   requestMessage,
   // isShortSavedMovies,
@@ -31,9 +31,9 @@ function SavedMovies({
       />
       <MoviesCardList
         isMoviePage={false}
-        movies={movies || []} //универсальный пропс movies, не путать со стейтом
+        movies={movies} //универсальный пропс movies, не путать со стейтом  || []
         isLoggedIn={isLoggedIn}
-        handleSaveMovie={handleSaveMovie}
+        handleDeleteMovie={handleDeleteMovie}
         handleSearchMovie={handleSearchMovie}
         requestMessage={requestMessage}
       // isSaved={isShortSavedMovies}

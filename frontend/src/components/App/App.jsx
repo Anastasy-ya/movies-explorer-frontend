@@ -17,76 +17,52 @@ import { useLocation } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
 import * as auth from "../../utils/auth";
 import moviesApi from "../../utils/MoviesApi";
+import mainApi from "../../utils/MainApi";
+import deleteLocalStorage from "../../utils/consts";
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({
     name: "",
     email: "",
     password: "",
   });
+
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
+  // фильмы и сохраненные фильмы
   const [movies, setMovies] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
-  const [isLiked, setIsLiked] = React.useState(false);
+  // const [isLiked, setIsLiked] = React.useState(false);
   //сообщения об ошибках
-  //на страницах регистрации и авторизации
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(false);
   const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false);
-  // shortFilteredMovies
+  // два раза один стейт?
   const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
-
-  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
   //получение значения от кастомного хука
-
-
+  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
+  
   const navigate = useNavigate();
-
   const path = useLocation();
-
 
   //////////////////useEffects//////////////////////////////////
 
-  // после авторизации получить фильмы и данные пользователя
-  // наверное сюда же нужно добавить сохраненные фильмы
-  //checkToken заменить на получение сохраненных фильмов
-
-  function handleSearchMovie(string) {
-    // console.log('запущена функция handleSearchMovie')
-    setShowPreloader(true);
-    moviesApi
-      .getMovies()
-      .then((allMovies) => {
-        // const d = ["nameRU", "nameEn"];
-        //в идеале надо определять язык и и скать на этом языке, подумаю об этом после сдачи диплома
-        const films = allMovies.filter((movie) => {
-          return (
-            movie.nameRU.toLowerCase().includes(string.toLowerCase())
-          )
-        })
-        setMovies(films);
-        // console.log(films.length)
-
-        // localStorage.setItem()
-      })
-      .catch(console.error)
-      .finally(() => {
-        setShowPreloader(false);
-      });
-  }
-  // console.log(movies.length)
-
-  React.useEffect(() => { // получение currentuser
-    if (isLoggedIn) {
+   // проверка зарегистрирован ли пользователь
+  React.useEffect(() => {
+    // if (isLoggedIn) {
       setShowPreloader(true);
     auth
       .checkToken()
-      .then((user) => { //проверить что пришло
-        setCurrentUser(user); //зарегистрированному пользователю в инпутах форм будут показаны его данные
+      .then((user) => {
+        setIsLoggedIn(true)
+        // console.log(user);
+        setCurrentUser(user); 
+        //зарегистрированному пользователю в инпутах форм будут показаны его данные
+        
+        // navigate("/", { replace: true });
         //записать в сторадж
       })
       .catch((err) => {
@@ -95,11 +71,10 @@ function App() {
       .finally(() => {
         setShowPreloader(false);
       });
+      //костыль
       // setCurrentUser({ name: "Анастасия", email: "mail@mail.com" });
-      //и наверное в сторадж
-
-    }
-  }, [isLoggedIn]);
+    // }
+  }, []);
 
   //проверка главная ли страница для функции отображения хэдера
   useEffect(() => {
@@ -132,38 +107,20 @@ function App() {
 
   ///////////////////handlers auth///////////////////////////////////
 
-  // function checkToken() {
-  //   setShowPreloader(true);
-  //   auth
-  //     .checkToken()
-  //     .then((user) => { //проверить что пришло
-  //       setCurrentUser(user);
-  //       //записать в сторадж
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  //     .finally(() => {
-  //       setShowPreloader(false);
-  //     });
-  // }
-
-
-
-  //регистрация 
+  //регистрация +
   function handleRegister({ name, email, password }) {
     setShowPreloader(true);
     auth
       .register({ name, email, password })
       .then((res) => {
-        handleLogin({ name, email }) // совместить с авторизацией
-
+        handleLogin({ email, password })
         //уведомление о удачной регистрации не нужно
+        //происходит перенаправление на movies через функцию авторизации
       })
-      .then((res) => {
-        // navigate("/movies", { replace: true }); //подумать почему здесь происходит перенаправление в любом случае
-        console.log()
-      })
+      // .then((res) => {
+        
+      //   console.log()
+      // })
       .catch((err) => {
         console.log(err);
         setRequestMessage(err);
@@ -178,11 +135,11 @@ function App() {
       });
   }
 
-  //авторизация
-  function handleLogin({ name, email }) {
+  //авторизация +
+  function handleLogin({ email, password }) {
     setShowPreloader(true);
     auth
-      .login({ name, email })
+      .login({ email, password })
       .then((res) => {
         setIsLoggedIn(true);
         setCurrentUser(res) //проверить что там сохраняется
@@ -232,6 +189,13 @@ function App() {
         email: "",
         password: "",
       }))
+      .then(() => setIsLoggedIn(false))
+      .then(() => {
+        // deleteLocalStorage(); //дописать найденные и сохраненные фильмы, состояние переключателя и поисковую строку,
+        // deleteLocalStorage();
+        // deleteLocalStorage();
+        navigate("/", { replace: true });
+      })
       .catch((err) => {
         console.log(err);
       })
@@ -243,8 +207,44 @@ function App() {
   ///////////////////handlers auth///////////////////////////////////
   ///////////////////handlers movies/////////////////////////////////
 
+  function handleSearchMovie(string) {
+    setShowPreloader(true);
+    moviesApi
+      .getMovies()
+      .then((allMovies) => {
+        // const d = ["nameRU", "nameEn"];
+        //в идеале надо определять язык и и скать на этом языке, подумаю об этом после сдачи диплома
+        const films = allMovies.filter((movie) => {
+          return (
+            movie.nameRU.toLowerCase().includes(string.toLowerCase())
+            || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+          )
+        })
+        setMovies(films);
+
+        // localStorage.setItem()
+      })
+      .catch(console.error)
+      .finally(() => {
+        setShowPreloader(false);
+      });
+  }
+
   //функция сохранения фильма
   function handleSaveMovie(movie) {
+    setShowPreloader(true);
+    mainApi
+      .saveMovie(movie)
+      .then(() => {
+        setSavedMovies({ ...savedMovies, movie })
+
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setShowPreloader(false);
+      });
     // const isLiked = movie.likes.some((i) => {
     //   return i === currentUser._id});
     // api
@@ -257,8 +257,12 @@ function App() {
     //   .catch(console.error);
   }
 
+  function handleDeleteMovie(id) {
+    console.log('карточка удалена')
+  }
 
-  function handlerChangeTumblerSavedMovies() {
+
+  function handlerChangeTumblerSavedMovies() { //к удалению и переделке в ф-ю подобную той, что ниже
     setIsShortSavedMovies(!isShortSavedMovies);
   }
 
@@ -285,6 +289,14 @@ function App() {
     }
   }, [isShortMovies]);
 
+  console.log(
+    'isShortMovies', isShortMovies, 
+    'IsLoggedIn', isLoggedIn,
+    'currentUser', currentUser,
+    // 'movies', movies,
+    'savedMovies', savedMovies,
+    
+    )
 
   ///////////////////handlers movies/////////////////////////////////
 
@@ -292,7 +304,8 @@ function App() {
   return (
     <div className="root">
       <div className="page">
-        <CurrentUserContext.Provider value={currentUser || ""}>
+        <CurrentUserContext.Provider value={currentUser 
+        || ""}>
           {showPreloader && <Preloader />}
           <Routes>
 
@@ -388,12 +401,14 @@ function App() {
                         <Movies
                           isLoggedIn={isLoggedIn}
                           movies={isShortMovies ? shortFilteredMovies : movies}
-                          handleSaveMovie={handleSaveMovie}
+                          handleSaveMovie={handleSaveMovie} 
+                          //handleSaveMovie на странице movies происходит сохранение, а saved-movies - удаление
                           handleSearchMovie={handleSearchMovie}
                           requestMessage={requestMessage}
                           isShortMovies={isShortMovies}
                           // handlerChangeTumbler={handlerChangeTumbler}
                           setIsShortMovies={setIsShortMovies}
+                          
                         />
                       </main>
                       <Footer />
@@ -427,6 +442,7 @@ function App() {
                           // isShortSavedMovies={isShortSavedMovies}
                           // setIsShortSavedMovies={setIsShortSavedMovies}
                           handlerChangeTumblerSavedMovies={handlerChangeTumblerSavedMovies}
+                          handleDeleteMovie={handleDeleteMovie}
                         />
                       </main>
                       <Footer />
