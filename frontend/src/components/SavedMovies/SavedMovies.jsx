@@ -3,6 +3,7 @@ import './SavedMovies.css';
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 // import LearnMore from "../LearnMore/LearnMore";
 import SearchForm from "../SearchForm/SearchForm";
+import { useResize } from "../../components/hooks/useResize";
 
 function SavedMovies({
   movies,
@@ -15,16 +16,8 @@ function SavedMovies({
   handlerChangeTumblerSavedMovies
 }) {
 
-  let films;
-  // useEffect((isShortSavedMovies) => {
-    // console.log('сработал юзэффект')
-    // if (isShortSavedMovies) { // && movies.length > 0
-    //   films = movies.filter((film) => film.duration <= 40)
+  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
 
-    //   // setIsShortSavedMovies(films;
-    //   console.log(films, 'итоговое значение фильтрации')
-    // }
-  // }, [isShortSavedMovies, movies]);
 
   return (
     <>

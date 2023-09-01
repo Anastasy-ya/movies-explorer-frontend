@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
@@ -27,7 +27,7 @@ function Profile({
   };
 
   console.log(values);
-  // console.log('requestMessage', requestMessage);
+
 
   return (
     <section className="profile">

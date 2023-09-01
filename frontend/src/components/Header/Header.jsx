@@ -32,7 +32,7 @@ function Header({
     else {
       setHeaderView(
         <>
-          {isLoggedIn && !isMainPage &&  (<nav className="header__navigation-box"> {/*!isMainPage &&  */}
+          {isLoggedIn && (<nav className="header__navigation-box"> {/*!isMainPage &&  */}
 
             <NavLink
               className={({ isActive }) => `header__link ${isActive ? "header__link_active" : ""}`}

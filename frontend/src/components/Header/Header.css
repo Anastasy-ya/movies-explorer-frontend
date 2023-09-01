@@ -24,12 +24,11 @@
   justify-content: center;
 }
 
-/* @media screen and (max-width: 720px) { 
-  /*не используется, но пригодится в случае доработки*/
-  /* .header__navigation-box { */
-    /* gap: 5px; */
-  /* } */
-/* } */
+@media screen and (max-width: 720px) {
+  .header__navigation-box {
+    gap: 5px;
+  }
+}
 
 .header__link {
   font-weight: 400;
@@ -38,12 +37,11 @@
   text-align: center;
 }
 
-/* @media screen and (max-width: 720px) { */
-  /*не используется, но пригодится в случае доработки*/
-  /* .header__link { */
-    /* font-size: 10px; */
-  /* } */
-/* } */
+@media screen and (max-width: 720px) {
+  .header__link {
+    font-size: 10px;
+  }
+}
 
 .header__link_active {
   font-weight: 500;

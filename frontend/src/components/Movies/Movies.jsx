@@ -3,6 +3,7 @@ import './Movies.css';
 import LearnMore from "../LearnMore/LearnMore";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
+import { useResize } from "../../components/hooks/useResize";
 
 function Movies({
   movies,
@@ -16,10 +17,9 @@ function Movies({
   setIsShortMovies
 }) {
 
-  // let films
+  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
 
-
-  // console.log(isShortMovies)
+  
 
   return (
     <>
@@ -32,7 +32,7 @@ function Movies({
       />
       <MoviesCardList
         isMoviePage={true}
-        movies={movies || []} //универсальный пропс movies, не путать со стейтом
+        movies={movies} //универсальный пропс movies, не путать со стейтом
         isLoggedIn={isLoggedIn}
         handleSaveMovie={handleSaveMovie}
         handleSearchMovie={handleSearchMovie}

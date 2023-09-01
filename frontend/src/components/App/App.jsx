@@ -37,9 +37,12 @@ function App() {
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(false);
   const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false);
-  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize(); 
+  // shortFilteredMovies
+  const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
+
+  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
   //получение значения от кастомного хука
-  
+
 
   const navigate = useNavigate();
 
@@ -62,12 +65,12 @@ function App() {
         //в идеале надо определять язык и и скать на этом языке, подумаю об этом после сдачи диплома
         const films = allMovies.filter((movie) => {
           return (
-          movie.nameRU.toLowerCase().includes(string.toLowerCase())
+            movie.nameRU.toLowerCase().includes(string.toLowerCase())
           )
         })
         setMovies(films);
         // console.log(films.length)
-        
+
         // localStorage.setItem()
       })
       .catch(console.error)
@@ -79,27 +82,22 @@ function App() {
 
   React.useEffect(() => { // получение currentuser
     if (isLoggedIn) {
-      //     setShowPreloader(true);
-      //     // Promise.all([moviesApi.getMovies() ])
-      //     moviesApi
-      //       .getMovies()
-      //       .then((movies) => { 
-      //         const films = JSON.parse(localStorage.getItem("movies")) || [];
-      //         if (!films.length === 0) {
-      //           localStorage.setItem('movies', JSON.stringify(movies)) //тут не добавляется
-      //         }
-      //         setMovies(movies || []);
-      setCurrentUser({ name: "Анастасия", email: "mail@mail.com" }); 
-      //зарегистрированному пользователю в инпутах форм будут показаны его данные
+      setShowPreloader(true);
+    auth
+      .checkToken()
+      .then((user) => { //проверить что пришло
+        setCurrentUser(user); //зарегистрированному пользователю в инпутах форм будут показаны его данные
+        //записать в сторадж
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setShowPreloader(false);
+      });
+      // setCurrentUser({ name: "Анастасия", email: "mail@mail.com" });
+      //и наверное в сторадж
 
-      //         //данные пользователя записать в currentUser
-      //         // setCurrentUser(user);
-      //         //и наверное в сторадж
-      //       })
-      //       .catch(console.error)
-      //       .finally(() => {
-      //         setShowPreloader(false);
-      //       });
     }
   }, [isLoggedIn]);
 
@@ -134,24 +132,23 @@ function App() {
 
   ///////////////////handlers auth///////////////////////////////////
 
-  function checkToken() {
-    setShowPreloader(true);
-    auth
-      .checkToken()
-      .then((user) => { //проверить что пришло
-        setCurrentUser(user);
-        //записать в сторадж
-      })
-      .catch((err) => {
-        console.log(err);
+  // function checkToken() {
+  //   setShowPreloader(true);
+  //   auth
+  //     .checkToken()
+  //     .then((user) => { //проверить что пришло
+  //       setCurrentUser(user);
+  //       //записать в сторадж
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
+  //     .finally(() => {
+  //       setShowPreloader(false);
+  //     });
+  // }
 
-      })
-      .finally(() => {
 
-        setShowPreloader(false);
-      });
-
-  }
 
   //регистрация 
   function handleRegister({ name, email, password }) {
@@ -273,22 +270,20 @@ function App() {
   //   setIsShortMovies(!isShortMovies);
   // }
 
-  // console.log(isShortMovies,'isShortMovies')
+  // console.log(isShortMovies,'isShortMovies из app')
 
 
-  // useEffect((isShortMovies) => {
-  //   // console.log('сработал юзэффект', isShortMovies, 'isShortMovies')
-
-  //   if (isShortMovies && movies.length > 0) { // && movies.length > 0
-  //     const shortFilteredFilms = movies.filter((movie) => {
-  //       return (
-  //         movie.duration <= 40
-  //       )
-  //     })
-  //     setMovies(shortFilteredFilms);
-  //     console.log(shortFilteredFilms)
-  //   }
-  // }, [isShortMovies, movies]);
+  useEffect(() => {
+    if (isShortMovies && movies.length > 0) {
+      setShortFilteredMovies(
+        movies.filter((movie) => {
+          return (
+            movie.duration <= 40
+          )
+        })
+      )
+    }
+  }, [isShortMovies]);
 
 
   ///////////////////handlers movies/////////////////////////////////
@@ -392,7 +387,7 @@ function App() {
                       <main className="content">
                         <Movies
                           isLoggedIn={isLoggedIn}
-                          movies={movies}
+                          movies={isShortMovies ? shortFilteredMovies : movies}
                           handleSaveMovie={handleSaveMovie}
                           handleSearchMovie={handleSearchMovie}
                           requestMessage={requestMessage}
