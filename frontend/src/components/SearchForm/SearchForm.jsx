@@ -27,14 +27,14 @@ function SearchForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSearchMovie(moviesSearchQuery); //values['search']
-    localStorage.setItem('moviesSearchQuery', moviesSearchQuery)
+    handleSearchMovie(values['search']); //values['search']
+    localStorage.setItem('moviesSearchQuery', values['search'])
     // resetForm();
   };
 
-  useEffect(() => {
-    setMoviesSearchQuery(values['search'])
-  }, [values['search']]);
+  // useEffect(() => {
+  //   setMoviesSearchQuery(values['search'])
+  // }, [values['search']]);
 
 
   return (
@@ -49,11 +49,11 @@ function SearchForm({
             type="text"
             name="search"
             className="search-input__field"
-            value={moviesSearchQuery || values.search}
+            value={values.search ?? moviesSearchQuery} // || moviesSearchQuery
             placeholder="Фильм"//{placeholder}
             onChange={handleChange}
             aria-label="write keywords for searching"
-            autoСomplete="off"
+            // autoСomplete="off"
             required
           />
 

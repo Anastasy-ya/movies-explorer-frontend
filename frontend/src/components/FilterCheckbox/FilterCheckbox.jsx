@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import './FilterCheckbox.css';
 
 function FilterCheckbox({ setIsShortMovies, isShortMovies, handleSubmit }) { //handlerChangeTumbler,
-console.log(isShortMovies, 'isShortMovies')
+// console.log(isShortMovies, 'isShortMovies')
   function handleChange(e) {
     setIsShortMovies(!isShortMovies);
     // handleSubmit(e); //

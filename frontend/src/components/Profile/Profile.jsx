@@ -18,7 +18,7 @@ function Profile({
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  console.log('введено в поля', values)
+  // console.log('введено в поля', values)
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -28,7 +28,7 @@ function Profile({
     resetForm();
   };
 
-  console.log(values);
+  // console.log(values);
 
 
   return (

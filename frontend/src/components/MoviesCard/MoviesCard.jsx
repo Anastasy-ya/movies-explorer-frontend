@@ -51,7 +51,7 @@ function MoviesCard({
         target="_blank"
       >
         <img
-          src={`${MOVIES_URL}${movie.image.url}`}
+          src={`${isMoviePage ? (MOVIES_URL + movie.image.url) : (movie.image)}`}
           // `${BASE_URL}${movie.image.url}`
           className="card__image"
           alt="Movie"

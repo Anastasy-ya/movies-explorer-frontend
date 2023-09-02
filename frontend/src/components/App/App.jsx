@@ -56,7 +56,7 @@ function App() {
   //получение значения от кастомного хука
   const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
 
-  console.log(savedMovies)
+  // console.log(savedMovies)
 
   const navigate = useNavigate();
   const path = useLocation();
@@ -180,8 +180,8 @@ function App() {
     auth
       .updateUser({ name, email })
       .then((res) => {
-        setCurrentUser({ name, email })
-        // setRequestMessage(res);
+        setCurrentUser(res)
+        setRequestMessage('Данные успешно изменены');
         // уведомление в профиле
       })
       .catch((err) => {
@@ -205,9 +205,9 @@ function App() {
       }))
       .then(() => setIsLoggedIn(false))
       .then(() => {
-        // deleteLocalStorage(); //дописать найденные и сохраненные фильмы, состояние переключателя и поисковую строку,
-        // deleteLocalStorage();
-        // deleteLocalStorage();
+        localStorage.removeItem("isShortMovies");
+        localStorage.removeItem("films");
+        localStorage.removeItem("moviesSearchQuery");
         navigate("/", { replace: true });
       })
       .catch((err) => {
@@ -267,11 +267,12 @@ function App() {
 
   //функция сохранения фильма
   function handleSaveMovie(movie) {
+    console.log(movie, 'это пришло на сохранение фильма')
     setShowPreloader(true);
     MainApi
       .saveMovie(movie)
       .then((newMovie) => { //ошибка валидации
-        // console.log(newMovie)
+        console.log(newMovie, 'сохраненный фильм')
         setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem ))
         setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem ))
         newMovie.buttonLikeType = "delete"
@@ -290,13 +291,13 @@ function App() {
 
   function handleDeleteMovie(id) {
     setShowPreloader(true);
-    console.log(id, 'id')
+    // console.log(id, 'id')
     const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
-    console.log(deleteMovie._id, 'deleteMovie', deleteMovie)
+    // console.log(deleteMovie._id, 'deleteMovie', deleteMovie)
     MainApi
       .deleteCard(deleteMovie._id)
       .then(() => {
-        console.log('карточка удалена')
+        // console.log('карточка удалена')
         setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))// ошибка
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem ))
         setShortFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem ))

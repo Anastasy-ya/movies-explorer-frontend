@@ -16,7 +16,7 @@ function MoviesCardList({
   handleDeleteMovie
 }) {
 
-  console.log(movies)
+  // console.log(movies)
 
   return (
     <section className="card-list">

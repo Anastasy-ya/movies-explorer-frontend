@@ -19,7 +19,7 @@ export function getInitialMovies() {
 }
 
 export function saveMovie(movie) {
-  // console.log(movie)
+
   const newMovie = {
     country: movie.country,
     director: movie.director,
@@ -33,8 +33,6 @@ export function saveMovie(movie) {
     nameRU: movie.nameRU,
     nameEN: movie.nameEN,
   }
-  // console.log(MOVIES_URL + movie.image.url)
-  // console.log(newMovie)
   return fetch(`${API_URL}/movies`, {
     method: "POST",
     headers: {
