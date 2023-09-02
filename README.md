@@ -18,7 +18,9 @@ https://www.figma.com/file/mqW0Joa8w2EToBoXqKky1S/Diploma-(Copy)?type=design&nod
 Graduate work on the course web developer/backend
 
 
-Адрес репозитория: https://github.com/Anastasy-ya/movies-explorer-api
+Адрес репозитория: 
+https://github.com/Anastasy-ya/movies-explorer-api
+https://github.com/Anastasy-ya/movies-explorer-frontend
 
 
 ## Ссылки на проект
@@ -28,3 +30,5 @@ IP 51.250.76.210
 Frontend https://anastasy-ya.diplom.nomoredomains.xyz
 
 Backend https://api.anastasy-ya.diplom.nomoredomains.xyz
+
+Pull Request https://github.com/Anastasy-ya/movies-explorer-frontend/pull/2
