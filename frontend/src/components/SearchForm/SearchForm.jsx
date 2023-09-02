@@ -30,9 +30,6 @@ function SearchForm({
     // setMoviesSearchQuery(moviesSearchQuery)
     handleSearchMovie(moviesSearchQuery); //values['search']
     //values['search'] || localStorage.getItem('moviesSearchQuery')
-    console.log(localStorage.getItem('moviesSearchQuery'))
-    console.warn(values['search'])
-    // resetForm();
   };
 
   // useEffect(() => {
