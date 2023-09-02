@@ -140,7 +140,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setRequestMessage(err);
+        setRequestMessage(err || "");
         //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
@@ -166,7 +166,7 @@ function App() {
       .catch((err) => {
         console.log(err);
         setIsLoggedIn(false);
-        setRequestMessage(err);
+        setRequestMessage(err || "");
         //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
@@ -186,7 +186,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setRequestMessage(err);
+        setRequestMessage(err || "");
         // уведомление в профиле
       })
       .finally(() => {

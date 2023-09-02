@@ -30,7 +30,7 @@ function Register({
     resetForm();
   };
   // console.log('errors', errors);
-    // console.log('поля', values, currentUser);
+  // console.log('поля', values, currentUser);
 
   return (
     <section className="auth-container">
@@ -45,7 +45,7 @@ function Register({
         typeReg={true}
         isValid={isValid}
         onSubmit={(e) => handleSubmit(e)}
-        >
+      >
 
         <Input
           type={"text"}
@@ -85,11 +85,12 @@ function Register({
           errors={errors}
         />
 
-        <RequestMessage
-            requestMessage={requestMessage}
-            parent={"profile"}
-          />
-
+        <RequestMessage 
+          parent={"profile"}
+          requestMessage={requestMessage}
+        />
+          
+        
       </Form>
 
       <div className="auth-container__link-container">

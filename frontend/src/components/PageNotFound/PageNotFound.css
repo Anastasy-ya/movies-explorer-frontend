@@ -53,7 +53,10 @@
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
-  margin: 184px 0 0;
+  margin: 184px auto 0;
+  background-color: transparent;
+  border: none;
+  width: 200px;
 }
 
 @media screen and (max-width: 720px) {
