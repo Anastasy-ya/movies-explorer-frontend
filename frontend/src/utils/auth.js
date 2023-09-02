@@ -1,5 +1,5 @@
-import { BASE_URL } from "../utils/consts";
-// export const baseUrl = API_URL;
+import { API_URL } from "../utils/consts";
+export const baseUrl = API_URL;
 
 function checkResponce(res) {
   if (res.ok) {
@@ -9,7 +9,7 @@ function checkResponce(res) {
 }
 
 export const register = ({ name, email, password }) => {
-  return fetch(`${BASE_URL}/signup`, {
+  return fetch(`${baseUrl}/signup`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -23,7 +23,7 @@ export const register = ({ name, email, password }) => {
 };
 
 export const login = ({ email, password }) => {
-  return fetch(`${BASE_URL}/signin`, {
+  return fetch(`${baseUrl}/signin`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -35,7 +35,7 @@ export const login = ({ email, password }) => {
 };
 
 export const checkToken = () => {
-  return fetch(`${BASE_URL}/users/me`, {
+  return fetch(`${baseUrl}/users/me`, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -49,7 +49,7 @@ export const checkToken = () => {
 };
 
 export const updateUser = ({ name, email }) => {
-  return fetch(`${BASE_URL}/users/me`, {
+  return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -66,7 +66,7 @@ export const updateUser = ({ name, email }) => {
 };
 
 export const logOut = () => {
-  return fetch(`${BASE_URL}/signout`, {
+  return fetch(`${baseUrl}/signout`, {
     method: "GET",
     credentials: "include",
     headers: {

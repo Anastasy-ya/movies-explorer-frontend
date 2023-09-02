@@ -1,6 +1,6 @@
 import React from 'react';
 import './MoviesCard.css';
-import { BASE_URL, MOVIES_URL } from "../../utils/consts";
+import { MOVIES_URL } from "../../utils/consts";
 import { Link } from 'react-router-dom';
 
 function MoviesCard({

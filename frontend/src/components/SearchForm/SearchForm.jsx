@@ -16,15 +16,14 @@ function SearchForm({
 }) {
 
    //поисковые строки
+  //  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState("");
    const [moviesSearchQuery, setMoviesSearchQuery] = React.useState(() => {
     const checkStorage = localStorage.getItem("moviesSearchQuery");
     return checkStorage ? checkStorage : ""
    });
-   const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState("");
-
+  
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
   
-
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSearchMovie(values['search']); //values['search']
@@ -58,7 +57,7 @@ function SearchForm({
           />
 
           <button
-            type="submit" //добавить тайт всем сабмитам
+            type="submit"
             className="search-input__button"
             aria-label="search films"
             // disabled={!isValid} //раскомментировать для показа всех фильмов

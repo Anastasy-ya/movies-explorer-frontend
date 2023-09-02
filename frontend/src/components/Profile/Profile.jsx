@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
@@ -79,7 +79,7 @@ function Profile({
             maxLength="20"
             id="profile__profile-email-input`"
             onChange={(e) => handleChange(e)}
-            pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
+            pattern="^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
             value={values.email ?? currentUser.email}
           />
           <span className="profile__input-error profile__input-error_type_bottom">

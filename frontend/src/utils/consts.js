@@ -1,7 +1,7 @@
 export const BASE_URL = "http://localhost:3001";
 export const MOVIES_URL = "https://api.nomoreparties.co";
-export const API_URL = "https://api.anastasy-ya.diplom.nomoredomains.xyz";
-// "https://api.anastasy-ya.diplom.nomoredomains.xyz"
+export const API_URL = "http://localhost:3001"; //"https://api.anastasy-ya.diplom.nomoredomains.xyz";
+export const MOVIES_API = "https://api.nomoreparties.co/beatfilm-movies";
 
 const MESSAGES = {
 ValidationError: 'Вы ввели неправильный логин или пароль', //400

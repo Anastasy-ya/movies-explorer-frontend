@@ -4,11 +4,9 @@ import usePopupClose from "../hooks/usePopupClose";
 import { NavLink } from "react-router-dom";
 import InfoAccount from "../InfoAccount/InfoAccount";
 
-function Popup({ isOpen, onLoading, isLoggedIn, handleOpenClosePopup }) {
+function Popup({ isOpen, isLoggedIn, handleOpenClosePopup }) {
 
-  // function 
-
-  usePopupClose({ isOpen, handleOpenClosePopup }); // , targetLink: "popup__link"
+  usePopupClose({ isOpen, handleOpenClosePopup });
   
   return (
     <>

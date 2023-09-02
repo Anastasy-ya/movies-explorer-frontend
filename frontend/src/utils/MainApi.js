@@ -26,7 +26,7 @@ export function saveMovie(movie) {
     duration: movie.duration,
     year: movie.year,
     description: movie.description,
-    image: MOVIES_URL + movie.image.url, //undefined
+    image: MOVIES_URL + movie.image.url,
     trailerLink: movie.trailerLink,
     thumbnail: MOVIES_URL + movie.image.formats.thumbnail.url,
     movieId: String(movie.id),

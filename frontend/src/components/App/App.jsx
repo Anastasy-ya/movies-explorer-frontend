@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom"; //, Navigate, useNavigate
+import { Route, Routes, useNavigate } from "react-router-dom"; //, Navigate, useNavigate
 import './App.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -17,7 +17,6 @@ import { useLocation } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
 import * as auth from "../../utils/auth";
 import moviesApi from "../../utils/MoviesApi";
-import deleteLocalStorage from "../../utils/consts";
 
 import * as MainApi from "../../utils/MainApi";
 
@@ -54,7 +53,7 @@ function App() {
   const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState([]);
  
   //получение значения от кастомного хука
-  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
+  const { isWideScreen } = useResize();
 
   // console.log(savedMovies)
 
@@ -267,12 +266,12 @@ function App() {
 
   //функция сохранения фильма
   function handleSaveMovie(movie) {
-    console.log(movie, 'это пришло на сохранение фильма')
+    // console.log(movie, 'это пришло на сохранение фильма')
     setShowPreloader(true);
     MainApi
       .saveMovie(movie)
       .then((newMovie) => { //ошибка валидации
-        console.log(newMovie, 'сохраненный фильм')
+        // console.log(newMovie, 'сохраненный фильм')
         setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem ))
         setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem ))
         newMovie.buttonLikeType = "delete"
@@ -297,7 +296,6 @@ function App() {
     MainApi
       .deleteCard(deleteMovie._id)
       .then(() => {
-        // console.log('карточка удалена')
         setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))// ошибка
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem ))
         setShortFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem ))
@@ -321,7 +319,7 @@ function App() {
         })
     )
     }
-  }, [isShortSavedMovies]);
+  }, [isShortSavedMovies, savedMovies]);
 
   //тумблер "короткометражки" на странице с фильмами
   useEffect(() => {
@@ -334,7 +332,7 @@ function App() {
         })
       )
     }
-  }, [isShortMovies]);
+  }, [isShortMovies, movies]);
 
   return (
     <div className="root">

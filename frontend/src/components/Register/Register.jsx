@@ -30,7 +30,7 @@ function Register({
     resetForm();
   };
   // console.log('errors', errors);
-    console.log('поля', values, currentUser);
+    // console.log('поля', values, currentUser);
 
   return (
     <section className="auth-container">

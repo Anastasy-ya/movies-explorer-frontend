@@ -1,3 +1,4 @@
+import { MOVIES_API } from "../utils/consts";
 class MoviesApi {
   constructor( baseUrl, headers ) {
     this._baseUrl = baseUrl;
@@ -14,12 +15,11 @@ class MoviesApi {
   getMovies() {
     return fetch(`${this._baseUrl}`, {
       headers: this._headers,
-      // credentials: "include",
     }).then((res) => this._checkResponce(res));
   }
 }
 
-const moviesApi = new MoviesApi("https://api.nomoreparties.co/beatfilm-movies", {
+const moviesApi = new MoviesApi(MOVIES_API, {
   "Content-Type": "application/json",
 });
 

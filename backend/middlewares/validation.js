@@ -1,7 +1,7 @@
 const { Joi, celebrate } = require('celebrate');
 const validator = require('validator');
 
-const regUrl = /^(ftp|http|https):\/\/[^ "]+$/;
+// const regUrl = /^(ftp|http|https):\/\/[^ "]+$/;
 const reqEmail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/;
 
 const signUpValidation = celebrate({
@@ -33,12 +33,7 @@ const createMovieValidation = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().custom((value, helpers) => {
-      if (!validator.isURL(value)) {
-        return helpers.error('Некорректный URL');
-      }
-      return value;
-    }),
+    image: Joi.string().required(),
     trailerLink: Joi.string().required().custom((value, helpers) => {
       if (!validator.isURL(value)) {
         return helpers.error('Некорректный URL');
