@@ -17,8 +17,8 @@ const {
 } = require('../utils/constants');
 
 const createUser = (req, res, next) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     return next(new ValidationError(fieldsIsNotFilled));
   }
   return bcrypt.hash(req.body.password, 10)
@@ -60,8 +60,7 @@ const login = (req, res, next) => {
             res.cookie('jwt', jwt, {
               maxAge: 604800,
               httpOnly: true,
-              sameSite: 'none', // эти две строчки добавлены samesite был true
-              secure: true,
+              sameSite: true,
             });
             return res.send(user.toJSON());
           }

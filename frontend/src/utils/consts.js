@@ -1,6 +1,7 @@
-export const BASE_URL = "http://localhost:3001";
-export const MOVIES_URL = " https://api.nomoreparties.co";
-export const API_URL = "https://api.anastasy-ya.diplom.nomoredomains.xyz"
+export const BASE_URL = "http://localhost:3000";
+export const MOVIES_URL = "https://api.nomoreparties.co";
+export const API_URL = "http://localhost:3000";
+// "https://api.anastasy-ya.diplom.nomoredomains.xyz"
 
 export const deleteLocalStorage = (name) => {
   return localStorage.removeItem(`${name}`);

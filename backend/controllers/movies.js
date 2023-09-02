@@ -3,12 +3,19 @@ const Movie = require('../models/movie');
 const ValidationError = require('../errors/ValidationError');
 const NotFound = require('../errors/NotFound');
 const Forbidden = require('../errors/Forbidden');
+
 const {
   invalidMovieID,
   movieIsNotFound,
   accessIsDenied,
   movieRemoved,
 } = require('../utils/constants');
+
+const getMovies = (req, res, next) => {
+  Movie.find({ owner: req.user._id })
+    .then((movie) => res.status(http2.HTTP_STATUS_OK).send(movie))
+    .catch(next);
+};
 
 const createMovie = (req, res, next) => {
   Movie.create({
@@ -22,12 +29,6 @@ const createMovie = (req, res, next) => {
       }
       return next(err);
     });
-};
-
-const getMovies = (req, res, next) => {
-  Movie.find({ owner: req.user._id })
-    .then((movie) => res.status(http2.HTTP_STATUS_OK).send(movie))
-    .catch(next);
 };
 
 const deleteMovieById = (req, res, next) => {

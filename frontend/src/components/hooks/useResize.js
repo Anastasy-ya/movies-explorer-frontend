@@ -10,7 +10,7 @@ export const useResize = () => {
       (function throttle() { 
         setTimeout(() => {
           setWidth(event.target.innerWidth)
-      }, 1500);
+      }, 1000);
       }())
     };
     window.addEventListener('resize', handleResize);

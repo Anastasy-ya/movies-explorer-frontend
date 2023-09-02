@@ -14,10 +14,10 @@ function MoviesCard({
   const saveOrDeleteText = isMoviePage ? "save movie" : "delete movie from saved";
   const { _id, nameRU, duration, trailerLink } = movie;
   let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`
- console.log(movie, 'пришло на отрисовку')
+//  console.log(movie, 'пришло на отрисовку')
 
   function saveOrDeleteHandler() {
-    console.log(movie, _id, 'movie, id')
+    // console.log(movie, _id, 'movie, id')
     isMoviePage ? handleSaveMovie(movie) : handleDeleteMovie(_id)
   }
 

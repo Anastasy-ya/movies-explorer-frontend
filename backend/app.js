@@ -31,18 +31,20 @@ const { DB_URL_DIPLOM, PORT } = process.env;
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 mongoose.connect(DB_URL_DIPLOM, {
+
   useNewUrlParser: true,
   family: 4,
 });
 
 app.use(cors({
   origin: [
-    // 'http://anastasy-ya.diplom.nomoredomains.xyz',
-    // 'http://api.anastasy-ya.diplom.nomoredomains.xyz',
-    // 'https://anastasy-ya.diplom.nomoredomains.xyz',
-    // 'https://api.anastasy-ya.diplom.nomoredomains.xyz',
+    'http://anastasy-ya.diplom.nomoredomains.xyz',
+    'http://api.anastasy-ya.diplom.nomoredomains.xyz',
+    'https://anastasy-ya.diplom.nomoredomains.xyz',
+    'https://api.anastasy-ya.diplom.nomoredomains.xyz',
     'http://localhost:3000',
     'http://localhost:3001',
+    '*',
   ],
   credentials: true,
 }));

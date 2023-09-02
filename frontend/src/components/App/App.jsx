@@ -46,6 +46,9 @@ function App() {
   const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
   // отфильтрованные короткометражки на странице с сохраненными фильмами
   const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState([]);
+  //поисковые строки
+  const [moviesSearchQuery, setMoviesSearchQuery] = React.useState("");
+  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState("");
   //получение значения от кастомного хука
   const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
 
@@ -167,7 +170,7 @@ function App() {
     auth
       .updateUser({ name, email })
       .then((res) => {
-        setCurrentUser({ name, email })//проверить что пришло
+        setCurrentUser({ name, email })
         // setRequestMessage(res);
         // уведомление в профиле
       })
@@ -258,8 +261,10 @@ function App() {
     MainApi
       .saveMovie(movie)
       .then((newMovie) => { //ошибка валидации
-        setSavedMovies((state) =>
-          state.map((c) => (c._id === movie._id ? newMovie : c)))
+        setMovies((state) => state.map((elem) => elem.id === newMovie.movieID ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem ))
+        newMovie.buttonLikeType = "delete"
+        setSavedMovies((state) => [...state, newMovie])
+          // state.map((c) => (c._id === movie._id ? newMovie : c)))
 
       })
       .catch((err) => {
@@ -288,10 +293,6 @@ function App() {
       });
   }
 
-  // function handlerChangeTumblerSavedMovies() { //к удалению и переделке в ф-ю подобную той, что ниже
-  //   setIsShortSavedMovies(!isShortSavedMovies);
-  // }
-
   //тумблер "короткометражки" на странице с сохраненными фильмами
   useEffect(() => {
     if (isShortSavedMovies && savedMovies.length > 0) {
@@ -317,18 +318,6 @@ function App() {
       )
     }
   }, [isShortMovies]);
-
-  // console.log(
-  //   'isShortMovies', isShortMovies,
-  //   'IsLoggedIn', isLoggedIn,
-  //   'currentUser', currentUser,
-  //   // 'movies', movies,
-  //   'savedMovies', savedMovies,
-
-  // )
-
-  ///////////////////handlers movies/////////////////////////////////
-
 
   return (
     <div className="root">

@@ -8,11 +8,10 @@ function SavedMovies({
   movies,
   isLoggedIn,
   handleDeleteMovie,
-  handleSearchMovie, //тут должна быть другая функция
+  handleSearchMovie,
   requestMessage,
   isShortMovies,
   setIsShortMovies
-  // handlerChangeTumblerSavedMovies,
 }) {
 
   return (
@@ -25,12 +24,11 @@ function SavedMovies({
       />
       <MoviesCardList
         isMoviePage={false}
-        movies={movies} //универсальный пропс movies, не путать со стейтом  || []
+        movies={movies} //универсальный пропс movies, не путать со стейтом
         isLoggedIn={isLoggedIn}
         handleDeleteMovie={handleDeleteMovie}
         handleSearchMovie={handleSearchMovie}
         requestMessage={requestMessage}
-      // isSaved={isShortSavedMovies}
       />
     </>
   );

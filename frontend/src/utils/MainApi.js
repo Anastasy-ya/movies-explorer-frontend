@@ -1,6 +1,5 @@
 import { API_URL, MOVIES_URL } from "../utils/consts";
 
-
 function checkResponce(res) {
   if (res.ok) {
     // console.log(res.json());
@@ -8,7 +7,6 @@ function checkResponce(res) {
   }
   return Promise.reject(`Ошибка: ${res.status}`);
 }
-
 
 export function getInitialMovies() {
   return fetch(`${API_URL}/movies`, {
@@ -31,11 +29,12 @@ export function saveMovie(movie) {
     image: MOVIES_URL + movie.image.url, //возможно придется дописывать адрес
     trailerLink: movie.trailerLink,
     thumbnail: MOVIES_URL + movie.image.formats.thumbnail.url,
-    owner: movie.owner,
     movieId: String(movie.id),
     nameRU: movie.nameRU,
     nameEN: movie.nameEN,
   }
+  console.log(MOVIES_URL + movie.image.url)
+  console.log(newMovie)
   return fetch(`${API_URL}/movies`, {
     method: "POST",
     headers: {
