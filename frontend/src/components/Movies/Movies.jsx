@@ -15,7 +15,8 @@ function Movies({
   isShortMovies, //undefined
   // setIsShortMovies
   // handlerChangeTumbler,
-  setIsShortMovies
+  setIsShortMovies,
+  handleDeleteMovie
 }) {
 
   // console.log('всего карточек изначально', movies.length)
@@ -85,6 +86,7 @@ function Movies({
         handleSaveMovie={handleSaveMovie}
         handleSearchMovie={handleSearchMovie}
         requestMessage={requestMessage}
+        handleDeleteMovie={handleDeleteMovie}
       // isSaved={isShortMovies} 
       //этот параметр отличается у фильмов и сохраненных фильмов
       />

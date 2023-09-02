@@ -19,22 +19,22 @@ export function getInitialMovies() {
 }
 
 export function saveMovie(movie) {
-
+  // console.log(movie)
   const newMovie = {
     country: movie.country,
     director: movie.director,
     duration: movie.duration,
     year: movie.year,
     description: movie.description,
-    image: MOVIES_URL + movie.image.url, //возможно придется дописывать адрес
+    image: MOVIES_URL + movie.image.url, //undefined
     trailerLink: movie.trailerLink,
     thumbnail: MOVIES_URL + movie.image.formats.thumbnail.url,
     movieId: String(movie.id),
     nameRU: movie.nameRU,
     nameEN: movie.nameEN,
   }
-  console.log(MOVIES_URL + movie.image.url)
-  console.log(newMovie)
+  // console.log(MOVIES_URL + movie.image.url)
+  // console.log(newMovie)
   return fetch(`${API_URL}/movies`, {
     method: "POST",
     headers: {

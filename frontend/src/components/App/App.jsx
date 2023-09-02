@@ -35,25 +35,35 @@ function App() {
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
   // фильмы и сохраненные фильмы
-  const [movies, setMovies] = React.useState([]);
+  const [movies, setMovies] = React.useState(() => {
+    const checkStorage = localStorage.getItem("films");
+    return checkStorage ? JSON.parse(checkStorage) : []
+  });
   const [savedMovies, setSavedMovies] = React.useState([]);
   // const [isLiked, setIsLiked] = React.useState(false);
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
-  const [isShortMovies, setIsShortMovies] = React.useState(false);
-  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false);
+  const [isShortMovies, setIsShortMovies] = React.useState(() => {
+    const checkStorage = localStorage.getItem("isShortMovies");
+    return checkStorage ? JSON.parse(checkStorage) : false
+  });
+  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false); //аналогично
   // отфильтрованные короткометражки на странице с фильмами
   const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
   // отфильтрованные короткометражки на странице с сохраненными фильмами
   const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState([]);
-  //поисковые строки
-  const [moviesSearchQuery, setMoviesSearchQuery] = React.useState("");
-  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState("");
+ 
   //получение значения от кастомного хука
   const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
 
+  console.log(savedMovies)
+
   const navigate = useNavigate();
   const path = useLocation();
+
+  useEffect(() => {
+    localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies))
+  }, [isShortMovies])
 
   //получение сохраненных фильмов из бд
   useEffect(() => {
@@ -247,7 +257,7 @@ function App() {
             )
           })
         setMovies(films);
-        // localStorage.setItem(string) // потом достать и вставить в новый стейт
+        localStorage.setItem("films", JSON.stringify(films)); // потом достать и вставить в новый стейт
       })
       .catch(console.error)
       .finally(() => {
@@ -261,10 +271,11 @@ function App() {
     MainApi
       .saveMovie(movie)
       .then((newMovie) => { //ошибка валидации
-        setMovies((state) => state.map((elem) => elem.id === newMovie.movieID ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem ))
+        // console.log(newMovie)
+        setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem ))
+        setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem ))
         newMovie.buttonLikeType = "delete"
         setSavedMovies((state) => [...state, newMovie])
-          // state.map((c) => (c._id === movie._id ? newMovie : c)))
 
       })
       .catch((err) => {
@@ -275,15 +286,20 @@ function App() {
       });
   }
 
+
+
   function handleDeleteMovie(id) {
     setShowPreloader(true);
     console.log(id, 'id')
+    const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
+    console.log(deleteMovie._id, 'deleteMovie', deleteMovie)
     MainApi
-      .deleteCard(id)
-      .then(() => { //json ошибка
+      .deleteCard(deleteMovie._id)
+      .then(() => {
         console.log('карточка удалена')
-        setSavedMovies((state) => state.filter((c) => c.id !== id))// ошибка
-
+        setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))// ошибка
+        setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem ))
+        setShortFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem ))
       })
       .catch((err) => {
         console.log(err);
@@ -419,6 +435,7 @@ function App() {
                             requestMessage={requestMessage}
                             isShortMovies={isShortMovies}
                             setIsShortMovies={setIsShortMovies}
+                            handleDeleteMovie={handleDeleteMovie}
 
                           />
                         </main>

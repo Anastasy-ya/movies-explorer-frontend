@@ -12,17 +12,21 @@ function MoviesCard({
 
 
   const saveOrDeleteText = isMoviePage ? "save movie" : "delete movie from saved";
-  const { _id, nameRU, duration, trailerLink } = movie;
+  const { id, nameRU, duration, trailerLink, movieId } = movie;
   let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`
+  // let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`;
 //  console.log(movie, 'пришло на отрисовку')
 
   function saveOrDeleteHandler() {
     // console.log(movie, _id, 'movie, id')
-    isMoviePage ? handleSaveMovie(movie) : handleDeleteMovie(_id)
+    
+    movie.buttonLikeType === "unliked" ? handleSaveMovie(movie) : handleDeleteMovie(isMoviePage ? id : movieId)
+    //всегда если класс анлайк, нужно сохранить карточку, во всех остальных случаях удалять
   }
 
   return (
-    <li className="card">
+    // <li className="card">
+    <>
       <div className="card__info">
         <div className="card__text-block">
           <h2 className="card__header">{nameRU}</h2>
@@ -53,8 +57,8 @@ function MoviesCard({
           alt="Movie"
         />
       </Link>
-
-    </li>
+</>
+    // </li>
   );
 }
 

@@ -14,30 +14,26 @@ function MoviesCardList({
   handleSearchMovie,
   requestMessage,
   handleDeleteMovie
-
 }) {
 
-
-  // function isSavedMovie(movie) {
-  //   return savedMovies.some((savedMovie) => savedMovie.movieId === movie.movieId);
-  // }
+  console.log(movies)
 
   return (
     <section className="card-list">
 
       <ul className="card-list__size-container size-container">
-        {movies.length > 0 && movies.map((movie) => (
-
+        {movies.length > 0 && movies.map((movie, index) => (
+          <li className="card" key={index}>
           <MoviesCard
-            key={movie.id}
+            key={index}
             movie={movie}
             isMoviePage={isMoviePage}
             handleSearchMovie={handleSearchMovie}
             requestMessage={requestMessage}
             handleSaveMovie={handleSaveMovie} //попадает из movies
             handleDeleteMovie={handleDeleteMovie} //попадает из saved-movies
-
           />
+          </li>
         ))}
 
       </ul>

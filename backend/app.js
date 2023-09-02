@@ -5,7 +5,7 @@ const express = require('express');
 
 const helmet = require('helmet');
 
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit'); //раскомментироватьт
 
 const { errors } = require('celebrate');
 
@@ -13,10 +13,10 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-});
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000,
+//   max: 100,
+// }); //раскомментироватьт
 
 const cookieParser = require('cookie-parser');
 
@@ -57,7 +57,7 @@ app.use(cookieParser());
 
 app.use(requestLogger);
 
-app.use(limiter);
+// app.use(limiter); //раскомменттировать
 
 app.use(routes);
 
