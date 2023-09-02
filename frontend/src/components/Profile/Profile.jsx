@@ -18,6 +18,8 @@ function Profile({
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
+  console.log('введено в поля', values)
+
   const currentUser = React.useContext(CurrentUserContext);
 
   const handleSubmit = (e) => {
@@ -45,7 +47,7 @@ function Profile({
           </label>
           <input
             type="text"
-            name="profileName"
+            name="name"
             className="
             profile__input 
             profile__input_type_grid2"
@@ -56,7 +58,7 @@ function Profile({
             id="profile__profile-name-input"
             onChange={(e) => handleChange(e)}
             pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
-            value={values.profileName ?? currentUser.name}
+            value={values.name ?? currentUser.name}
           />
           <span className="profile__input-error">
             {errors["profile-name"] && "Имя: "}{errors?.["profile-name"]}
@@ -67,7 +69,7 @@ function Profile({
           </label>
           <input
             type="text"
-            name="profileEmail"
+            name="email"
             className="
             profile__input 
             profile__input_type_grid4"
@@ -78,7 +80,7 @@ function Profile({
             id="profile__profile-email-input`"
             onChange={(e) => handleChange(e)}
             pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
-            value={values.profileEmail ?? currentUser.email}
+            value={values.email ?? currentUser.email}
           />
           <span className="profile__input-error profile__input-error_type_bottom">
             {errors["profile-email"] && "E-mail: "}{errors?.["profile-email"]}

@@ -1,113 +1,156 @@
-import API_URL from "../utils/consts";
+import { API_URL, MOVIES_URL } from "../utils/consts";
 
-class MainApi {
-  constructor( baseUrl, headers ) {
-    this._baseUrl = baseUrl;
-    this._headers = headers;
+
+function checkResponce(res) {
+  if (res.ok) {
+    // console.log(res.json());
+    return res.json();
   }
+  return Promise.reject(`Ошибка: ${res.status}`);
+}
 
-  _checkResponce(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+
+export function getInitialMovies() {
+  return fetch(`${API_URL}/movies`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  }).then((res) => checkResponce(res)
+  );
+}
+
+export function saveMovie(movie) {
+
+  const newMovie = {
+    country: movie.country,
+    director: movie.director,
+    duration: movie.duration,
+    year: movie.year,
+    description: movie.description,
+    image: MOVIES_URL + movie.image.url, //возможно придется дописывать адрес
+    trailerLink: movie.trailerLink,
+    thumbnail: MOVIES_URL + movie.image.formats.thumbnail.url,
+    owner: movie.owner,
+    movieId: String(movie.id),
+    nameRU: movie.nameRU,
+    nameEN: movie.nameEN,
   }
+  return fetch(`${API_URL}/movies`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(newMovie),
+  }).then((res) => checkResponce(res));
+}
 
-  saveMovie(data) {
-    return fetch(`${this._baseUrl}/`, {
-      method: "POST",
-      headers: this._headers,
-      credentials: "include",
-      body: JSON.stringify(data),
-    }).then((res) => this._checkResponce(res));
-  }
-
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
-      credentials: "include",
-    }).then((res) => this._checkResponce(res));
-  }
-
-  // changeLikeCardStatus(_id, isLiked) {
-  //   return fetch(`${this._baseUrl}/movies/${_id}/likes`, {
-  //     method: isLiked ? "DELETE" : "PUT",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //   }).then((res) => this._checkResponce(res));
-  // }
-
- 
-
-  // getUserData() {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     headers: this._headers,
-  //     credentials: "include",
-  //   }).then((res) => {
-  //     return this._checkResponce(res)
-  //   });
-  // }
-
-  // setUserData(data) {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     method: "PATCH",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //     body: JSON.stringify(data),
-  //   }).then((res) => this._checkResponce(res));
-  // }
-
-  
-
-  // saveAvatar(link) {
-  //   return fetch(`${this._baseUrl}/users/me/avatar`, {
-  //     method: "PATCH",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //     body: JSON.stringify({
-  //       avatar: link,
-  //     }),
-  //   }).then((res) => this._checkResponce(res));
-  // }
-
-  //этот метод будет вызван в публичной функции index.js deleteCard
-  deleteCard(_id) {
-    return fetch(`${this._baseUrl}/cards/${_id}`, {
-      method: "DELETE",
-      headers: this._headers,
-      credentials: "include",
-    }).then((res) => this._checkResponce(res));
-  }
-
-  // addLike(_id) {
-  //   return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
-  //     method: "PUT",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //   }).then((res) => this._checkResponce(res));
-  // }
-
-  // removeLike(_id) {
-  //   return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
-  //     method: "DELETE",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //   }).then((res) => this._checkResponce(res));
-  // }
-
-  // changeLikeCardStatus(_id, isLiked) {
-  //   return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
-  //     method: isLiked ? "DELETE" : "PUT",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //   }).then((res) => this._checkResponce(res));
-  // }
-
-} //Api
+export function deleteCard(_id) {
+  return fetch(`${API_URL}/movies/${_id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  }).then((res) => checkResponce(res));
+}
 
 
-const mainApi = new MainApi(API_URL, {
-  "Content-Type": "application/json",
-});
 
-export default mainApi;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import {API_URL} from "../utils/consts"; //проверить фиг скобки
+
+// class MainApi {
+//   constructor( baseUrl ) {
+//     this._baseUrl = baseUrl;
+//     // this._headers = headers;
+//   }
+
+//   _checkResponce(res) {
+//     if (res.ok) {
+//       // console.log(res.json());
+//       return res.json();
+//     }
+//     return Promise.reject(`Ошибка: ${res.status}`);
+//   }
+
+//   saveMovie(data) {
+//     return fetch(`${this._baseUrl}/movies`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       credentials: "include",
+//       body: JSON.stringify(data),
+//     }).then((res) => this._checkResponce(res));
+//   }
+
+//   getInitialMovies() {
+//     return fetch(`${this._baseUrl}/movies`, {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       credentials: "include",
+//     }).then((res) => this._checkResponce(res)
+//     );
+//   }
+
+//   //этот метод будет вызван в публичной функции index.js deleteCard
+//   deleteCard(_id) {
+//     return fetch(`${this._baseUrl}/cards/${_id}`, {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       credentials: "include",
+//     }).then((res) => this._checkResponce(res));
+//   }
+
+//   // addLike(_id) {
+//   //   return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
+//   //     method: "PUT",
+//   //     headers: this._headers,
+//   //     credentials: "include",
+//   //   }).then((res) => this._checkResponce(res));
+//   // }
+
+//   // removeLike(_id) {
+//   //   return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
+//   //     method: "DELETE",
+//   //     headers: this._headers,
+//   //     credentials: "include",
+//   //   }).then((res) => this._checkResponce(res));
+//   // }
+
+//   // changeLikeCardStatus(_id, isLiked) {
+//   //   return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
+//   //     method: isLiked ? "DELETE" : "PUT",
+//   //     headers: this._headers,
+//   //     credentials: "include",
+//   //   }).then((res) => this._checkResponce(res));
+//   // }
+
+// } //Api
+
+
+// const mainApi = new MainApi(API_URL);
+
+// export default mainApi;

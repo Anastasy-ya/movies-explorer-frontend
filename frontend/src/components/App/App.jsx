@@ -17,10 +17,12 @@ import { useLocation } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
 import * as auth from "../../utils/auth";
 import moviesApi from "../../utils/MoviesApi";
-import mainApi from "../../utils/MainApi";
 import deleteLocalStorage from "../../utils/consts";
 
+import * as MainApi from "../../utils/MainApi";
+
 function App() {
+  const [tokenChecked, setTokenChecked] = useState(false); //костыль
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPreloader, setShowPreloader] = useState(false);
@@ -40,40 +42,54 @@ function App() {
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(false);
   const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false);
-  // два раза один стейт?
+  // отфильтрованные короткометражки на странице с фильмами
   const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
+  // отфильтрованные короткометражки на странице с сохраненными фильмами
+  const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState([]);
   //получение значения от кастомного хука
   const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
-  
+
   const navigate = useNavigate();
   const path = useLocation();
 
-  //////////////////useEffects//////////////////////////////////
-
-   // проверка зарегистрирован ли пользователь
-  React.useEffect(() => {
-    // if (isLoggedIn) {
+  //получение сохраненных фильмов из бд
+  useEffect(() => {
+    if (isLoggedIn) {
       setShowPreloader(true);
+      MainApi
+        .getInitialMovies()
+        .then((films) => {
+          const deleteIconMovies = films.map((film) => {
+            return {
+              ...film, buttonLikeType: "delete", key: film._id //доп свойство для присваивания класса type delete
+            }
+          })
+          setSavedMovies(deleteIconMovies); //измененные фильмы с иконкой удаления
+        })
+        .catch(console.error)
+        .finally(() => {
+          setShowPreloader(false);
+        });
+    }
+  }, [isLoggedIn])
+
+  // проверка зарегистрирован ли пользователь
+  useEffect(() => {
+    setShowPreloader(true);
     auth
       .checkToken()
       .then((user) => {
         setIsLoggedIn(true)
-        // console.log(user);
-        setCurrentUser(user); 
+        setCurrentUser(user);
         //зарегистрированному пользователю в инпутах форм будут показаны его данные
-        
-        // navigate("/", { replace: true });
-        //записать в сторадж
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
+        setTokenChecked(true);
         setShowPreloader(false);
       });
-      //костыль
-      // setCurrentUser({ name: "Анастасия", email: "mail@mail.com" });
-    // }
   }, []);
 
   //проверка главная ли страница для функции отображения хэдера
@@ -90,11 +106,7 @@ function App() {
         setRequestMessage("")
       }, 5000);
     }
-
   }, [requestMessage]);
-
-  //////////////////useEffects//////////////////////////////////
-  ///////////////////handlers///////////////////////////////////
 
   //функция открытия/закрытия попапа
   function handleOpenClosePopup() {
@@ -104,30 +116,21 @@ function App() {
     /*после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
   };
 
-
-  ///////////////////handlers auth///////////////////////////////////
-
-  //регистрация +
+  //регистрация
   function handleRegister({ name, email, password }) {
     setShowPreloader(true);
     auth
       .register({ name, email, password })
       .then((res) => {
         handleLogin({ email, password })
-        //уведомление о удачной регистрации не нужно
         //происходит перенаправление на movies через функцию авторизации
       })
-      // .then((res) => {
-        
-      //   console.log()
-      // })
       .catch((err) => {
         console.log(err);
         setRequestMessage(err);
         //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
-
         //навигация после авторизации потому что функция авторизации асинхронная 
         // и если пользователь попадет на сайт раньше, чем произойдет авторизация, 
         // он снова будет перенаправлен на главную
@@ -135,14 +138,14 @@ function App() {
       });
   }
 
-  //авторизация +
+  //авторизация 
   function handleLogin({ email, password }) {
     setShowPreloader(true);
     auth
       .login({ email, password })
       .then((res) => {
         setIsLoggedIn(true);
-        setCurrentUser(res) //проверить что там сохраняется
+        setCurrentUser(res)
       })
       .then((res) => {
         navigate("/movies", { replace: true });
@@ -159,20 +162,18 @@ function App() {
   }
 
   //изменить данные профиля
-  // проверить после регистрации и авторизации
   function handleChangeProfile({ name, email }) {
     setShowPreloader(true);
     auth
       .updateUser({ name, email })
       .then((res) => {
-        setCurrentUser(res)//проверить что пришло
-        setRequestMessage(res);
+        setCurrentUser({ name, email })//проверить что пришло
+        // setRequestMessage(res);
         // уведомление в профиле
       })
       .catch((err) => {
         console.log(err);
         setRequestMessage(err);
-        // setUserMessage("Что-то пошло не так! Попробуйте ещё раз.");
         // уведомление в профиле
       })
       .finally(() => {
@@ -204,25 +205,46 @@ function App() {
       });
   };
 
-  ///////////////////handlers auth///////////////////////////////////
-  ///////////////////handlers movies/////////////////////////////////
+  // поиск на странице с сохраненными фильмами
+  function handleSearchSavedMovie(string) {
+    setShowPreloader(true);
+    const films =
+      savedMovies.filter((movie) => {
+        return (
+          movie.nameRU.toLowerCase().includes(string.toLowerCase())
+          || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+        )
+      })
+    setSavedMovies(films);
+    setShowPreloader(false);
+  }
 
+  // поиск на странице с фильмами
   function handleSearchMovie(string) {
     setShowPreloader(true);
     moviesApi
       .getMovies()
       .then((allMovies) => {
-        // const d = ["nameRU", "nameEn"];
         //в идеале надо определять язык и и скать на этом языке, подумаю об этом после сдачи диплома
-        const films = allMovies.filter((movie) => {
-          return (
-            movie.nameRU.toLowerCase().includes(string.toLowerCase())
-            || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-          )
+        const putLikeButtons = allMovies.map((movie) => {
+          const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
+          //сравнить код из базы с id входящего фильма
+          if (savedMovieLike) {
+            return {
+              ...movie, buttonLikeType: "liked", key: movie.id
+            }
+          }
+          return { ...movie, buttonLikeType: "unliked", key: movie.id }
         })
+        const films =
+          putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
+            return (
+              movie.nameRU.toLowerCase().includes(string.toLowerCase())
+              || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+            )
+          })
         setMovies(films);
-
-        // localStorage.setItem()
+        // localStorage.setItem(string) // потом достать и вставить в новый стейт
       })
       .catch(console.error)
       .finally(() => {
@@ -233,10 +255,11 @@ function App() {
   //функция сохранения фильма
   function handleSaveMovie(movie) {
     setShowPreloader(true);
-    mainApi
+    MainApi
       .saveMovie(movie)
-      .then(() => {
-        setSavedMovies({ ...savedMovies, movie })
+      .then((newMovie) => { //ошибка валидации
+        setSavedMovies((state) =>
+          state.map((c) => (c._id === movie._id ? newMovie : c)))
 
       })
       .catch((err) => {
@@ -245,38 +268,44 @@ function App() {
       .finally(() => {
         setShowPreloader(false);
       });
-    // const isLiked = movie.likes.some((i) => {
-    //   return i === currentUser._id});
-    // api
-    //   .changeLikeCardStatus(card._id, isLiked)
-    //   .then((newCard) => {
-    //     setCards((state) =>
-    //       state.map((c) => (c._id === card._id ? newCard : c))
-    //     );
-    //   })
-    //   .catch(console.error);
   }
 
   function handleDeleteMovie(id) {
-    console.log('карточка удалена')
+    setShowPreloader(true);
+    console.log(id, 'id')
+    MainApi
+      .deleteCard(id)
+      .then(() => { //json ошибка
+        console.log('карточка удалена')
+        setSavedMovies((state) => state.filter((c) => c.id !== id))// ошибка
+
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setShowPreloader(false);
+      });
   }
 
-
-  function handlerChangeTumblerSavedMovies() { //к удалению и переделке в ф-ю подобную той, что ниже
-    setIsShortSavedMovies(!isShortSavedMovies);
-  }
-
-  // console.log(isShortSavedMovies)
-
-  // function handlerChangeTumbler(e) {
-  //   e.preventDefault();
-  //   console.log('сработала handlerChangeTumbler')
-  //   setIsShortMovies(!isShortMovies);
+  // function handlerChangeTumblerSavedMovies() { //к удалению и переделке в ф-ю подобную той, что ниже
+  //   setIsShortSavedMovies(!isShortSavedMovies);
   // }
 
-  // console.log(isShortMovies,'isShortMovies из app')
+  //тумблер "короткометражки" на странице с сохраненными фильмами
+  useEffect(() => {
+    if (isShortSavedMovies && savedMovies.length > 0) {
+      setShortFilteredSavedMovies(
+        savedMovies.filter((savedmovie) => {
+          return (
+            savedmovie.duration <= 40
+          )
+        })
+    )
+    }
+  }, [isShortSavedMovies]);
 
-
+  //тумблер "короткометражки" на странице с фильмами
   useEffect(() => {
     if (isShortMovies && movies.length > 0) {
       setShortFilteredMovies(
@@ -289,202 +318,196 @@ function App() {
     }
   }, [isShortMovies]);
 
-  console.log(
-    'isShortMovies', isShortMovies, 
-    'IsLoggedIn', isLoggedIn,
-    'currentUser', currentUser,
-    // 'movies', movies,
-    'savedMovies', savedMovies,
-    
-    )
+  // console.log(
+  //   'isShortMovies', isShortMovies,
+  //   'IsLoggedIn', isLoggedIn,
+  //   'currentUser', currentUser,
+  //   // 'movies', movies,
+  //   'savedMovies', savedMovies,
+
+  // )
 
   ///////////////////handlers movies/////////////////////////////////
 
 
   return (
     <div className="root">
-      <div className="page">
-        <CurrentUserContext.Provider value={currentUser 
-        || ""}>
-          {showPreloader && <Preloader />}
-          <Routes>
+      {tokenChecked &&
+        <div className="page">
+          <CurrentUserContext.Provider
+            value={currentUser || ""}>
+            {showPreloader && <Preloader />}
+            <Routes>
 
-            <Route
-              path="*" //пользователь вошел на несуществующую страницу
-              element={
-                <main className="content">
-                  <PageNotFound />
-                </main>
-              }
-            />
-
-            <Route
-              path="/signup"
-              element={
-                <main className="content">
-                  <Register
-                    handleRegister={handleRegister}
-                    formName={"signup"}
-                    className={"auth-container__form"}
-                    buttonText={"Зарегистрироваться"}
-                    wellcomeText={"Добро пожаловать!"}
-                    askToChangeForm={"Уже зарегистрированы? "}
-                    askToChangeFormLink={"Войти"}
-                    routTo={"/signin"}
-                    requestMessage={requestMessage}
-                  // setAuthRequestError={setAuthRequestError}
-                  // setCurrentUser={setCurrentUser}
-                  // currentUser={currentUser}
-                  />
-                </main>
-              }
-            />
-
-            <Route
-              path="/signin"
-              element={
-                <main className="content">
-                  <Login
-                    handleLogin={handleLogin}
-                    formName={"signin"}
-                    className={"auth-container__form"}
-                    buttonText={"Войти"}
-                    wellcomeText={"Рады видеть!"}
-                    askToChangeForm={"Ещё не зарегистрированы? "}
-                    askToChangeFormLink={"Регистрация"}
-                    routTo={"/signup"}
-                    requestMessage={requestMessage}
-                  // setAuthRequestError={setAuthRequestError}
-                  // setCurrentUser={setCurrentUser}
-                  // currentUser={currentUser}
-                  />
-                </main>
-              }
-            />
-
-            <Route
-              path="/"
-              element={
-                <>
-                  <Header
-                    isLoggedIn={isLoggedIn}
-                    handleOpenClosePopup={handleOpenClosePopup}
-                    isOpenPopup={isOpenPopup}
-                    isMainPage={isMainPage}
-                    isWideScreen={isWideScreen}
-                  />
+              <Route
+                path="*" //пользователь вошел на несуществующую страницу
+                element={
                   <main className="content">
-                    <Main
-                      isLoggedIn={isLoggedIn}
+                    <PageNotFound />
+                  </main>
+                }
+              />
+
+              <Route
+                path="/signup"
+                element={
+                  <main className="content">
+                    <Register
+                      handleRegister={handleRegister}
+                      formName={"signup"}
+                      className={"auth-container__form"}
+                      buttonText={"Зарегистрироваться"}
+                      wellcomeText={"Добро пожаловать!"}
+                      askToChangeForm={"Уже зарегистрированы? "}
+                      askToChangeFormLink={"Войти"}
+                      routTo={"/signin"}
+                      requestMessage={requestMessage}
                     />
                   </main>
-                  <Footer />
-                </>
-              }
-            />
+                }
+              />
 
-            <Route
-              path="/movies"
-              element={
-                <ProtectedRoute
-                  isLoggedIn={isLoggedIn}
-                  element={() => (
-                    <>
-                      <Header
+              <Route
+                path="/signin"
+                element={
+                  <main className="content">
+                    <Login
+                      handleLogin={handleLogin}
+                      formName={"signin"}
+                      className={"auth-container__form"}
+                      buttonText={"Войти"}
+                      wellcomeText={"Рады видеть!"}
+                      askToChangeForm={"Ещё не зарегистрированы? "}
+                      askToChangeFormLink={"Регистрация"}
+                      routTo={"/signup"}
+                      requestMessage={requestMessage}
+                    />
+                  </main>
+                }
+              />
+
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Header
+                      isLoggedIn={isLoggedIn}
+                      handleOpenClosePopup={handleOpenClosePopup}
+                      isOpenPopup={isOpenPopup}
+                      isMainPage={isMainPage}
+                      isWideScreen={isWideScreen}
+                    />
+                    <main className="content">
+                      <Main
                         isLoggedIn={isLoggedIn}
-                        handleOpenClosePopup={handleOpenClosePopup}
-                        isOpenPopup={isOpenPopup}
-                        isMainPage={isMainPage}
-                        isWideScreen={isWideScreen}
                       />
-                      <main className="content">
-                        <Movies
+                    </main>
+                    <Footer />
+                  </>
+                }
+              />
+
+              <Route
+                path="/movies"
+                element={
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    element={() => (
+                      <>
+                        <Header
                           isLoggedIn={isLoggedIn}
-                          movies={isShortMovies ? shortFilteredMovies : movies}
-                          handleSaveMovie={handleSaveMovie} 
-                          //handleSaveMovie на странице movies происходит сохранение, а saved-movies - удаление
-                          handleSearchMovie={handleSearchMovie}
-                          requestMessage={requestMessage}
-                          isShortMovies={isShortMovies}
-                          // handlerChangeTumbler={handlerChangeTumbler}
-                          setIsShortMovies={setIsShortMovies}
-                          
+                          handleOpenClosePopup={handleOpenClosePopup}
+                          isOpenPopup={isOpenPopup}
+                          isMainPage={isMainPage}
+                          isWideScreen={isWideScreen}
                         />
-                      </main>
-                      <Footer />
-                    </>
-                  )}
-                />
-              }
-            />
+                        <main className="content">
+                          <Movies
+                            isLoggedIn={isLoggedIn}
+                            movies={isShortMovies ? shortFilteredMovies : movies}
+                            handleSaveMovie={handleSaveMovie}
+                            handleSearchMovie={handleSearchMovie}
+                            requestMessage={requestMessage}
+                            isShortMovies={isShortMovies}
+                            setIsShortMovies={setIsShortMovies}
 
-            <Route
-              path="/saved-movies"
-              element={
-                <ProtectedRoute
-                  isLoggedIn={isLoggedIn}
-                  element={() => (
-                    <>
-                      <Header
-                        isLoggedIn={isLoggedIn}
-                        handleOpenClosePopup={handleOpenClosePopup}
-                        isOpenPopup={isOpenPopup}
-                        isMainPage={isMainPage}
-                        isWideScreen={isWideScreen}
-                      />
-                      <main className="content">
-                        <SavedMovies
+                          />
+                        </main>
+                        <Footer />
+                      </>
+                    )}
+                  />
+                }
+              />
+
+              <Route
+                path="/saved-movies"
+                element={
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    element={() => (
+                      <>
+                        <Header
                           isLoggedIn={isLoggedIn}
-                          movies={savedMovies}
-                          handleSaveMovie={handleSaveMovie}
-                          handleSearchMovie={handleSearchMovie}
-                          requestMessage={requestMessage}
-                          // isShortSavedMovies={isShortSavedMovies}
-                          // setIsShortSavedMovies={setIsShortSavedMovies}
-                          handlerChangeTumblerSavedMovies={handlerChangeTumblerSavedMovies}
-                          handleDeleteMovie={handleDeleteMovie}
+                          handleOpenClosePopup={handleOpenClosePopup}
+                          isOpenPopup={isOpenPopup}
+                          isMainPage={isMainPage}
+                          isWideScreen={isWideScreen}
                         />
-                      </main>
-                      <Footer />
-                    </>
-                  )}
-                />
-              }
-            />
+                        <main className="content">
+                          <SavedMovies
+                            isLoggedIn={isLoggedIn}
+                            movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
+                            // handleSaveMovie={handleSaveMovie}
+                            handleSearchMovie={handleSearchSavedMovie} //отличается от movies
+                            requestMessage={requestMessage}
+                            // handlerChangeTumblerSavedMovies={handlerChangeTumblerSavedMovies}
+                            handleDeleteMovie={handleDeleteMovie}
+                            isShortMovies={isShortSavedMovies}
+                            setIsShortMovies={setIsShortSavedMovies}
+                          />
+                        </main>
+                        <Footer />
+                      </>
+                    )}
+                  />
+                }
+              />
 
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute
-                  isLoggedIn={isLoggedIn}
-                  element={() => (
-                    <>
-                      <Header
-                        isLoggedIn={isLoggedIn}
-                        handleOpenClosePopup={handleOpenClosePopup}
-                        isOpenPopup={isOpenPopup}
-                        isMainPage={isMainPage}
-                        isWideScreen={isWideScreen}
-                      />
-                      <main className="content">
-                        <Profile
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    element={() => (
+                      <>
+                        <Header
                           isLoggedIn={isLoggedIn}
-                          routTo={"/"}
-                          handleChangeProfile={handleChangeProfile}
-                          handleDeleteToken={handleDeleteToken}
-                          requestMessage={requestMessage}
+                          handleOpenClosePopup={handleOpenClosePopup}
+                          isOpenPopup={isOpenPopup}
+                          isMainPage={isMainPage}
+                          isWideScreen={isWideScreen}
                         />
-                      </main>
-                    </>
-                  )}
-                />
-              }
-            />
+                        <main className="content">
+                          <Profile
+                            isLoggedIn={isLoggedIn}
+                            routTo={"/"}
+                            handleChangeProfile={handleChangeProfile}
+                            handleDeleteToken={handleDeleteToken}
+                            requestMessage={requestMessage}
+                          />
+                        </main>
+                      </>
+                    )}
+                  />
+                }
+              />
 
-          </Routes>
+            </Routes>
 
-        </CurrentUserContext.Provider>
-      </div>
+          </CurrentUserContext.Provider>
+        </div>
+      }
     </div>
   );
 }

@@ -4,6 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
 
+
 function MoviesCardList({
   isMoviePage,
   movies,
@@ -16,6 +17,7 @@ function MoviesCardList({
 
 }) {
 
+
   // function isSavedMovie(movie) {
   //   return savedMovies.some((savedMovie) => savedMovie.movieId === movie.movieId);
   // }
@@ -24,7 +26,7 @@ function MoviesCardList({
     <section className="card-list">
 
       <ul className="card-list__size-container size-container">
-        {movies.map((movie) => (
+        {movies.length > 0 && movies.map((movie) => (
 
           <MoviesCard
             key={movie.id}
@@ -36,10 +38,10 @@ function MoviesCardList({
             handleDeleteMovie={handleDeleteMovie} //попадает из saved-movies
 
           />
-
         ))}
+
       </ul>
-      
+
     </section>
   );
 }

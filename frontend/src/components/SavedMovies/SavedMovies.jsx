@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './SavedMovies.css';
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-// import LearnMore from "../LearnMore/LearnMore";
+
 import SearchForm from "../SearchForm/SearchForm";
-import { useResize } from "../../components/hooks/useResize";
 
 function SavedMovies({
   movies,
@@ -11,23 +10,18 @@ function SavedMovies({
   handleDeleteMovie,
   handleSearchMovie, //тут должна быть другая функция
   requestMessage,
-  // isShortSavedMovies,
-  // setIsShortSavedMovies
-  handlerChangeTumblerSavedMovies
+  isShortMovies,
+  setIsShortMovies
+  // handlerChangeTumblerSavedMovies,
 }) {
-
-  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
-
 
   return (
     <>
       <SearchForm
         requestMessage={requestMessage}
-        // movies={films || []}
         handleSearchMovie={handleSearchMovie}
-        // setIsShort={setIsShortSavedMovies}
-        // isShort={isShortSavedMovies}
-        handlerChangeTumbler={handlerChangeTumblerSavedMovies}
+        setIsShortMovies={setIsShortMovies}
+        isShortMovies={isShortMovies}
       />
       <MoviesCardList
         isMoviePage={false}

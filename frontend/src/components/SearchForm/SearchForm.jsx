@@ -20,6 +20,7 @@ function SearchForm({
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSearchMovie(values['search']);
+    //тут сохранить в локал сторадж для каждого вида
     resetForm();
   };
 

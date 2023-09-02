@@ -12,22 +12,13 @@ function MoviesCard({
 
 
   const saveOrDeleteText = isMoviePage ? "save movie" : "delete movie from saved";
-  const { id, nameRU, duration, trailerLink } = movie;
+  const { _id, nameRU, duration, trailerLink } = movie;
   let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`
- 
+ console.log(movie, 'пришло на отрисовку')
 
-  function saveOrDeleteHandler(id) {
-    isMoviePage ? handleSaveMovie(id) : handleDeleteMovie(id)
-    // const isLiked = card.likes.some((i) => {
-    //   return i === currentUser._id});
-    // api
-    //   .changeLikeCardStatus(card._id, isLiked)
-    //   .then((newCard) => {
-    //     setCards((state) =>
-    //       state.map((c) => (c._id === card._id ? newCard : c))
-    //     );
-    //   })
-      // .catch(console.error);
+  function saveOrDeleteHandler() {
+    console.log(movie, _id, 'movie, id')
+    isMoviePage ? handleSaveMovie(movie) : handleDeleteMovie(_id)
   }
 
   return (
@@ -38,10 +29,14 @@ function MoviesCard({
           <p className="card__subtitle">{movieDuration}</p>
         </div>
         <button
-          className={`card__icon ${isMoviePage ? "card__icon_type_save" : "card__icon_type_delete"}`}
+          className={`card__icon ${movie.buttonLikeType === "liked" 
+          ? "card__icon_type_save_active" 
+          : movie.buttonLikeType === "unliked" 
+          ? "card__icon_type_save" 
+          : "card__icon_type_delete"}`}
           /*card__icon_type_save_active класс добавится на этапе добавления функционала*/
           aria-label={saveOrDeleteText}
-          onClick={(id) => saveOrDeleteHandler(id)}
+          onClick={saveOrDeleteHandler}
         ></button>
       </div>
 
