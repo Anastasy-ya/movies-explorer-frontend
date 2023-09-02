@@ -34,6 +34,7 @@ function App() {
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
   // фильмы и сохраненные фильмы
+  const [basicMovies, setBasicMovies] = React.useState([]);
   const [movies, setMovies] = React.useState(() => {
     const checkStorage = localStorage.getItem("films");
     return checkStorage ? JSON.parse(checkStorage) : []
@@ -231,14 +232,32 @@ function App() {
     setShowPreloader(false);
   }
 
+  //basicMovies
+  useEffect(() => {
+    if (isLoggedIn) {
+      setShowPreloader(true); //здесь не должно быть запроса к фильмам
+      moviesApi
+        .getMovies()
+        .then((basicMovies) => {
+          setBasicMovies(basicMovies)
+        })
+        .catch(console.error)
+        .finally(() => {
+          setShowPreloader(false);
+        });
+    }
+  }, [isLoggedIn])
+
+  
   // поиск на странице с фильмами
   function handleSearchMovie(string) {
-    setShowPreloader(true);
-    moviesApi
-      .getMovies()
-      .then((allMovies) => {
-        //в идеале надо определять язык и и скать на этом языке, подумаю об этом после сдачи диплома
-        const putLikeButtons = allMovies.map((movie) => {
+    console.log(string)
+    setShowPreloader(true); //здесь не должно быть запроса к фильмам
+    
+    // moviesApi
+    //   .getMovies()
+    //   .then((allMovies) => {
+        const putLikeButtons = basicMovies.map((movie) => {
           const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
           //сравнить код из базы с id входящего фильма
           if (savedMovieLike) {
@@ -257,11 +276,11 @@ function App() {
           })
         setMovies(films);
         localStorage.setItem("films", JSON.stringify(films)); // потом достать и вставить в новый стейт
-      })
-      .catch(console.error)
-      .finally(() => {
+      // })
+      // .catch(console.error)
+      // .finally(() => {
         setShowPreloader(false);
-      });
+      // });
   }
 
   //функция сохранения фильма

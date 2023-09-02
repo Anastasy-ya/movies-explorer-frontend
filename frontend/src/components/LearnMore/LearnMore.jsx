@@ -2,7 +2,7 @@ import React from "react";
 import './LearnMore.css';
 
 function LearnMore({ moviesToRender, handlerMoreFilms, isRenderedLearnMore }) {
-
+  
   return (
     <div className="learn-more size-container">
       {isRenderedLearnMore ? 
@@ -15,7 +15,7 @@ function LearnMore({ moviesToRender, handlerMoreFilms, isRenderedLearnMore }) {
           Ещё
         </button>
         : <p 
-        className={`${moviesToRender > 0 ? "learn-more__message" : "learn-more__none"}`}>
+        className={`${moviesToRender <= 0 ? "learn-more__message" : "learn-more__none"}`}>
         Ничего не найдено
         </p>
         }
