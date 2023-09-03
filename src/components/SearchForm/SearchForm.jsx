@@ -15,26 +15,46 @@ function SearchForm({
   // isShort
 }) {
 
-   //поисковые строки
+  //поисковые строки
   //  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState("");
-   const [moviesSearchQuery, setMoviesSearchQuery] = React.useState(() => {
-    const checkStorage = localStorage.getItem("moviesSearchQuery");
-    return checkStorage ? checkStorage : ""
-   });
-  
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-  
+  const [moviesSearchQuery, setMoviesSearchQuery] = React.useState(() => ""
+    // const checkStorage = localStorage.getItem("moviesSearchQuery");
+    // return checkStorage ? checkStorage : ""
+  );
+
+  const { values, handleChange, errors, isValid, resetForm, setErrors } = useFormWithValidation();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('moviesSearchQuery', values['search'])
+
+    if (!isValid) {
+      setErrors('Нужно ввести ключевое слово')
+      return;
+    }
+    setErrors(''); //обнулить ошибки 
+    // чтобы они не показались одновременно с ошибкой после запроса на сервер
+    
+    setMoviesSearchQuery(values['search'] ?? moviesSearchQuery)
+    // localStorage.setItem('moviesSearchQuery', moviesSearchQuery)
+    // localStorage.getItem("moviesSearchQuery");
     // setMoviesSearchQuery(moviesSearchQuery)
-    handleSearchMovie(moviesSearchQuery); //values['search']
+    handleSearchMovie(values['search']); //values['search']
     //values['search'] || localStorage.getItem('moviesSearchQuery')
   };
 
+  //обнулить сообщение об ошибке
+  useEffect(() => {
+    if (isValid) {
+      setErrors('')
+    } 
+  }, [isValid]);
+
+
+  //записать поисковую строку
   // useEffect(() => {
   //   setMoviesSearchQuery(moviesSearchQuery)
   // }, [values['search']]);
+
 
 
   return (
@@ -43,7 +63,10 @@ function SearchForm({
 
         <form
           className="search-input__form form"
-          onSubmit={(e) => handleSubmit(e)}>
+          onSubmit={(e) => handleSubmit(e)}
+          noValidate
+          >
+          
 
           <input
             type="text"
@@ -54,14 +77,17 @@ function SearchForm({
             onChange={handleChange}
             aria-label="write keywords for searching"
             // autoСomplete="off"
-            required
+            // required
           />
+
+          {/* <span className="search-input__error">
+            {errors?.['search']}
+          </span> */}
 
           <button
             type="submit"
             className="search-input__button"
             aria-label="search films"
-            // disabled={!isValid} //раскомментировать для показа всех фильмов
           >Найти
           </button>
 

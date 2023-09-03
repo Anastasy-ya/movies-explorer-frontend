@@ -29,6 +29,7 @@ function Register({
     handleRegister(values);
     resetForm();
   };
+  
   // console.log('errors', errors);
   // console.log('поля', values, currentUser);
 

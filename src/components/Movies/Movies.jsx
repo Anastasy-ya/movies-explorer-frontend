@@ -94,6 +94,7 @@ function Movies({
         moviesToRender={moviesToRender}
         handlerMoreFilms={handlerMoreFilms}
         isRenderedLearnMore={isRenderedLearnMore}
+        movies={moviesForRender()}
       />
     </>
   );
