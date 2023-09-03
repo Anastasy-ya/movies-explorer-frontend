@@ -14,10 +14,3 @@ import { MOVIES_API } from "../utils/consts";
       }
     }).then((res) => checkResponce(res));
   };
-
-
-// const moviesApi = new MoviesApi(MOVIES_API, {
-//   "Content-Type": "application/json",
-// });
-
-// export default moviesApi;

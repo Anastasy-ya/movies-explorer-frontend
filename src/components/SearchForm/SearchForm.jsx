@@ -1,88 +1,77 @@
 import React, { useState, useEffect } from "react";
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import useFormWithValidation from "../hooks/usevalidate";
+// import useFormWithValidation from "../hooks/usevalidate";
 import RequestMessage from "../RequestMessage/RequestMessage";
+import AuthForm from "../AuthForm/AuthForm";
+import { ErrorMessage } from "@hookform/error-message";
+import { useLocation } from "react-router-dom";
 
 function SearchForm({
   handleSearchMovie,
   requestMessage,
-  // handlerChangeTumbler,
+  setRequestMessage,
   setIsShortMovies,
-  isShortMovies
-  // movies,
-  // setIsShort,
-  // isShort
+  isShortMovies,
+  onSearch,
+
 }) {
 
-  //поисковые строки
-  //  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState("");
-  const [moviesSearchQuery, setMoviesSearchQuery] = React.useState(() => ""
-    // const checkStorage = localStorage.getItem("moviesSearchQuery");
-    // return checkStorage ? checkStorage : ""
-  );
-
-  const { values, handleChange, errors, isValid, resetForm, setErrors } = useFormWithValidation();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!isValid) {
-      setErrors('Нужно ввести ключевое слово')
-      return;
+  // const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
+  const { register, errors, isValid, handleSubmit, watch, setValue } = AuthForm();
+  const location = useLocation();
+  
+  useEffect(() => {
+    if (location.pathname === "/movies") {
+      const savedQuery = localStorage.getItem("moviesSearchQuery");
+      if (savedQuery) {
+        setValue("search", savedQuery); //динамические значения полей
+      }
+    } else {
+      const savedQuery = localStorage.getItem("savedMoviesSearchQuery");
+      if (savedQuery) {
+        setValue("search", savedQuery);
+      }
     }
-    setErrors(''); //обнулить ошибки 
-    // чтобы они не показались одновременно с ошибкой после запроса на сервер
-    
-    setMoviesSearchQuery(values['search'] ?? moviesSearchQuery)
-    // localStorage.setItem('moviesSearchQuery', moviesSearchQuery)
-    // localStorage.getItem("moviesSearchQuery");
-    // setMoviesSearchQuery(moviesSearchQuery)
-    handleSearchMovie(values['search']); //values['search']
-    //values['search'] || localStorage.getItem('moviesSearchQuery')
+  }, []);
+
+  const onSubmit = (data) => {
+    setRequestMessage(<ErrorMessage errors={errors} name="search" />)
+    onSearch(data.search);
   };
 
-  //обнулить сообщение об ошибке
-  useEffect(() => {
-    if (isValid) {
-      setErrors('')
-    } 
-  }, [isValid]);
+  const query = watch()
 
+  }
 
-  //записать поисковую строку
+  // // обнулить сообщение об ошибке
   // useEffect(() => {
-  //   setMoviesSearchQuery(moviesSearchQuery)
-  // }, [values['search']]);
+  //   if (isValid) {
+  //     errors.search=""
+  //   }
+  // }, [isValid]);
 
-
-
+// console.log(isValid)
   return (
     <div className="search-input">
       <div className="search-input__size-container size-container">
 
         <form
           className="search-input__form form"
-          onSubmit={(e) => handleSubmit(e)}
-          noValidate
+          onSubmit={handleSubmit(onSubmit)}
           >
-          
 
           <input
             type="text"
             name="search"
             className="search-input__field"
-            value={values.search || moviesSearchQuery} // || moviesSearchQuery
-            placeholder="Фильм"//{placeholder}
-            onChange={handleChange}
+            placeholder="Фильм"
             aria-label="write keywords for searching"
-            // autoСomplete="off"
-            // required
+            {...register("search", {
+              required: "Нужно ввести ключевое слово",
+            })}
           />
-
-          {/* <span className="search-input__error">
-            {errors?.['search']}
-          </span> */}
+          {/* <ErrorMessage errors={errors} name="search" /> */}
 
           <button
             type="submit"
@@ -91,12 +80,14 @@ function SearchForm({
           >Найти
           </button>
 
+          {<RequestMessage
+            requestMessage={requestMessage}
+            parent={"search-input"}
+          />}
+
         </form>
 
-        <RequestMessage
-          requestMessage={requestMessage}
-          parent={"search-input"}
-        />
+
 
         <FilterCheckbox
           // handlerChangeTumbler={handlerChangeTumbler}

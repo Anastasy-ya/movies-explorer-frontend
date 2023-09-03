@@ -20,7 +20,7 @@ import * as moviesApi from "../../utils/MoviesApi";
 import * as MainApi from "../../utils/MainApi";
 
 function App() {
-  const [tokenChecked, setTokenChecked] = useState(false); //костыль
+  const [tokenChecked, setTokenChecked] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPreloader, setShowPreloader] = useState(false);
@@ -510,6 +510,7 @@ function App() {
                               handleSaveMovie={handleSaveMovie}
                               handleSearchMovie={handleSearchMovie}
                               requestMessage={requestMessage}
+                              setRequestMessage={setRequestMessage} //нов
                               isShortMovies={isShortMovies}
                               setIsShortMovies={setIsShortMovies}
                               handleDeleteMovie={handleDeleteMovie}

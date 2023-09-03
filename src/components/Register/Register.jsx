@@ -29,7 +29,7 @@ function Register({
     handleRegister(values);
     resetForm();
   };
-  
+
   // console.log('errors', errors);
   // console.log('поля', values, currentUser);
 
@@ -87,7 +87,7 @@ function Register({
         />
 
         <RequestMessage 
-          parent={"profile"}
+          parent={"auth-container"}
           requestMessage={requestMessage}
         />
           

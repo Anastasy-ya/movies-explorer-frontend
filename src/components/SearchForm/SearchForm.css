@@ -91,8 +91,6 @@
 }
 
 .search-input__button {
-  font-family: "Inter", "Arial", "sans-serif";
-  font-style: normal;
   font-feature-settings: "clig" off, "liga" off;
   font-weight: 500;
   width: 70px;
@@ -108,7 +106,7 @@
   grid-area: button;
 }
 
-.search-input__error {
+.search-input__request-message {
   /*текст ошибки*/
   font-weight: 400;
   font-size: 12px;
@@ -118,4 +116,5 @@
   padding: 0;
   margin: 5px 0 0;
   grid-area: error;
+  text-align: right;
 }
