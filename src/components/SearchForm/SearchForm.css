@@ -117,4 +117,10 @@
   margin: 5px 0 0;
   grid-area: error;
   text-align: right;
+  width: 100%;
+  display: block;
+}
+
+.search-input__container {
+  width: 100%;
 }

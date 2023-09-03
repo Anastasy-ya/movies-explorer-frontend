@@ -29,7 +29,7 @@ function Movies({
     localStorage.getItem("moviesSearchQuery") || "",
   );
   // const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
-  const { isWideScreen, isMiddleScreen, isNarrowScreen } = useResize();
+  const { isWideScreen, isMiddleScreen } = useResize();
 
   //количество карточек на странице при первой отрисовке
   const count = isWideScreen ?
@@ -47,7 +47,6 @@ function Movies({
         setAddMovies(addMovies + 2);
   }
 
-
   //сколько карточек показано сейчас?
   const showedMovies = count + addMovies;
 
@@ -62,27 +61,24 @@ function Movies({
 
   const moviesToRender = movies.length - showedMovies;
 
-
   useEffect(() => {
-    // console.log('сколько не показано?', movies.length - showedMovies)
-
     if (moviesToRender > 0) { // || movies.length === 0
       setIsRenderedLearnMore(true)
     } else {
       setIsRenderedLearnMore(false)
     }
-
   }, [movies, showedMovies]);
 
-  // console.log(showedMovies, '-количество к отрисовке', isRenderedLearnMore, 'isRenderedLearnMore');
+  
 
   function handleSearch(query) {
-    setRequestMessage(<ErrorMessage errors={"ffg"} name="search" />)
+    setRequestMessage(movies ? "Ничего не найдено" : 0)
     setQuery(query);
     handleSearchMovie(query)
     localStorage.setItem("moviesSearchQuery", query);
   }
-  console.log(requestMessage)
+  
+  console.log(movies.length, requestMessage)
 
   return (
     <>
@@ -93,6 +89,7 @@ function Movies({
         setIsShortMovies={setIsShortMovies}
         isShortMovies={isShortMovies}
         onSearch={handleSearch}
+        setQuery={setQuery}
         // isShowErrorMessage={isShowErrorMessage}
       />
       <MoviesCardList

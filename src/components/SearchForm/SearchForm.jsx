@@ -14,13 +14,13 @@ function SearchForm({
   setIsShortMovies,
   isShortMovies,
   onSearch,
-
+  setQuery
 }) {
 
   // const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
   const { register, errors, isValid, handleSubmit, watch, setValue } = AuthForm();
   const location = useLocation();
-  
+
   useEffect(() => {
     if (location.pathname === "/movies") {
       const savedQuery = localStorage.getItem("moviesSearchQuery");
@@ -36,22 +36,19 @@ function SearchForm({
   }, []);
 
   const onSubmit = (data) => {
-    setRequestMessage(<ErrorMessage errors={errors} name="search" />)
     onSearch(data.search);
   };
 
-  const query = watch()
+  const query = watch("search", localStorage.getItem("moviesSearchQuery") || "");
 
-  }
+  useEffect(() => {
+    localStorage.setItem("moviesSearchQuery", query);
+    setQuery(query);
+  }, [query]);
 
-  // // обнулить сообщение об ошибке
-  // useEffect(() => {
-  //   if (isValid) {
-  //     errors.search=""
-  //   }
-  // }, [isValid]);
+  console.log(requestMessage)
+  
 
-// console.log(isValid)
   return (
     <div className="search-input">
       <div className="search-input__size-container size-container">
@@ -59,7 +56,7 @@ function SearchForm({
         <form
           className="search-input__form form"
           onSubmit={handleSubmit(onSubmit)}
-          >
+        >
 
           <input
             type="text"
@@ -71,7 +68,6 @@ function SearchForm({
               required: "Нужно ввести ключевое слово",
             })}
           />
-          {/* <ErrorMessage errors={errors} name="search" /> */}
 
           <button
             type="submit"
@@ -80,14 +76,14 @@ function SearchForm({
           >Найти
           </button>
 
+          {/*TODO: добавить еще один пропс в остальные элеементы */}
           {<RequestMessage
             requestMessage={requestMessage}
             parent={"search-input"}
+            oneMoreElement={<ErrorMessage errors={errors} name="search" />}
           />}
 
         </form>
-
-
 
         <FilterCheckbox
           // handlerChangeTumbler={handlerChangeTumbler}
