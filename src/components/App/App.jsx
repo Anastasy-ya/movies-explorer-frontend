@@ -65,7 +65,7 @@ function App() {
   //получение сохраненных фильмов из бд
   useEffect(() => {
     if (isLoggedIn) {
-      setShowPreloader(true);
+      // setShowPreloader(true);
       MainApi
         .getInitialMovies()
         .then((films) => {
@@ -78,14 +78,14 @@ function App() {
         })
         .catch(console.error)
         .finally(() => {
-          setShowPreloader(false);
+          // setShowPreloader(false);
         });
     }
   }, [isLoggedIn])
 
   // проверка зарегистрирован ли пользователь
   useEffect(() => {
-    setShowPreloader(true);
+    // setShowPreloader(true);
     auth
       .checkToken()
       .then((user) => {
@@ -98,7 +98,7 @@ function App() {
       })
       .finally(() => {
         setTokenChecked(true);
-        setShowPreloader(false);
+        // setShowPreloader(false);
       });
   }, []);
 
@@ -150,7 +150,7 @@ function App() {
 
   //авторизация 
   function handleLogin({ email, password }) {
-    setShowPreloader(true);
+    // setShowPreloader(true);
     auth
       .login({ email, password })
       .then((res) => {
@@ -167,13 +167,13 @@ function App() {
         //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
-        setShowPreloader(false);
+        // setShowPreloader(false);
       });
   }
 
   //изменить данные профиля
   function handleChangeProfile({ name, email }) {
-    setShowPreloader(true);
+    // setShowPreloader(true);
     auth
       .updateUser({ name, email })
       .then((res) => {
@@ -187,7 +187,7 @@ function App() {
         // уведомление в профиле
       })
       .finally(() => {
-        setShowPreloader(false);
+        // setShowPreloader(false);
       });
   }
 
@@ -265,6 +265,7 @@ function App() {
             console.log(items)
           setMovies(items);
           localStorage.setItem("films", JSON.stringify(items));
+          setRequestMessage(items.length > 0 ? "" : "Ничего не найдено");
           //конец функции поиска фильмов
         })
 
@@ -298,6 +299,7 @@ function App() {
         })
       setMovies(films);
       localStorage.setItem("films", JSON.stringify(films));
+      setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
     }//конец блока else
   };
 
@@ -435,7 +437,7 @@ function App() {
 
 
   function handleDeleteMovie(id) {
-    setShowPreloader(true);
+    // setShowPreloader(true);
     // console.log(id, 'id')
     const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
     // console.log(deleteMovie._id, 'deleteMovie', deleteMovie)
@@ -450,7 +452,7 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        setShowPreloader(false);
+        // setShowPreloader(false);
       });
   }
 
