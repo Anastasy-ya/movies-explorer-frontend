@@ -21,7 +21,6 @@ import * as MainApi from "../../utils/MainApi";
 
 function App() {
   const [tokenChecked, setTokenChecked] = useState(false);
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPreloader, setShowPreloader] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({
@@ -33,7 +32,7 @@ function App() {
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
   // фильмы и сохраненные фильмы
-  const [basicMovies, setBasicMovies] = React.useState([]);
+  const [basicMovies, setBasicMovies] = React.useState(JSON.parse(localStorage.getItem("films")) || []);
   const [movies, setMovies] = React.useState(() => {
     const checkStorage = localStorage.getItem("films");
     return checkStorage ? JSON.parse(checkStorage) : []
@@ -115,7 +114,7 @@ function App() {
     if (requestMessage) {
       setTimeout(() => {
         setRequestMessage("")
-      }, 5000);
+      }, 3000);
     }
   }, [requestMessage]);
 
@@ -194,7 +193,7 @@ function App() {
 
   //выйти
   function handleDeleteToken() {
-    setShowPreloader(true);
+    // setShowPreloader(true);
     auth.logOut()
       .then(() => setCurrentUser({
         name: "",
@@ -212,13 +211,13 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        setShowPreloader(false);
+        // setShowPreloader(false);
       });
   };
 
   // поиск на странице с сохраненными фильмами
   function handleSearchSavedMovie(string) {
-    setShowPreloader(true);
+    // setShowPreloader(true);
     const films =
       savedMovies.filter((movie) => {
         return (
@@ -227,373 +226,444 @@ function App() {
         )
       })
     setSavedMovies(films);
-    setShowPreloader(false);
+    setRequestMessage(films.length > 0 ? "" : "Ничего не найдено")
+    // setShowPreloader(false);
   }
 
 
-  // // основная функция поиска фильмов
-  // function handleSearchMovie(string) {
-  //   console.log(string, 'поисковая строка попала в ф-ю поиска')
-  //   setShowPreloader(true); 
+  // основная функция поиска фильмов
+  function handleSearchMovie(string) {
+    // console.log(string, 'поисковая строка попала в ф-ю поиска')
 
-  //   if (basicMovies.length === 0) { // если карточек нет, получить
-  //     moviesApi
-  //       .getMovies()
-  //       .then((films) => {
-  //         console.log(films)
-  //         setBasicMovies(films) //basicMovies
-          
-  //       }) //тут теряются фильмы
-  //       .then(() => {
-  //         searchMovies(string)
-  //       }) 
-  //       .catch((err) => {
-  //         console.log(err)
-  //         //записать ошибку сообщения
-  //       })
-  //       .finally(() => {
-  //         setShowPreloader(false);
-  //       })
-  //   } else searchMovies();
-  // };
+
+    if (basicMovies.length === 0) { // если карточек нет, получить
+      setShowPreloader(true);
+      moviesApi
+        .getMovies()
+        .then((cards) => {
+          console.log(cards, "данные от сервера")
+          setBasicMovies(cards) //basicMovies
+          //начало функции поиска фильмов
+          const putLikeButtons = cards.map((movie) => {
+            const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
+            if (savedMovieLike) {
+              return {
+                ...movie, buttonLikeType: "liked", key: movie.id
+              }
+            }
+            return { ...movie, buttonLikeType: "unliked", key: movie.id }
+          })
+          console.log(putLikeButtons, "putLikeButtons") //+
+          const items = //это films
+            putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
+              console.log(movie)
+              return (
+                movie.nameRU.toLowerCase().includes(string.toLowerCase())
+                || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+              )
+            })
+            console.log(items)
+          setMovies(items);
+          localStorage.setItem("films", JSON.stringify(items));
+          //конец функции поиска фильмов
+        })
+
+        .catch((err) => {
+          console.log(err)
+          setRequestMessage(err, `Во время запроса произошла ошибка. 
+          Возможно, проблема с соединением или сервер недоступен. 
+          Подождите немного и попробуйте ещё раз`)//пока так
+        })
+        .finally(() => {
+          setShowPreloader(false);
+
+          // searchMovies(string)//вызов второй функции
+        })
+    } else {//начало блока else
+      const putLikeButtons = basicMovies.map((movie) => {
+        const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
+        if (savedMovieLike) {
+          return {
+            ...movie, buttonLikeType: "liked", key: movie.id
+          }
+        }
+        return { ...movie, buttonLikeType: "unliked", key: movie.id }
+      })
+      const films =
+        putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
+          return (
+            movie.nameRU.toLowerCase().includes(string.toLowerCase())
+            || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+          )
+        })
+      setMovies(films);
+      localStorage.setItem("films", JSON.stringify(films));
+    }//конец блока else
+  };
 
   // console.log(basicMovies, 'базовые фильмы в глобальной области')
 
-  //   //механика поиска фильмов, 
-  //   //составная часть основной функции поиска
-  //   function searchMovies(string) {
-  //     // setShowPreloader(true); 
-  //     // moviesApi
-  //     //   .getMovies()
-  //     //   .then((allMovies) => {
-  //       console.log(basicMovies, 'базовые фильмы попадают в поиск')
-  //     const putLikeButtons = basicMovies.map((movie) => {
-  //       const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
-  //       //сравнить код из базы с id входящего фильма
-  //       if (savedMovieLike) {
-  //         return {
-  //           ...movie, buttonLikeType: "liked", key: movie.id
-  //         }
-  //       }
-  //       return { ...movie, buttonLikeType: "unliked", key: movie.id }
-  //     })
-  //     const films =
-  //       putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
-  //         return (
-  //           movie.nameRU.toLowerCase().includes(string.toLowerCase())
-  //           || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-  //         )
-  //       })
-  //     setMovies(films);
-  //     localStorage.setItem("films", JSON.stringify(films)); // потом достать и вставить в новый стейт
-
+  // //механика поиска фильмов, 
+  // //составная часть основной функции поиска
+  // function searchMovies(basicMovies, string) {
+  // const putLikeButtons = basicMovies.map((movie) => {
+  //   const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
+  //   if (savedMovieLike) {
+  //     return {
+  //       ...movie, buttonLikeType: "liked", key: movie.id
+  //     }
   //   }
+  //   return { ...movie, buttonLikeType: "unliked", key: movie.id }
+  // })
+  // const films =
+  //   putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
+  //     return (
+  //       movie.nameRU.toLowerCase().includes(string.toLowerCase())
+  //       || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+  //     )
+  //   })
+  // setMovies(films);
+  // localStorage.setItem("films", JSON.stringify(films));
+  // }
 
-  //basicMovies
-  useEffect(() => {
-    if (isLoggedIn) {
-      setShowPreloader(true); //здесь не должно быть запроса к фильмам
-      moviesApi
-        .getMovies()
-        .then((basicMovies) => {
-          setBasicMovies(basicMovies)
-        })
-        .catch(console.error)
-        .finally(() => {
-          setShowPreloader(false);
-        });
-    }
-  }, [isLoggedIn])
 
-  
-  // поиск на странице с фильмами
-  function handleSearchMovie(string) {
-    console.log(string)
-    setShowPreloader(true); //здесь не должно быть запроса к фильмам
-    
-    // moviesApi
-    //   .getMovies()
-    //   .then((allMovies) => {
-        const putLikeButtons = basicMovies.map((movie) => {
-          const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
-          //сравнить код из базы с id входящего фильма
-          if (savedMovieLike) {
-            return {
-              ...movie, buttonLikeType: "liked", key: movie.id
-            }
-          }
-          return { ...movie, buttonLikeType: "unliked", key: movie.id }
-        })
-        const films =
-          putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
-            return (
-              movie.nameRU.toLowerCase().includes(string.toLowerCase())
-              || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-            )
-          })
-        setMovies(films);
-        localStorage.setItem("films", JSON.stringify(films)); // потом достать и вставить в новый стейт
-      // })
-      // .catch(console.error)
-      // .finally(() => {
-        setShowPreloader(false);
-      // });
-  }
 
-    //функция сохранения фильма
-    function handleSaveMovie(movie) {
-      // console.log(movie, 'это пришло на сохранение фильма')
-      setShowPreloader(true);
-      MainApi //TODO: проверить работоспособность, в крайнем случае вытащить старый код
+
+
+
+
+  // function searchMovies(string) {
+  //   console.log(basicMovies, 'базовые фильмы попадают в поиск')
+  //   const likedOrUnlikedButtons = basicMovies.map((movie) => {
+  //     //присвоить новое свойство для установки вида
+  //     console.log(savedMovies, 'savedMovies',  )
+  //     const likedMovies = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
+  //     console.log(likedMovies)
+  //     if (likedMovies) {
+  //       //сохраненным записать like, несохраненным unlike
+  //       return {
+  //         ...movie, buttonLikeType: "liked", key: movie.id
+  //       }
+  //     }
+  //     return { ...movie, buttonLikeType: "unliked", key: movie.id }
+  //   })
+
+  //   const films = // далее поиск идет по измененным фильмам со свойством 
+  //   likedOrUnlikedButtons.filter((movie) => { //измененные movies с добавленным свойством
+  //       return (
+  //         movie.nameRU.toLowerCase().includes(string.toLowerCase())
+  //         || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+  //       )
+  //     })
+  //   setMovies(films); //сохранение фильмов на "/movies"
+  //   console.log(films, 'отфильтрованные фильмы')
+  //   localStorage.setItem("films", JSON.stringify(films)); // потом достать и вставить в новый стейт
+  // }
+
+
+
+  // //basicMovies
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     // setShowPreloader(true); //здесь не должно быть запроса к фильмам
+  //     moviesApi
+  //       .getMovies()
+  //       .then((basicMovies) => {
+  //         setBasicMovies(basicMovies)
+  //       })
+  //       .catch(console.error)
+  //       .finally(() => {
+  //         // setShowPreloader(false);
+  //       });
+  //   }
+  // }, [isLoggedIn])
+
+
+  // // поиск на странице с фильмами
+  // function handleSearchMovie(string) {
+  //   console.log(string)
+  //   setShowPreloader(true); //здесь не должно быть запроса к фильмам
+
+  //   // moviesApi
+  //   //   .getMovies()
+  //   //   .then((allMovies) => {
+  //       const putLikeButtons = basicMovies.map((movie) => {
+  //         const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
+  //         //сравнить код из базы с id входящего фильма
+  //         if (savedMovieLike) {
+  //           return {
+  //             ...movie, buttonLikeType: "liked", key: movie.id
+  //           }
+  //         }
+  //         return { ...movie, buttonLikeType: "unliked", key: movie.id }
+  //       })
+  //       const films =
+  //         putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
+  //           return (
+  //             movie.nameRU.toLowerCase().includes(string.toLowerCase())
+  //             || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+  //           )
+  //         })
+  //       setMovies(films);
+  //       setRequestMessage(films.length > 0 ? "" : "Ничего не найдено")
+  //       localStorage.setItem("films", JSON.stringify(films)); // потом достать и вставить в новый стейт
+  //     // })
+  //     // .catch(console.error)
+  //     // .finally(() => {
+  //       setShowPreloader(false);
+  //     // });
+  // }
+
+  //функция сохранения фильма
+  function handleSaveMovie(movie) {
+    MainApi //TODO: проверить работоспособность, в крайнем случае вытащить старый код
       .saveMovie(movie)
-        .then((newMovie) => { //ошибка валидации
-          // console.log(newMovie, 'сохраненный фильм')
-          setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
-          setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
-          newMovie.buttonLikeType = "delete"
-          setSavedMovies((state) => [...state, newMovie])
-
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setShowPreloader(false);
-        });
-    }
-
-
-
-    function handleDeleteMovie(id) {
-      setShowPreloader(true);
-      // console.log(id, 'id')
-      const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
-      // console.log(deleteMovie._id, 'deleteMovie', deleteMovie)
-      MainApi
-        .deleteCard(deleteMovie._id)
-        .then(() => {
-          setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))// ошибка
-          setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
-          setShortFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setShowPreloader(false);
-        });
-    }
-
-    //тумблер "короткометражки" на странице с сохраненными фильмами
-    useEffect(() => {
-      if (isShortSavedMovies && savedMovies.length > 0) {
-        setShortFilteredSavedMovies(
-          savedMovies.filter((savedmovie) => {
-            return (
-              savedmovie.duration <= 40
-            )
-          })
-        )
-      }
-    }, [isShortSavedMovies, savedMovies]);
-
-    //тумблер "короткометражки" на странице с фильмами
-    useEffect(() => {
-      if (isShortMovies && movies.length > 0) {
-        setShortFilteredMovies(
-          movies.filter((movie) => {
-            return (
-              movie.duration <= 40
-            )
-          })
-        )
-      }
-    }, [isShortMovies, movies]);
-
-    // console.log(isLoggedIn, 'isLoggedIn')
-
-    return (
-      <div className="root">
-        {tokenChecked &&
-          <div className="page">
-            <CurrentUserContext.Provider
-              value={currentUser || ""}>
-              {showPreloader && <Preloader />}
-              <Routes>
-
-                <Route
-                  path="*" //пользователь вошел на несуществующую страницу
-                  element={
-                    <main className="content">
-                      <PageNotFound />
-                    </main>
-                  }
-                />
-
-                <Route
-                  path="/signup"
-                  element={
-                    <main className="content">
-                      <Register
-                        handleRegister={handleRegister}
-                        formName={"signup"}
-                        className={"auth-container__form"}
-                        buttonText={"Зарегистрироваться"}
-                        wellcomeText={"Добро пожаловать!"}
-                        askToChangeForm={"Уже зарегистрированы? "}
-                        askToChangeFormLink={"Войти"}
-                        routTo={"/signin"}
-                        requestMessage={requestMessage}
-                      />
-                    </main>
-                  }
-                />
-
-                <Route
-                  path="/signin"
-                  element={
-                    <main className="content">
-                      <Login
-                        handleLogin={handleLogin}
-                        formName={"signin"}
-                        className={"auth-container__form"}
-                        buttonText={"Войти"}
-                        wellcomeText={"Рады видеть!"}
-                        askToChangeForm={"Ещё не зарегистрированы? "}
-                        askToChangeFormLink={"Регистрация"}
-                        routTo={"/signup"}
-                        requestMessage={requestMessage}
-                      />
-                    </main>
-                  }
-                />
-
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <Header
-                        isLoggedIn={isLoggedIn}
-                        handleOpenClosePopup={handleOpenClosePopup}
-                        isOpenPopup={isOpenPopup}
-                        isMainPage={isMainPage}
-                        isWideScreen={isWideScreen}
-                      />
-                      <main className="content">
-                        <Main
-                          isLoggedIn={isLoggedIn}
-                        />
-                      </main>
-                      <Footer />
-                    </>
-                  }
-                />
-
-                <Route
-                  path="/movies"
-                  element={
-                    <ProtectedRoute
-                      isLoggedIn={isLoggedIn}
-                      element={() => (
-                        <>
-                          <Header
-                            isLoggedIn={isLoggedIn}
-                            handleOpenClosePopup={handleOpenClosePopup}
-                            isOpenPopup={isOpenPopup}
-                            isMainPage={isMainPage}
-                            isWideScreen={isWideScreen}
-                          />
-                          <main className="content">
-                            <Movies
-                              isLoggedIn={isLoggedIn}
-                              movies={isShortMovies ? shortFilteredMovies : movies}
-                              handleSaveMovie={handleSaveMovie}
-                              handleSearchMovie={handleSearchMovie}
-                              requestMessage={requestMessage}
-                              setRequestMessage={setRequestMessage} //нов
-                              isShortMovies={isShortMovies}
-                              setIsShortMovies={setIsShortMovies}
-                              handleDeleteMovie={handleDeleteMovie}
-
-                            />
-                          </main>
-                          <Footer />
-                        </>
-                      )}
-                    />
-                  }
-                />
-
-                <Route
-                  path="/saved-movies"
-                  element={
-                    <ProtectedRoute
-                      isLoggedIn={isLoggedIn}
-                      element={() => (
-                        <>
-                          <Header
-                            isLoggedIn={isLoggedIn}
-                            handleOpenClosePopup={handleOpenClosePopup}
-                            isOpenPopup={isOpenPopup}
-                            isMainPage={isMainPage}
-                            isWideScreen={isWideScreen}
-                          />
-                          <main className="content">
-                            <SavedMovies
-                              isLoggedIn={isLoggedIn}
-                              movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
-                              // handleSaveMovie={handleSaveMovie}
-                              handleSearchMovie={handleSearchSavedMovie} //отличается от movies
-                              requestMessage={requestMessage}
-                              // handlerChangeTumblerSavedMovies={handlerChangeTumblerSavedMovies}
-                              handleDeleteMovie={handleDeleteMovie}
-                              isShortMovies={isShortSavedMovies}
-                              setIsShortMovies={setIsShortSavedMovies}
-                            />
-                          </main>
-                          <Footer />
-                        </>
-                      )}
-                    />
-                  }
-                />
-
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute
-                      isLoggedIn={isLoggedIn}
-                      element={() => (
-                        <>
-                          <Header
-                            isLoggedIn={isLoggedIn}
-                            handleOpenClosePopup={handleOpenClosePopup}
-                            isOpenPopup={isOpenPopup}
-                            isMainPage={isMainPage}
-                            isWideScreen={isWideScreen}
-                          />
-                          <main className="content">
-                            <Profile
-                              isLoggedIn={isLoggedIn}
-                              routTo={"/"}
-                              handleChangeProfile={handleChangeProfile}
-                              handleDeleteToken={handleDeleteToken}
-                              requestMessage={requestMessage}
-                            />
-                          </main>
-                        </>
-                      )}
-                    />
-                  }
-                />
-
-              </Routes>
-
-            </CurrentUserContext.Provider>
-          </div>
-        }
-      </div>
-    );
+      .then((newMovie) => { //ошибка валидации
+        // console.log(newMovie, 'сохраненный фильм')
+        setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
+        setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
+        newMovie.buttonLikeType = "delete"
+        setSavedMovies((state) => [...state, newMovie])
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+      });
   }
 
-  export default App;
+
+
+  function handleDeleteMovie(id) {
+    setShowPreloader(true);
+    // console.log(id, 'id')
+    const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
+    // console.log(deleteMovie._id, 'deleteMovie', deleteMovie)
+    MainApi
+      .deleteCard(deleteMovie._id)
+      .then(() => {
+        setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))// ошибка
+        setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
+        setShortFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setShowPreloader(false);
+      });
+  }
+
+  //тумблер "короткометражки" на странице с сохраненными фильмами
+  useEffect(() => {
+    if (isShortSavedMovies && savedMovies.length > 0) {
+      setShortFilteredSavedMovies(
+        savedMovies.filter((savedmovie) => {
+          return (
+            savedmovie.duration <= 40
+          )
+        })
+      )
+    }
+  }, [isShortSavedMovies, savedMovies]);
+
+  //тумблер "короткометражки" на странице с фильмами
+  useEffect(() => {
+    if (isShortMovies && movies.length > 0) {
+      setShortFilteredMovies(
+        movies.filter((movie) => {
+          return (
+            movie.duration <= 40
+          )
+        })
+      )
+    }
+  }, [isShortMovies, movies]);
+
+  // console.log(isLoggedIn, 'isLoggedIn')
+
+  return (
+    <div className="root">
+      {tokenChecked &&
+        <div className="page">
+          <CurrentUserContext.Provider
+            value={currentUser || ""}>
+            {showPreloader && <Preloader />}
+            <Routes>
+
+              <Route
+                path="*" //пользователь вошел на несуществующую страницу
+                element={
+                  <main className="content">
+                    <PageNotFound />
+                  </main>
+                }
+              />
+
+              <Route
+                path="/signup"
+                element={
+                  <main className="content">
+                    <Register
+                      handleRegister={handleRegister}
+                      formName={"signup"}
+                      className={"auth-container__form"}
+                      buttonText={"Зарегистрироваться"}
+                      wellcomeText={"Добро пожаловать!"}
+                      askToChangeForm={"Уже зарегистрированы? "}
+                      askToChangeFormLink={"Войти"}
+                      routTo={"/signin"}
+                      requestMessage={requestMessage}
+                    />
+                  </main>
+                }
+              />
+
+              <Route
+                path="/signin"
+                element={
+                  <main className="content">
+                    <Login
+                      handleLogin={handleLogin}
+                      formName={"signin"}
+                      className={"auth-container__form"}
+                      buttonText={"Войти"}
+                      wellcomeText={"Рады видеть!"}
+                      askToChangeForm={"Ещё не зарегистрированы? "}
+                      askToChangeFormLink={"Регистрация"}
+                      routTo={"/signup"}
+                      requestMessage={requestMessage}
+                    />
+                  </main>
+                }
+              />
+
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Header
+                      isLoggedIn={isLoggedIn}
+                      handleOpenClosePopup={handleOpenClosePopup}
+                      isOpenPopup={isOpenPopup}
+                      isMainPage={isMainPage}
+                      isWideScreen={isWideScreen}
+                    />
+                    <main className="content">
+                      <Main
+                        isLoggedIn={isLoggedIn}
+                      />
+                    </main>
+                    <Footer />
+                  </>
+                }
+              />
+
+              <Route
+                path="/movies"
+                element={
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    element={() => (
+                      <>
+                        <Header
+                          isLoggedIn={isLoggedIn}
+                          handleOpenClosePopup={handleOpenClosePopup}
+                          isOpenPopup={isOpenPopup}
+                          isMainPage={isMainPage}
+                          isWideScreen={isWideScreen}
+                        />
+                        <main className="content">
+                          <Movies
+                            isLoggedIn={isLoggedIn}
+                            movies={isShortMovies ? shortFilteredMovies : movies}
+                            handleSaveMovie={handleSaveMovie}
+                            handleSearchMovie={handleSearchMovie}
+                            requestMessage={requestMessage}
+                            setRequestMessage={setRequestMessage}
+                            isShortMovies={isShortMovies}
+                            setIsShortMovies={setIsShortMovies}
+                            handleDeleteMovie={handleDeleteMovie}
+
+                          />
+                        </main>
+                        <Footer />
+                      </>
+                    )}
+                  />
+                }
+              />
+
+              <Route
+                path="/saved-movies"
+                element={
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    element={() => (
+                      <>
+                        <Header
+                          isLoggedIn={isLoggedIn}
+                          handleOpenClosePopup={handleOpenClosePopup}
+                          isOpenPopup={isOpenPopup}
+                          isMainPage={isMainPage}
+                          isWideScreen={isWideScreen}
+                        />
+                        <main className="content">
+                          <SavedMovies
+                            isLoggedIn={isLoggedIn}
+                            movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
+                            // handleSaveMovie={handleSaveMovie}
+                            handleSearchMovie={handleSearchSavedMovie} //отличается от movies
+                            requestMessage={requestMessage}
+                            setRequestMessage={setRequestMessage}
+                            handleDeleteMovie={handleDeleteMovie}
+                            isShortMovies={isShortSavedMovies}
+                            setIsShortMovies={setIsShortSavedMovies}
+                          />
+                        </main>
+                        <Footer />
+                      </>
+                    )}
+                  />
+                }
+              />
+
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    element={() => (
+                      <>
+                        <Header
+                          isLoggedIn={isLoggedIn}
+                          handleOpenClosePopup={handleOpenClosePopup}
+                          isOpenPopup={isOpenPopup}
+                          isMainPage={isMainPage}
+                          isWideScreen={isWideScreen}
+                        />
+                        <main className="content">
+                          <Profile
+                            isLoggedIn={isLoggedIn}
+                            routTo={"/"}
+                            handleChangeProfile={handleChangeProfile}
+                            handleDeleteToken={handleDeleteToken}
+                            requestMessage={requestMessage}
+                          />
+                        </main>
+                      </>
+                    )}
+                  />
+                }
+              />
+
+            </Routes>
+
+          </CurrentUserContext.Provider>
+        </div>
+      }
+    </div>
+  );
+}
+
+export default App;

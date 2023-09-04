@@ -4,8 +4,7 @@ import LearnMore from "../LearnMore/LearnMore";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import { useResize } from "../../components/hooks/useResize";
-import { ErrorMessage } from "@hookform/error-message";
-
+// import { ErrorMessage } from "@hookform/error-message";
 
 function Movies({
   movies,
@@ -14,13 +13,10 @@ function Movies({
   requestMessage,
   setRequestMessage,
   handleSearchMovie,
-  isShortMovies, //undefined
-  // setIsShortMovies
+  isShortMovies,
   setIsShortMovies,
   handleDeleteMovie
 }) {
-
-  // console.log('всего карточек изначально', movies.length)
 
   const [addMovies, setAddMovies] = useState(0);
   const [isRenderedLearnMore, setIsRenderedLearnMore] = useState(false);
@@ -28,7 +24,7 @@ function Movies({
   const [query, setQuery] = useState(
     localStorage.getItem("moviesSearchQuery") || "",
   );
-  // const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
+
   const { isWideScreen, isMiddleScreen } = useResize();
 
   //количество карточек на странице при первой отрисовке
@@ -52,9 +48,7 @@ function Movies({
 
   //определить количество карточек к показу
   const moviesForRender = () => {
-
     if (movies.length > 0) {
-      // console.log('показано карточек:', movies.slice(0, showedMovies))
       return movies.slice(0, showedMovies);
     } return [];
   };
@@ -69,16 +63,11 @@ function Movies({
     }
   }, [movies, showedMovies]);
 
-  
-
   function handleSearch(query) {
-    setRequestMessage(movies ? "Ничего не найдено" : 0)
-    setQuery(query);
     handleSearchMovie(query)
+    setQuery(query);
     localStorage.setItem("moviesSearchQuery", query);
   }
-  
-  console.log(movies.length, requestMessage)
 
   return (
     <>
@@ -90,7 +79,7 @@ function Movies({
         isShortMovies={isShortMovies}
         onSearch={handleSearch}
         setQuery={setQuery}
-        // isShowErrorMessage={isShowErrorMessage}
+      // isShowErrorMessage={isShowErrorMessage}
       />
       <MoviesCardList
         isMoviePage={true}

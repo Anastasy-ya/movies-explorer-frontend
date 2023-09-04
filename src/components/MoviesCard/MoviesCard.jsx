@@ -17,9 +17,8 @@ function MoviesCard({
   // let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`;
 //  console.log(movie, 'пришло на отрисовку')
 
-  function saveOrDeleteHandler() {
-    // console.log(movie, _id, 'movie, id')
-    
+  function saveOrDeleteHandler(e) {
+    e.preventDefault();
     movie.buttonLikeType === "unliked" ? handleSaveMovie(movie) : handleDeleteMovie(isMoviePage ? id : movieId)
     //всегда если класс анлайк, нужно сохранить карточку, во всех остальных случаях удалять
   }
@@ -40,7 +39,7 @@ function MoviesCard({
           : "card__icon_type_delete"}`}
           /*card__icon_type_save_active класс добавится на этапе добавления функционала*/
           aria-label={saveOrDeleteText}
-          onClick={saveOrDeleteHandler}
+          onClick={(e) => saveOrDeleteHandler(e)}
         ></button>
       </div>
 

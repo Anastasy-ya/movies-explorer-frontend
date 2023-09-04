@@ -23,15 +23,15 @@ function SearchForm({
 
   useEffect(() => {
     if (location.pathname === "/movies") {
-      const savedQuery = localStorage.getItem("moviesSearchQuery");
-      if (savedQuery) {
-        setValue("search", savedQuery); //динамические значения полей
-      }
+    //   const savedQuery = localStorage.getItem("moviesSearchQuery");
+      // if (savedQuery) {
+        setValue("search", localStorage.getItem("moviesSearchQuery") || ""); //динамические значения полей
+    //   }
     } else {
-      const savedQuery = localStorage.getItem("savedMoviesSearchQuery");
-      if (savedQuery) {
-        setValue("search", savedQuery);
-      }
+    //   const savedQuery = localStorage.getItem("savedMoviesSearchQuery");
+    //   if (savedQuery) {
+        setValue("search", localStorage.getItem("savedMoviesSearchQuery"));
+    //   }
     }
   }, []);
 
@@ -46,7 +46,7 @@ function SearchForm({
     setQuery(query);
   }, [query]);
 
-  console.log(requestMessage)
+  // console.log(requestMessage)
   
 
   return (
