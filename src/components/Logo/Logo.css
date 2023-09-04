@@ -1,0 +1,6 @@
+.logo {
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  background-image: url("../../images/logo.svg");
+}

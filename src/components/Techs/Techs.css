@@ -1,0 +1,127 @@
+.techs {
+  background-color: var(--dark-grey);
+  /* width: 100%; */
+}
+
+.techs__size-container {
+  padding: 100px 0 100px;
+  
+}
+
+@media screen and (max-width: 1200px) {
+  .techs__size-container {
+    /* max-width: 668px; */
+    padding: 90px 0 90px;
+    max-width: 668px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .techs__size-container {
+    padding: 70px 0 70px;
+    max-width: 292px;
+  }
+}
+
+.techs__subtitle {
+  font-size: 50px;
+  font-weight: 400;
+  letter-spacing: -2px;
+  line-height: 58px;
+  text-align: center;
+  padding: 0;
+  margin: 86px auto 26px;
+
+}
+
+@media screen and (max-width: 1200px) {
+  .techs__subtitle {
+    margin: 80px auto 20px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .techs__subtitle {
+    margin: 60px auto 24px; /**/
+    font-size: 30px;
+    line-height: normal;
+    letter-spacing: -1.2px;
+  }
+}
+
+.techs__text {
+  color: white;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.56px;
+  line-height: 20px;
+  text-align: center;
+  /* padding: 0; */
+  margin: 0 auto;
+  max-width: 460px;
+}
+
+@media screen and (max-width: 1200px) {
+  .techs__text {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.48px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .techs__text {
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: -0.44px;
+  }
+}
+
+.techs__list {
+  display: flex;
+  gap: 10px;
+  max-width: 690px;
+  /* justify-content: center; */
+  align-items: center;
+  margin: 100px auto 0;
+  padding: 0;
+  /* height: 60px; */
+}
+
+@media screen and (max-width: 1200px) {
+  .techs__list {
+    margin: 83px auto 0;
+    max-width: 648px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .techs__list {
+    margin: 50px auto 0;
+    max-width: 178px;
+    flex-wrap: wrap;
+  }
+}
+
+.techs__box {
+  background-color: var(--middle-grey);
+  border-radius: 10px;
+  height: 60px;
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+
+}
+
+@media screen and (max-width: 720px) {
+  .techs__box {
+    height: 57px;
+    width: 84px;
+  }
+}
+
