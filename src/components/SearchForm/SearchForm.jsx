@@ -14,7 +14,8 @@ function SearchForm({
   setIsShortMovies,
   isShortMovies,
   onSearch,
-  setQuery
+  setQuery,
+  setSavedQuery
 }) {
 
   // const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
@@ -23,15 +24,15 @@ function SearchForm({
 
   useEffect(() => {
     if (location.pathname === "/movies") {
-    //   const savedQuery = localStorage.getItem("moviesSearchQuery");
+      //   const savedQuery = localStorage.getItem("moviesSearchQuery");
       // if (savedQuery) {
-        setValue("search", localStorage.getItem("moviesSearchQuery") || ""); //динамические значения полей
-    //   }
+      setValue("search", localStorage.getItem("moviesSearchQuery") || ""); //динамические значения полей
+      //   }
     } else {
-    //   const savedQuery = localStorage.getItem("savedMoviesSearchQuery");
-    //   if (savedQuery) {
-        setValue("search", localStorage.getItem("savedMoviesSearchQuery"));
-    //   }
+      //   const savedQuery = localStorage.getItem("savedMoviesSearchQuery");
+      //   if (savedQuery) {
+      setValue("search", localStorage.getItem("savedMoviesSearchQuery"));
+      //   }
     }
   }, []);
 
@@ -39,15 +40,20 @@ function SearchForm({
     onSearch(data.search);
   };
 
+  const savedQuery = watch("search", localStorage.getItem("savedMoviesSearchQuery") || "");
   const query = watch("search", localStorage.getItem("moviesSearchQuery") || "");
 
   useEffect(() => {
-    localStorage.setItem("moviesSearchQuery", query);
-    setQuery(query);
+    if (location.pathname === "/movies") {
+      localStorage.setItem("moviesSearchQuery", query);
+      setQuery(query);
+    } else {
+      localStorage.setItem("savedMoviesSearchQuery", query);
+      setSavedQuery(query);
+    }
   }, [query]);
 
-  // console.log(requestMessage)
-  
+
 
   return (
     <div className="search-input">

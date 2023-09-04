@@ -19,7 +19,6 @@ function SavedMovies({
   );
 
   function handleSearch(query) {
-    // setRequestMessage(movies ? "Ничего не найдено" : 0)
     setSavedQuery(query);
     handleSearchMovie(query)
     localStorage.setItem("savedMoviesSearchQuery", query);
@@ -34,7 +33,7 @@ function SavedMovies({
         setIsShortMovies={setIsShortMovies}
         isShortMovies={isShortMovies}
         onSearch={handleSearch}
-        setQuery={setSavedQuery} //значение отличается от movies тк сохраняется другой стейт
+        setSavedQuery={setSavedQuery} //значение отличается от movies тк сохраняется другой стейт
       />
       <MoviesCardList
         isMoviePage={false}
