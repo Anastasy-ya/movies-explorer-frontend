@@ -32,7 +32,7 @@ function SavedMovies({
         handleSearchMovie={handleSearchMovie}
         setIsShortMovies={setIsShortMovies}
         isShortMovies={isShortMovies}
-        onSavedSearch={handleSearch}
+        onSearch={handleSearch}
         setSavedQuery={setSavedQuery} //значение отличается от movies тк сохраняется другой стейт
       />
       <MoviesCardList
