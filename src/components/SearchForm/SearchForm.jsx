@@ -15,7 +15,8 @@ function SearchForm({
   isShortMovies,
   onSearch,
   setQuery,
-  setSavedQuery
+  setSavedQuery,
+  onSavedSearch
 }) {
 
   // const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
@@ -31,13 +32,19 @@ function SearchForm({
     } else {
       //   const savedQuery = localStorage.getItem("savedMoviesSearchQuery");
       //   if (savedQuery) {
-      setValue("search", localStorage.getItem("savedMoviesSearchQuery"));
+      setValue("search", localStorage.getItem("savedMoviesSearchQuery"|| ""));
       //   }
     }
   }, []);
 
+  console.log(location.pathname)
+
   const onSubmit = (data) => {
-    onSearch(data.search);
+    if (location.pathname === "/movies") {
+      onSearch(data.search);
+    }else{
+      onSavedSearch(data.search);
+    }
   };
 
   const savedQuery = watch("search", localStorage.getItem("savedMoviesSearchQuery") || "");
@@ -48,10 +55,10 @@ function SearchForm({
       localStorage.setItem("moviesSearchQuery", query);
       setQuery(query);
     } else {
-      localStorage.setItem("savedMoviesSearchQuery", query);
-      setSavedQuery(query);
+      localStorage.setItem("savedMoviesSearchQuery", savedQuery);
+      setSavedQuery(savedQuery);
     }
-  }, [query]);
+  }, [query, savedQuery]);
 
 
 
