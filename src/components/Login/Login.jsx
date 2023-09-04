@@ -31,6 +31,11 @@ function Login({
     resetForm();
   };
 
+  function isDisabled() {
+    return (!isValid && currentUser[values] !== values)
+  }
+  // const isDisabled = () => !isValid && currentUser[values] !== values
+
   return (
     <section className="auth-container">
 
@@ -38,12 +43,13 @@ function Login({
       <h1 className="auth-container__wellcome">{wellcomeText}</h1>
 
       <Form
-        className={className}
+        // className={className}
         formName={formName}
         buttonText={buttonText}
-        isValid={isValid}
-        onSubmit={(e) => handleSubmit(e)}>
-
+        // isValid={isValid}
+        onSubmit={(e) => handleSubmit(e)}
+        disabled={!isValid}
+      >
         <Input
           type={"text"}
           name={"email"}

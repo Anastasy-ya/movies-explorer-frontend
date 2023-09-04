@@ -30,8 +30,6 @@ function Register({
     resetForm();
   };
 
-  // console.log('errors', errors);
-  // console.log('поля', values, currentUser);
 
   return (
     <section className="auth-container">
@@ -40,12 +38,13 @@ function Register({
       <h1 className="auth-container__wellcome">{wellcomeText}</h1>
 
       <Form
-        className={className}
+        // className={className}
         formName={formName}
         buttonText={buttonText}
         typeReg={true}
-        isValid={isValid}
+        // isValid={isValid}
         onSubmit={(e) => handleSubmit(e)}
+        disabled={!isValid}
       >
 
         <Input
@@ -86,12 +85,12 @@ function Register({
           errors={errors}
         />
 
-        <RequestMessage 
+        <RequestMessage
           parent={"auth-container"}
           requestMessage={requestMessage}
         />
-          
-        
+
+
       </Form>
 
       <div className="auth-container__link-container">

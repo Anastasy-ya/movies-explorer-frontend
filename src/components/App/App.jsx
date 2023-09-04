@@ -37,14 +37,14 @@ function App() {
     const checkStorage = localStorage.getItem("films");
     return checkStorage ? JSON.parse(checkStorage) : []
   });
-  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [savedMovies, setSavedMovies] = React.useState([]); //TODO:получить значения сторадж
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(() => {
     const checkStorage = localStorage.getItem("isShortMovies");
     return checkStorage ? JSON.parse(checkStorage) : false
   });
-  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false); //аналогично
+  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false);
   // отфильтрованные короткометражки на странице с фильмами
   const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
   // отфильтрованные короткометражки на странице с сохраненными фильмами
@@ -52,9 +52,6 @@ function App() {
 
   //получение значения от кастомного хука
   const { isWideScreen } = useResize();
-
-  // console.log(savedMovies)
-
   const navigate = useNavigate();
   const path = useLocation();
 
@@ -65,27 +62,25 @@ function App() {
   //получение сохраненных фильмов из бд
   useEffect(() => {
     if (isLoggedIn) {
-      // setShowPreloader(true);
       MainApi
         .getInitialMovies()
         .then((films) => {
           const deleteIconMovies = films.map((film) => {
             return {
-              ...film, buttonLikeType: "delete", key: film._id //доп свойство для присваивания класса type delete
+              ...film, buttonLikeType: "delete", key: film._id 
+              //доп свойство для присваивания класса type delete
             }
           })
           setSavedMovies(deleteIconMovies); //измененные фильмы с иконкой удаления
         })
         .catch(console.error)
         .finally(() => {
-          // setShowPreloader(false);
         });
     }
   }, [isLoggedIn])
 
   // проверка зарегистрирован ли пользователь
   useEffect(() => {
-    // setShowPreloader(true);
     auth
       .checkToken()
       .then((user) => {
@@ -98,7 +93,6 @@ function App() {
       })
       .finally(() => {
         setTokenChecked(true);
-        // setShowPreloader(false);
       });
   }, []);
 
@@ -109,7 +103,7 @@ function App() {
       setIsMainPage(false);
   }, [path]);
 
-  //удалить сообщение от сервера по таймеру
+  //удалить сообщение от сервера в компоненте RequestMessage по таймеру
   useEffect(() => {
     if (requestMessage) {
       setTimeout(() => {
@@ -123,7 +117,8 @@ function App() {
     // поменять значение на противоположное
     setIsOpenPopup(!isOpenPopup);
     document.querySelector(".burger").classList.toggle('open');
-    /*после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
+    /*TODO: после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
+    //и найти пропавшую анимацию
   };
 
   //регистрация
@@ -131,7 +126,7 @@ function App() {
     setShowPreloader(true);
     auth
       .register({ name, email, password })
-      .then((res) => {
+      .then(() => {
         handleLogin({ email, password })
         //происходит перенаправление на movies через функцию авторизации
       })
@@ -150,7 +145,6 @@ function App() {
 
   //авторизация 
   function handleLogin({ email, password }) {
-    // setShowPreloader(true);
     auth
       .login({ email, password })
       .then((res) => {
@@ -164,16 +158,13 @@ function App() {
         console.log(err);
         setIsLoggedIn(false);
         setRequestMessage(err || "");
-        //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
-        // setShowPreloader(false);
       });
   }
 
   //изменить данные профиля
   function handleChangeProfile({ name, email }) {
-    // setShowPreloader(true);
     auth
       .updateUser({ name, email })
       .then((res) => {
@@ -187,13 +178,11 @@ function App() {
         // уведомление в профиле
       })
       .finally(() => {
-        // setShowPreloader(false);
       });
   }
 
   //выйти
   function handleDeleteToken() {
-    // setShowPreloader(true);
     auth.logOut()
       .then(() => setCurrentUser({
         name: "",
@@ -211,13 +200,13 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        // setShowPreloader(false);
       });
   };
 
   // поиск на странице с сохраненными фильмами
+
+  // (state) => state.filter((c) => c._id !== deleteMovie._id)
   function handleSearchSavedMovie(string) {
-    // setShowPreloader(true);
     const films =
       savedMovies.filter((movie) => {
         return (
@@ -226,15 +215,11 @@ function App() {
         )
       })
     setSavedMovies(films);
-    setRequestMessage(films.length > 0 ? "" : "Ничего не найдено")
-    // setShowPreloader(false);
+    setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
   }
 
-
-  // основная функция поиска фильмов
+  // основная функция поиска фильмов TODO:рефакторить
   function handleSearchMovie(string) {
-    // console.log(string, 'поисковая строка попала в ф-ю поиска')
-
 
     if (basicMovies.length === 0) { // если карточек нет, получить
       setShowPreloader(true);
@@ -242,7 +227,7 @@ function App() {
         .getMovies()
         .then((cards) => {
           console.log(cards, "данные от сервера")
-          setBasicMovies(cards) //basicMovies
+          setBasicMovies(cards) //это стейт basicMovies
           //начало функции поиска фильмов
           const putLikeButtons = cards.map((movie) => {
             const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
@@ -262,13 +247,12 @@ function App() {
                 || movie.nameEN.toLowerCase().includes(string.toLowerCase())
               )
             })
-            console.log(items)
+          console.log(items)
           setMovies(items);
           localStorage.setItem("films", JSON.stringify(items));
           setRequestMessage(items.length > 0 ? "" : "Ничего не найдено");
           //конец функции поиска фильмов
         })
-
         .catch((err) => {
           console.log(err)
           setRequestMessage(err, `Во время запроса произошла ошибка. 
@@ -280,7 +264,9 @@ function App() {
 
           // searchMovies(string)//вызов второй функции
         })
-    } else {//начало блока else
+    } 
+    else 
+    {//начало блока else
       const putLikeButtons = basicMovies.map((movie) => {
         const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
         if (savedMovieLike) {
@@ -303,125 +289,11 @@ function App() {
     }//конец блока else
   };
 
-  // console.log(basicMovies, 'базовые фильмы в глобальной области')
-
-  // //механика поиска фильмов, 
-  // //составная часть основной функции поиска
-  // function searchMovies(basicMovies, string) {
-  // const putLikeButtons = basicMovies.map((movie) => {
-  //   const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
-  //   if (savedMovieLike) {
-  //     return {
-  //       ...movie, buttonLikeType: "liked", key: movie.id
-  //     }
-  //   }
-  //   return { ...movie, buttonLikeType: "unliked", key: movie.id }
-  // })
-  // const films =
-  //   putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
-  //     return (
-  //       movie.nameRU.toLowerCase().includes(string.toLowerCase())
-  //       || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-  //     )
-  //   })
-  // setMovies(films);
-  // localStorage.setItem("films", JSON.stringify(films));
-  // }
-
-
-
-
-
-
-
-  // function searchMovies(string) {
-  //   console.log(basicMovies, 'базовые фильмы попадают в поиск')
-  //   const likedOrUnlikedButtons = basicMovies.map((movie) => {
-  //     //присвоить новое свойство для установки вида
-  //     console.log(savedMovies, 'savedMovies',  )
-  //     const likedMovies = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
-  //     console.log(likedMovies)
-  //     if (likedMovies) {
-  //       //сохраненным записать like, несохраненным unlike
-  //       return {
-  //         ...movie, buttonLikeType: "liked", key: movie.id
-  //       }
-  //     }
-  //     return { ...movie, buttonLikeType: "unliked", key: movie.id }
-  //   })
-
-  //   const films = // далее поиск идет по измененным фильмам со свойством 
-  //   likedOrUnlikedButtons.filter((movie) => { //измененные movies с добавленным свойством
-  //       return (
-  //         movie.nameRU.toLowerCase().includes(string.toLowerCase())
-  //         || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-  //       )
-  //     })
-  //   setMovies(films); //сохранение фильмов на "/movies"
-  //   console.log(films, 'отфильтрованные фильмы')
-  //   localStorage.setItem("films", JSON.stringify(films)); // потом достать и вставить в новый стейт
-  // }
-
-
-
-  // //basicMovies
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     // setShowPreloader(true); //здесь не должно быть запроса к фильмам
-  //     moviesApi
-  //       .getMovies()
-  //       .then((basicMovies) => {
-  //         setBasicMovies(basicMovies)
-  //       })
-  //       .catch(console.error)
-  //       .finally(() => {
-  //         // setShowPreloader(false);
-  //       });
-  //   }
-  // }, [isLoggedIn])
-
-
-  // // поиск на странице с фильмами
-  // function handleSearchMovie(string) {
-  //   console.log(string)
-  //   setShowPreloader(true); //здесь не должно быть запроса к фильмам
-
-  //   // moviesApi
-  //   //   .getMovies()
-  //   //   .then((allMovies) => {
-  //       const putLikeButtons = basicMovies.map((movie) => {
-  //         const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
-  //         //сравнить код из базы с id входящего фильма
-  //         if (savedMovieLike) {
-  //           return {
-  //             ...movie, buttonLikeType: "liked", key: movie.id
-  //           }
-  //         }
-  //         return { ...movie, buttonLikeType: "unliked", key: movie.id }
-  //       })
-  //       const films =
-  //         putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
-  //           return (
-  //             movie.nameRU.toLowerCase().includes(string.toLowerCase())
-  //             || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-  //           )
-  //         })
-  //       setMovies(films);
-  //       setRequestMessage(films.length > 0 ? "" : "Ничего не найдено")
-  //       localStorage.setItem("films", JSON.stringify(films)); // потом достать и вставить в новый стейт
-  //     // })
-  //     // .catch(console.error)
-  //     // .finally(() => {
-  //       setShowPreloader(false);
-  //     // });
-  // }
-
   //функция сохранения фильма
   function handleSaveMovie(movie) {
-    MainApi //TODO: проверить работоспособность, в крайнем случае вытащить старый код
+    MainApi
       .saveMovie(movie)
-      .then((newMovie) => { //ошибка валидации
-        // console.log(newMovie, 'сохраненный фильм')
+      .then((newMovie) => {
         setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
         setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
         newMovie.buttonLikeType = "delete"
@@ -434,17 +306,12 @@ function App() {
       });
   }
 
-
-
   function handleDeleteMovie(id) {
-    // setShowPreloader(true);
-    // console.log(id, 'id')
     const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
-    // console.log(deleteMovie._id, 'deleteMovie', deleteMovie)
     MainApi
       .deleteCard(deleteMovie._id)
       .then(() => {
-        setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))// ошибка
+        setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
         setShortFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
       })
@@ -452,7 +319,6 @@ function App() {
         console.log(err);
       })
       .finally(() => {
-        // setShowPreloader(false);
       });
   }
 
@@ -481,8 +347,6 @@ function App() {
       )
     }
   }, [isShortMovies, movies]);
-
-  // console.log(isLoggedIn, 'isLoggedIn')
 
   return (
     <div className="root">
@@ -614,7 +478,6 @@ function App() {
                           <SavedMovies
                             isLoggedIn={isLoggedIn}
                             movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
-                            // handleSaveMovie={handleSaveMovie}
                             handleSearchMovie={handleSearchSavedMovie} //отличается от movies
                             requestMessage={requestMessage}
                             setRequestMessage={setRequestMessage}

@@ -18,8 +18,6 @@ function Profile({
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  // console.log('введено в поля', values)
-
   const currentUser = React.useContext(CurrentUserContext);
 
   const handleSubmit = (e) => {
@@ -28,8 +26,7 @@ function Profile({
     resetForm();
   };
 
-  // console.log(values);
-
+  // console.log(!isValid || currentUser.name === values.name || currentUser.email === values.email);
 
   return (
     <section className="profile">
@@ -95,7 +92,8 @@ function Profile({
             className="profile__change-data"
             type="submit"
             aria-label="change data"
-            disabled={!isValid}
+            disabled={!isValid || currentUser.name === values.name || currentUser.email === values.email}
+
           >
             Редактировать
           </button>
@@ -106,7 +104,7 @@ function Profile({
           aria-label="logout"
           onClick={handleDeleteToken}
           className="profile__change-data profile__change-data_type_link"
-          /*поправить нижний отступ */
+        /*поправить нижний отступ */
         >
           <p className="profile__change-data profile__change-data_type_link">
             Выйти из аккаунта

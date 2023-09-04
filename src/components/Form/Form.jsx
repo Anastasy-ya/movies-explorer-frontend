@@ -7,7 +7,7 @@ function Form({
   children,
   buttonText,
   typeReg,
-  isValid }) {
+  disabled }) {
 
   return (
     <form
@@ -20,7 +20,7 @@ function Form({
         className={`form__button ${typeReg && "form__button_type_reg"}`}
         type="submit" 
         aria-label={formName}
-        disabled={!isValid}
+        disabled={disabled}
       >        
         {buttonText}
       </button>

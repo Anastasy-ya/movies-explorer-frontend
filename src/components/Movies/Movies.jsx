@@ -4,7 +4,6 @@ import LearnMore from "../LearnMore/LearnMore";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import { useResize } from "../../components/hooks/useResize";
-// import { ErrorMessage } from "@hookform/error-message";
 
 function Movies({
   movies,
@@ -31,8 +30,8 @@ function Movies({
   const count = isWideScreen ?
     12 :
     isMiddleScreen ?
-      8 :
-      5;
+    8 :
+    5;
 
   //сколько показывать фильмов по кнопке "еще"?
   function handlerMoreFilms() {
@@ -56,7 +55,7 @@ function Movies({
   const moviesToRender = movies.length - showedMovies;
 
   useEffect(() => {
-    if (moviesToRender > 0) { // || movies.length === 0
+    if (moviesToRender > 0) {
       setIsRenderedLearnMore(true)
     } else {
       setIsRenderedLearnMore(false)
@@ -79,7 +78,6 @@ function Movies({
         isShortMovies={isShortMovies}
         onSearch={handleSearch}
         setQuery={setQuery}
-      // isShowErrorMessage={isShowErrorMessage}
       />
       <MoviesCardList
         isMoviePage={true}
@@ -89,7 +87,6 @@ function Movies({
         handleSearchMovie={handleSearchMovie}
         requestMessage={requestMessage}
         handleDeleteMovie={handleDeleteMovie}
-      // isSaved={isShortMovies} 
       //этот параметр отличается у фильмов и сохраненных фильмов
       />
       <LearnMore
