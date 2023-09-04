@@ -20,10 +20,6 @@
   border-bottom: 1px var(--blue) solid;
 }
 
-/* .form__input::placeholder {
-  color: #c4c4c4;
-} */
-
 .form__input:invalid {
   color: var(--pink);
 }

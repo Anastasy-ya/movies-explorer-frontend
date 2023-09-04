@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import './SavedMovies.css';
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
@@ -14,6 +14,7 @@ function SavedMovies({
   setIsShortMovies
 }) {
 
+  // eslint-disable-next-line no-unused-vars
   const [savedQuery, setSavedQuery] = useState(
     localStorage.getItem("savedMoviesSearchQuery") || "",
   );

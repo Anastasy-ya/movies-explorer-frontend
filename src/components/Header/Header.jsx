@@ -6,15 +6,15 @@ import InfoAccount from "../InfoAccount/InfoAccount";
 import Logo from "../Logo/Logo";
 import Popup from "../Popup/Popup";
 
-function Header({ 
-  isLoggedIn, 
-  isMainPage, 
-  isOpenPopup, 
-  handleOpenClosePopup, 
+function Header({
+  isLoggedIn,
+  isMainPage,
+  isOpenPopup,
+  handleOpenClosePopup,
   isWideScreen,
 }) {
 
-  
+
   const [headerView, setHeaderView] = useState(<p></p>);
 
   useEffect(() => {
@@ -22,9 +22,7 @@ function Header({
       setHeaderView(
         <div className="header__info-account">
           <Burger
-            // isLoggedIn={isLoggedIn}
             handleOpenClosePopup={handleOpenClosePopup}
-            // isOpen={isOpenPopup}
           />
         </div>
       )
@@ -32,7 +30,7 @@ function Header({
     else {
       setHeaderView(
         <>
-          {isLoggedIn && (<nav className="header__navigation-box"> {/*!isMainPage &&  */}
+          {isLoggedIn && (<nav className="header__navigation-box">
 
             <NavLink
               className={({ isActive }) => `header__link ${isActive ? "header__link_active" : ""}`}

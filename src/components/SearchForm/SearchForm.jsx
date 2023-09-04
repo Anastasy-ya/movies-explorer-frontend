@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-// import useFormWithValidation from "../hooks/usevalidate";
 import RequestMessage from "../RequestMessage/RequestMessage";
 import AuthForm from "../AuthForm/AuthForm";
 import { ErrorMessage } from "@hookform/error-message";
@@ -19,22 +18,16 @@ function SearchForm({
   onSavedSearch
 }) {
 
-  // const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
-  const { register, errors, isValid, handleSubmit, watch, setValue } = AuthForm();
+  const { register, errors, handleSubmit, watch, setValue } = AuthForm();
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/movies") {
-      //   const savedQuery = localStorage.getItem("moviesSearchQuery");
-      // if (savedQuery) {
       setValue("search", localStorage.getItem("moviesSearchQuery") || ""); //динамические значения полей
-      //   }
     } else {
-      //   const savedQuery = localStorage.getItem("savedMoviesSearchQuery");
-      //   if (savedQuery) {
-      setValue("search", localStorage.getItem("savedMoviesSearchQuery"|| ""));
-      //   }
+      setValue("search", localStorage.getItem("savedMoviesSearchQuery" || ""));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log(location.pathname)
@@ -42,7 +35,7 @@ function SearchForm({
   const onSubmit = (data) => {
     if (location.pathname === "/movies") {
       onSearch(data.search);
-    }else{
+    } else {
       onSavedSearch(data.search);
     }
   };
@@ -58,6 +51,7 @@ function SearchForm({
       localStorage.setItem("savedMoviesSearchQuery", savedQuery);
       setSavedQuery(savedQuery);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, savedQuery]);
 
 
@@ -99,13 +93,9 @@ function SearchForm({
         </form>
 
         <FilterCheckbox
-          // handlerChangeTumbler={handlerChangeTumbler}
           setIsShortMovies={setIsShortMovies}
           isShortMovies={isShortMovies}
           handleSubmit={handleSubmit}
-        // movies={movies}
-        // setIsShort={setIsShort}
-        // isShort={isShort}
         />
       </div>
     </div>

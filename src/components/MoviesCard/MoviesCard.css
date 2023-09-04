@@ -15,7 +15,6 @@
   height: 203px;
   object-fit: cover;
   width: 364px;
-  /* background-image: url(../../images/image.jpg); */
   margin: 0;
   padding: 0;
   display: block;
@@ -99,11 +98,6 @@
   width: auto;
   height: auto;
   flex-wrap: wrap;
-}
-
-@media screen and (max-width: 720px) {
-  .card__info {
-  }
 }
 
 .card__text-block {

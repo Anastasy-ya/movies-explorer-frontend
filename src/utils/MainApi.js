@@ -2,7 +2,6 @@ import { API_URL, MOVIES_URL } from "../utils/consts";
 
 function checkResponce(res) {
   if (res.ok) {
-    // console.log(res.json());
     return res.json();
   }
   return Promise.reject(`Ошибка: ${res.status}`);

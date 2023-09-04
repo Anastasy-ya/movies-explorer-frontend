@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import './Movies.css';
 import LearnMore from "../LearnMore/LearnMore";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
@@ -20,6 +20,7 @@ function Movies({
   const [addMovies, setAddMovies] = useState(0);
   const [isRenderedLearnMore, setIsRenderedLearnMore] = useState(false);
   //стейт для поисковой строки movies
+  // eslint-disable-next-line no-unused-vars
   const [query, setQuery] = useState(
     localStorage.getItem("moviesSearchQuery") || "",
   );
@@ -60,6 +61,7 @@ function Movies({
     } else {
       setIsRenderedLearnMore(false)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movies, showedMovies]);
 
   function handleSearch(query) {

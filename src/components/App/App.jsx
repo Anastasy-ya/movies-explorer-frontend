@@ -67,7 +67,7 @@ function App() {
         .then((films) => {
           const deleteIconMovies = films.map((film) => {
             return {
-              ...film, buttonLikeType: "delete", key: film._id 
+              ...film, buttonLikeType: "delete", key: film._id
               //доп свойство для присваивания класса type delete
             }
           })
@@ -264,9 +264,8 @@ function App() {
 
           // searchMovies(string)//вызов второй функции
         })
-    } 
-    else 
-    {//начало блока else
+    }
+    else {//начало блока else
       const putLikeButtons = basicMovies.map((movie) => {
         const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
         if (savedMovieLike) {

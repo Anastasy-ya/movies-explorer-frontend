@@ -14,8 +14,6 @@ function MoviesCard({
   const saveOrDeleteText = isMoviePage ? "save movie" : "delete movie from saved";
   const { id, nameRU, duration, trailerLink, movieId } = movie;
   let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`
-  // let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`;
-//  console.log(movie, 'пришло на отрисовку')
 
   function saveOrDeleteHandler(e) {
     e.preventDefault();
@@ -24,7 +22,6 @@ function MoviesCard({
   }
 
   return (
-    // <li className="card">
     <>
       <div className="card__info">
         <div className="card__text-block">
@@ -32,12 +29,12 @@ function MoviesCard({
           <p className="card__subtitle">{movieDuration}</p>
         </div>
         <button
-          className={`card__icon ${movie.buttonLikeType === "liked" 
-          ? "card__icon_type_save_active" 
-          : movie.buttonLikeType === "unliked" 
-          ? "card__icon_type_save" 
-          : "card__icon_type_delete"}`}
-          /*card__icon_type_save_active класс добавится на этапе добавления функционала*/
+          className={`card__icon ${movie.buttonLikeType === "liked"
+            ? "card__icon_type_save_active"
+            : movie.buttonLikeType === "unliked"
+              ? "card__icon_type_save"
+              : "card__icon_type_delete"}`}
+          /*card__icon_type_save_active*/
           aria-label={saveOrDeleteText}
           onClick={(e) => saveOrDeleteHandler(e)}
         ></button>
@@ -51,13 +48,12 @@ function MoviesCard({
       >
         <img
           src={`${isMoviePage ? (MOVIES_URL + movie.image.url) : (movie.image)}`}
-          // `${BASE_URL}${movie.image.url}`
           className="card__image"
           alt="Movie"
         />
       </Link>
-</>
-    // </li>
+    </>
+
   );
 }
 

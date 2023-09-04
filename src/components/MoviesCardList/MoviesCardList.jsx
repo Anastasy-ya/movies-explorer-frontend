@@ -7,15 +7,12 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 function MoviesCardList({
   isMoviePage,
   movies,
-  //здесь и movies для страницы movies и saved-movies для соответствующей страницы
   isLoggedIn,
   handleSaveMovie,
   handleSearchMovie,
   requestMessage,
   handleDeleteMovie
 }) {
-
-  // console.log(movies)
 
   return (
     <section className="card-list">

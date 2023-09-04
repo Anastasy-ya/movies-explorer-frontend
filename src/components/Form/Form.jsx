@@ -16,12 +16,12 @@ function Form({
       onSubmit={onSubmit}
     >
       {children}
-      <button 
+      <button
         className={`form__button ${typeReg && "form__button_type_reg"}`}
-        type="submit" 
+        type="submit"
         aria-label={formName}
         disabled={disabled}
-      >        
+      >
         {buttonText}
       </button>
     </form>

@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 import useFormWithValidation from "../hooks/usevalidate";
 import RequestMessage from "../RequestMessage/RequestMessage";
 
-
-// const currentUser = { name: "Анастасия", email: "mail@mail.com" }
-
 function Profile({
   isLoggedIn,
   routTo,
@@ -26,7 +23,6 @@ function Profile({
     resetForm();
   };
 
-  // console.log(!isValid || currentUser.name === values.name || currentUser.email === values.email);
 
   return (
     <section className="profile">
@@ -104,7 +100,6 @@ function Profile({
           aria-label="logout"
           onClick={handleDeleteToken}
           className="profile__change-data profile__change-data_type_link"
-        /*поправить нижний отступ */
         >
           <p className="profile__change-data profile__change-data_type_link">
             Выйти из аккаунта

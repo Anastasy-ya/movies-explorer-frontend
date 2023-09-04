@@ -1,5 +1,3 @@
-// import React, { useCallback, useState } from "react";
-// import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import React, { useCallback } from "react";
 
 //хук управления формой и валидации формы

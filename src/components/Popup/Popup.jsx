@@ -7,7 +7,7 @@ import InfoAccount from "../InfoAccount/InfoAccount";
 function Popup({ isOpen, isLoggedIn, handleOpenClosePopup }) {
 
   usePopupClose({ isOpen, handleOpenClosePopup });
-  
+
   return (
     <>
       <div

@@ -1,11 +1,9 @@
 import React from "react";
 import './FilterCheckbox.css';
 
-function FilterCheckbox({ setIsShortMovies, isShortMovies, handleSubmit }) { //handlerChangeTumbler,
-// console.log(isShortMovies, 'isShortMovies')
+function FilterCheckbox({ setIsShortMovies, isShortMovies, handleSubmit }) {
   function handleChange(e) {
     setIsShortMovies(!isShortMovies);
-    // handleSubmit(e); //
   };
 
   return (
@@ -13,9 +11,9 @@ function FilterCheckbox({ setIsShortMovies, isShortMovies, handleSubmit }) { //h
       <label className="tumbl">
         <input
           type="checkbox"
-          className="tumbl__checker"//{`tumbl__checker ${isChecked && "checked"}`}//
+          className="tumbl__checker"
           onChange={(e) => handleChange(e)}
-          checked={isShortMovies} // && "checked"
+          checked={isShortMovies}
         />
         <span className="tumbl__slider"
           aria-label="filter short films"></span>

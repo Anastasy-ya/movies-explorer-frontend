@@ -13,8 +13,8 @@ function Input({
   handleChange,
   errors,
   pattern
- }) {
-  
+}) {
+
   return (
     <label className="form__label form__label_type_profile">
       {labelText}

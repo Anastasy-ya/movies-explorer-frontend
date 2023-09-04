@@ -1,6 +1,5 @@
 import React from "react";
 import './InfoAccount.css';
-// import { NavLink, useLocation } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 function InfoAccount({ isLoggedIn, isPopup }) {
@@ -16,7 +15,8 @@ function InfoAccount({ isLoggedIn, isPopup }) {
           className="header__info-account"
         >
           <div className="info-account info-account_type_account">
-            <p className={`info-account__authentification ${isPopup && "info-account__authentification_type_popup"}`}>Аккаунт</p>
+            <p className={`info-account__authentification ${isPopup && 
+              "info-account__authentification_type_popup"}`}>Аккаунт</p>
             <div className="info-account__account-button"
               aria-label="profile"
             ></div>
@@ -42,7 +42,7 @@ function InfoAccount({ isLoggedIn, isPopup }) {
           <Link
             to="/signin"
             reloadDocument
-            className="info-account__login-button" /*navigation__text*/
+            className="info-account__login-button"
             aria-label="login button"
           >Войти
           </Link>
