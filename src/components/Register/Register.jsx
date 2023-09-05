@@ -40,11 +40,9 @@ function Register({
       <h1 className="auth-container__wellcome">{wellcomeText}</h1>
 
       <Form
-        // className={className}
         formName={formName}
         buttonText={buttonText}
         typeReg={true}
-        // isValid={isValid}
         onSubmit={(e) => handleSubmit(e)}
         disabled={!isValid}
       >
@@ -53,7 +51,7 @@ function Register({
           type={"text"}
           name={"name"}
           minLength={"2"}
-          maxLength={"40"}
+          maxLength={"20"}
           labelText={"Имя"}
           placeholder={"Введите имя"}
           value={values.name ?? currentUser.name}
@@ -66,7 +64,7 @@ function Register({
           type={"text"}
           name={"email"}
           minLength={"2"}
-          maxLength={"40"}
+          maxLength={"20"}
           labelText={"E-mail"}
           placeholder={"Введите E-mail"}
           value={values.email ?? currentUser.email}
@@ -89,10 +87,11 @@ function Register({
           errors={errors}
         />
 
-        <RequestMessage
+        {/* <RequestMessage
           parent={"auth-container"}
           requestMessage={requestMessage}
-        />
+          oneMoreElement={""}
+        /> */}
 
 
       </Form>

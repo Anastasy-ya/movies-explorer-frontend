@@ -86,12 +86,11 @@ function SearchForm({
           >Найти
           </button>
 
-          {/*TODO: добавить еще один пропс в остальные элеементы */}
-          {<RequestMessage
+          <RequestMessage
             requestMessage={requestMessage}
             parent={"search-input"}
-            oneMoreElement={<ErrorMessage errors={errors} name="search" />}
-          />}
+            erroElem={<ErrorMessage errors={errors} name="search" />}
+          />
 
         </form>
 

@@ -31,6 +31,7 @@ function App() {
 
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
   // базовые фильмы, этот стейт не меняется в коде
   const [basicMovies, setBasicMovies] = React.useState([]);
   //отфильтрованные основные фильмы
@@ -139,20 +140,22 @@ function App() {
     auth
       .register({ name, email, password })
       .then((res) => {
-        console.log(res, 'res')
+        // console.log(res, 'res') undefined
         //если вернулась ошибка, функцию не запускать
-        // if(res.ok) {
-          handleLogin({ email, password })
-        // }
-        //происходит перенаправление на movies через функцию авторизации
+        setIsRegistered(true)
       })
       .catch((err) => {
         console.log(err);
         setRequestMessage(err || "");
+        setIsRegistered(false)
         //уведомление о неудачной регистрации на странице с фильмами добавить
       })
-      // .finally(() => {
-      // });
+      .finally(() => {
+        if(isRegistered) {
+          handleLogin({ email, password })
+          //происходит перенаправление на movies через функцию авторизации
+        }
+      });
   }
 
   //авторизация +
@@ -245,8 +248,9 @@ function App() {
       moviesApi
         .getMovies()
         .then((cards) => {
-          setBasicMovies(cards) //это стейт basicMovies
-          localStorage.setItem("basicMovies", JSON.stringify(cards))
+          console.log(cards)
+          setBasicMovies(cards) 
+          localStorage.setItem("basicMovies", JSON.stringify({cards}))
           //начало функции поиска фильмов
           const putLikeButtons = cards.map((movie) => {
             const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)

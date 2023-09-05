@@ -47,7 +47,7 @@ function Login({
           type={"text"}
           name={"email"}
           minLength={"2"}
-          maxLength={"40"}
+          maxLength={"20"}
           labelText={"E-mail"}
           placeholder={"Введите E-mail"}
           value={values.email ?? currentUser.email}
@@ -71,10 +71,11 @@ function Login({
           values={values}
         />
 
-        <RequestMessage
+        {/* <RequestMessage
           requestMessage={requestMessage}
           parent={"auth-container"}
-        />
+          oneMoreElement={""}
+        /> */}
 
       </Form>
 
