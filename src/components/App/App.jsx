@@ -218,8 +218,15 @@ function App() {
       .then(() => setIsLoggedIn(false))
       .then(() => {
         localStorage.removeItem("isShortMovies");
-        localStorage.removeItem("films");
+        localStorage.removeItem("movies");
+        localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
+        localStorage.removeItem("shortFilteredSavedMovies");
+        localStorage.removeItem("shortFilteredMovies");
+        localStorage.removeItem("isShortMovies");
+        localStorage.removeItem("savedMoviesSearchQuery");
+        localStorage.removeItem("currentUser");
+        localStorage.removeItem("basicMovies");
         navigate("/", { replace: true });
       })
       .catch((err) => {
