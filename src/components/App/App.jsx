@@ -89,15 +89,15 @@ function App() {
       })
       .catch((err) => { 
         // если кука истекла, удалить все данные как при разлогировании
-        setIsLoggedIn(false);
-        setCurrentUser({
-          name: "",
-          email: "",
-          password: "",
-        });
-        localStorage.removeItem("isShortMovies");
-        localStorage.removeItem("films");
-        localStorage.removeItem("moviesSearchQuery");
+        // setIsLoggedIn(false);
+        // setCurrentUser({
+        //   name: "",
+        //   email: "",
+        //   password: "",
+        // });
+        // localStorage.removeItem("isShortMovies");
+        // localStorage.removeItem("films");
+        // localStorage.removeItem("moviesSearchQuery");
         console.log(err);
       })
       .finally(() => {
@@ -155,7 +155,7 @@ function App() {
       .then((res) => {
         console.log(res, "должен быть объект пользователя") //должен быть объект пользователя
         setIsLoggedIn(true);
-        setCurrentUser(res);
+        setCurrentUser({ email, password });
         localStorage.setItem("currentUser", JSON.stringify(res))
       })
       .then(() => {
@@ -219,8 +219,6 @@ function App() {
   };
 
   // поиск на странице с сохраненными фильмами
-
-  // (state) => state.filter((c) => c._id !== deleteMovie._id)
   function handleSearchSavedMovie(string) {
     const films =
       savedMovies.filter((movie) => {
@@ -230,6 +228,7 @@ function App() {
         )
       })
     setSavedMovies(films);
+    localStorage.setItem("savedMovies", JSON.stringify(films))
     setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
   }
 
@@ -241,8 +240,8 @@ function App() {
       moviesApi
         .getMovies()
         .then((cards) => {
-          console.log(cards, "данные от сервера")
           setBasicMovies(cards) //это стейт basicMovies
+          localStorage.setItem("basicMovies", cards)
           //начало функции поиска фильмов
           const putLikeButtons = cards.map((movie) => {
             const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
@@ -264,7 +263,7 @@ function App() {
             })
           console.log(items)
           setMovies(items);
-          localStorage.setItem("films", JSON.stringify(items));
+          localStorage.setItem("savedMovies", JSON.stringify(items));
           setRequestMessage(items.length > 0 ? "" : "Ничего не найдено");
           //конец функции поиска фильмов
         })
@@ -298,12 +297,12 @@ function App() {
           )
         })
       setMovies(films);
-      localStorage.setItem("films", JSON.stringify(films));
+      localStorage.setItem("savedMovies", JSON.stringify(films));
       setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
     }//конец блока else
   };
 
-  //функция сохранения фильма
+  //функция сохранения фильма +
   function handleSaveMovie(movie) {
     MainApi
       .saveMovie(movie)
@@ -312,6 +311,9 @@ function App() {
         setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
         newMovie.buttonLikeType = "delete"
         setSavedMovies((state) => [...state, newMovie])
+        //прибавляет новый фильм к массиву имеющихся
+        //обновить в LS этот массив
+        localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
       })
       .catch((err) => {
         console.log(err);
@@ -361,6 +363,8 @@ function App() {
       )
     }
   }, [isShortMovies, movies]);
+
+  console.log(isLoggedIn)
 
   return (
     <div className="root">

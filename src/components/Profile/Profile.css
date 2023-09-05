@@ -55,7 +55,7 @@
   background-color: transparent;
   border: none;
   grid-area: button;
-  margin: 193px 0 0;
+  margin: 145px 0 0;
 }
 
 .profile__change-data:disabled {
