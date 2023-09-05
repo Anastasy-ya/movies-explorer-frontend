@@ -30,7 +30,7 @@ function Header({
     else {
       setHeaderView(
         <>
-          {isLoggedIn && (<nav className="header__navigation-box">
+          {isLoggedIn && (<nav className="header__navigation-box"> {/*isWideScreen &&  */}
 
             <NavLink
               className={({ isActive }) => `header__link ${isActive ? "header__link_active" : ""}`}

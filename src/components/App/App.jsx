@@ -1,3 +1,168 @@
+// import React, { useState, useEffect } from "react";
+// import { Route, Routes, useNavigate } from "react-router-dom"; //, Navigate, useNavigate
+// import './App.css';
+// import Header from "../Header/Header";
+// import Footer from "../Footer/Footer";
+// import Main from "../Main/Main";
+// import Movies from "../Movies/Movies";
+// import SavedMovies from "../SavedMovies/SavedMovies";
+// import Profile from "../Profile/Profile";
+// import Login from "../Login/Login";
+// import Register from "../Register/Register";
+// import PageNotFound from "../PageNotFound/PageNotFound";
+// import Preloader from "../Preloader/Preloader";
+// import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+// import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+// import { useLocation } from "react-router-dom";
+// import { useResize } from "../../components/hooks/useResize";
+// import * as auth from "../../utils/auth";
+// import * as moviesApi from "../../utils/MoviesApi";
+// import * as MainApi from "../../utils/MainApi";
+
+// function App() {
+//   const [tokenChecked, setTokenChecked] = useState(false);
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [showPreloader, setShowPreloader] = useState(false);
+//   const [currentUser, setCurrentUser] = React.useState({
+//     name: "",
+//     email: "",
+//     password: "",
+//   });
+
+//   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+//   const [isMainPage, setIsMainPage] = useState(false);
+//   // фильмы и сохраненные фильмы
+//   const [basicMovies, setBasicMovies] = React.useState(JSON.parse(localStorage.getItem("films")) || []);
+//   const [movies, setMovies] = React.useState(() => {
+//     const checkStorage = localStorage.getItem("films");
+//     return checkStorage ? JSON.parse(checkStorage) : []
+//   });
+//   const [savedMovies, setSavedMovies] = React.useState([]); //TODO:получить значения сторадж
+//   //сообщения об ошибках
+//   const [requestMessage, setRequestMessage] = React.useState("");
+//   const [isShortMovies, setIsShortMovies] = React.useState(() => {
+//     const checkStorage = localStorage.getItem("isShortMovies");
+//     return checkStorage ? JSON.parse(checkStorage) : false
+//   });
+//   const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false);
+//   // отфильтрованные короткометражки на странице с фильмами
+//   const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
+//   // отфильтрованные короткометражки на странице с сохраненными фильмами
+//   const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState([]);
+
+//   //получение значения от кастомного хука
+//   const { isWideScreen } = useResize();
+//   const navigate = useNavigate();
+//   const path = useLocation();
+
+//   useEffect(() => {
+//     localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies))
+//   }, [isShortMovies])
+
+//   //получение сохраненных фильмов из бд
+//   useEffect(() => {
+//     if (isLoggedIn) {
+//       MainApi
+//         .getInitialMovies()
+//         .then((films) => {
+//           const deleteIconMovies = films.map((film) => {
+//             return {
+//               ...film, buttonLikeType: "delete", key: film._id
+//               //доп свойство для присваивания класса type delete
+//             }
+//           })
+//           setSavedMovies(deleteIconMovies); //измененные фильмы с иконкой удаления
+//         })
+//         .catch(console.error)
+//         .finally(() => {
+//         });
+//     }
+//   }, [isLoggedIn])
+
+//   // проверка зарегистрирован ли пользователь
+//   useEffect(() => {
+//     auth
+//       .checkToken()
+//       .then((user) => {
+//         setIsLoggedIn(true)
+//         setCurrentUser(user);
+//         //зарегистрированному пользователю в инпутах форм будут показаны его данные
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       })
+//       .finally(() => {
+//         setTokenChecked(true);
+//       });
+//   }, []);
+
+//   //проверка главная ли страница для функции отображения хэдера
+//   useEffect(() => {
+//     path.pathname === "/" ?
+//       setIsMainPage(true) :
+//       setIsMainPage(false);
+//   }, [path]);
+
+//   //удалить сообщение от сервера в компоненте RequestMessage по таймеру
+//   useEffect(() => {
+//     if (requestMessage) {
+//       setTimeout(() => {
+//         setRequestMessage("")
+//       }, 3000);
+//     }
+//   }, [requestMessage]);
+
+//   //функция открытия/закрытия попапа
+//   function handleOpenClosePopup() {
+//     // поменять значение на противоположное
+//     setIsOpenPopup(!isOpenPopup);
+//     document.querySelector(".burger").classList.toggle('open');
+//     /*TODO: после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
+//     //и найти пропавшую анимацию
+//   };
+
+//   //регистрация
+//   function handleRegister({ name, email, password }) {
+//     setShowPreloader(true);
+//     auth
+//       .register({ name, email, password })
+//       .then(() => {
+//         handleLogin({ email, password })
+//         //происходит перенаправление на movies через функцию авторизации
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         setRequestMessage(err || "");
+//         //уведомление о неудачной регистрации на странице с фильмами добавить
+//       })
+//       .finally(() => {
+//         //навигация после авторизации потому что функция авторизации асинхронная 
+//         // и если пользователь попадет на сайт раньше, чем произойдет авторизация, 
+//         // он снова будет перенаправлен на главную
+//         setShowPreloader(false);
+//       });
+//   }
+
+//   //авторизация 
+//   function handleLogin({ email, password }) {
+//     auth
+//       .login({ email, password })
+//       .then((res) => {
+//         setIsLoggedIn(true);
+//         setCurrentUser(res)
+//       })
+//       .then((res) => {
+//         navigate("/movies", { replace: true });
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         setIsLoggedIn(false);
+//         setRequestMessage(err || "");
+//       })
+//       .finally(() => {
+//       });
+//   }
+
 import React, { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom"; //, Navigate, useNavigate
 import './App.css';
@@ -32,23 +197,17 @@ function App() {
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
   // фильмы и сохраненные фильмы
-  const [basicMovies, setBasicMovies] = React.useState(JSON.parse(localStorage.getItem("films")) || []);
-  const [movies, setMovies] = React.useState(() => {
-    const checkStorage = localStorage.getItem("films");
-    return checkStorage ? JSON.parse(checkStorage) : []
-  });
-  const [savedMovies, setSavedMovies] = React.useState([]); //TODO:получить значения сторадж
+  const [basicMovies, setBasicMovies] = React.useState(JSON.parse(localStorage.getItem("basicMovies")) || []);
+  const [movies, setMovies] = React.useState(JSON.parse(localStorage.getItem("movies")) || []);
+  const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
-  const [isShortMovies, setIsShortMovies] = React.useState(() => {
-    const checkStorage = localStorage.getItem("isShortMovies");
-    return checkStorage ? JSON.parse(checkStorage) : false
-  });
-  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false);
+  const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
+  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false); //переписать и обойтись без него
   // отфильтрованные короткометражки на странице с фильмами
-  const [shortFilteredMovies, setShortFilteredMovies] = React.useState([]);
+  const [shortFilteredMovies, setShortFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredMovies")) || []);
   // отфильтрованные короткометражки на странице с сохраненными фильмами
-  const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState([]);
+  const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredSavedMovies")) || []);
 
   //получение значения от кастомного хука
   const { isWideScreen } = useResize();
@@ -71,24 +230,40 @@ function App() {
               //доп свойство для присваивания класса type delete
             }
           })
-          setSavedMovies(deleteIconMovies); //измененные фильмы с иконкой удаления
+          setSavedMovies(deleteIconMovies); //измененные фильмы с иконкой удаления savedMovies
+          localStorage.setItem("savedMovies", JSON.stringify(deleteIconMovies)) //savedMovies
         })
         .catch(console.error)
-        .finally(() => {
-        });
+        // .finally(() => {
+        // });
     }
   }, [isLoggedIn])
 
-  // проверка зарегистрирован ли пользователь
+  // проверка авторизован ли пользователь
+  // если его данные сохранились с прошлой сессии
   useEffect(() => {
     auth
       .checkToken()
       .then((user) => {
-        setIsLoggedIn(true)
+        console.log(user)
+        setIsLoggedIn(true);
         setCurrentUser(user);
-        //зарегистрированному пользователю в инпутах форм будут показаны его данные
+        localStorage.setItem("currentUser", JSON.stringify(currentUser))
+        //зарегистрированному пользователю в инпутах форм 
+        //будут показаны его данные
       })
-      .catch((err) => {
+      .catch((err) => { 
+        // если кука истекла, удалить все данные как при разлогировании
+        setIsLoggedIn(false);
+        setCurrentUser({
+          name: "",
+          email: "",
+          password: "",
+        });
+        localStorage.removeItem("isShortMovies");
+        localStorage.removeItem("films");
+        localStorage.removeItem("moviesSearchQuery");
+        navigate("/", { replace: true });
         console.log(err);
       })
       .finally(() => {
@@ -104,6 +279,7 @@ function App() {
   }, [path]);
 
   //удалить сообщение от сервера в компоненте RequestMessage по таймеру
+  // (бегущая строка)
   useEffect(() => {
     if (requestMessage) {
       setTimeout(() => {
@@ -123,7 +299,6 @@ function App() {
 
   //регистрация
   function handleRegister({ name, email, password }) {
-    setShowPreloader(true);
     auth
       .register({ name, email, password })
       .then(() => {
@@ -135,12 +310,8 @@ function App() {
         setRequestMessage(err || "");
         //уведомление о неудачной регистрации на странице с фильмами добавить
       })
-      .finally(() => {
-        //навигация после авторизации потому что функция авторизации асинхронная 
-        // и если пользователь попадет на сайт раньше, чем произойдет авторизация, 
-        // он снова будет перенаправлен на главную
-        setShowPreloader(false);
-      });
+      // .finally(() => {
+      // });
   }
 
   //авторизация 
@@ -148,19 +319,24 @@ function App() {
     auth
       .login({ email, password })
       .then((res) => {
+        console.log(res, "должен быть объект пользователя") //должен быть объект пользователя
         setIsLoggedIn(true);
-        setCurrentUser(res)
+        setCurrentUser(res);
+        localStorage.setItem("currentUser", JSON.stringify(res))
       })
-      .then((res) => {
+      .then(() => {
         navigate("/movies", { replace: true });
+        //навигация после авторизации потому что функция авторизации асинхронная 
+        // и если пользователь попадет на сайт раньше, чем произойдет авторизация, 
+        // он снова будет перенаправлен на главную
       })
       .catch((err) => {
         console.log(err);
         setIsLoggedIn(false);
         setRequestMessage(err || "");
       })
-      .finally(() => {
-      });
+      // .finally(() => {
+      // });
   }
 
   //изменить данные профиля
@@ -169,6 +345,10 @@ function App() {
       .updateUser({ name, email })
       .then((res) => {
         setCurrentUser(res)
+        localStorage.setItem("currentUser", JSON.stringify(
+            res.name ? { name: res.name } : { name: "" },
+            res.email ? { email: res.email } : { email: "" }
+        ))
         setRequestMessage('Данные успешно изменены');
         // уведомление в профиле
       })
