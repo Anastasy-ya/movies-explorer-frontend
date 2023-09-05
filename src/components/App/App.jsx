@@ -31,10 +31,13 @@ function App() {
 
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
-  // фильмы и сохраненные фильмы
-  const [basicMovies, setBasicMovies] = React.useState(JSON.parse(localStorage.getItem("basicMovies")) || []);
+  // базовые фильмы, этот стейт не меняется в коде
+  const [basicMovies, setBasicMovies] = React.useState([]);
+  //отфильтрованные основные фильмы
   const [movies, setMovies] = React.useState(JSON.parse(localStorage.getItem("movies")) || []);
+  // базовые фильмы для сохраненных, обновляется при лайке
   const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
+  const [savedFilteredMovies, setSavedFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("savedFilteredMovies")) || []);
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
@@ -227,8 +230,8 @@ function App() {
           || movie.nameEN.toLowerCase().includes(string.toLowerCase())
         )
       })
-    setSavedMovies(films);
-    localStorage.setItem("savedMovies", JSON.stringify(films))
+    setSavedFilteredMovies(films);
+    localStorage.setItem("savedFilteredMovies", JSON.stringify(films))
     setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
   }
 
@@ -322,6 +325,7 @@ function App() {
       });
   }
 
+  // удаление из сохраненных +
   function handleDeleteMovie(id) {
     const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
     MainApi
@@ -334,8 +338,8 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {
-      });
+      // .finally(() => {
+      // });
   }
 
   //тумблер "короткометражки" на странице с сохраненными фильмами
