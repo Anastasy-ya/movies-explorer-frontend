@@ -317,10 +317,11 @@ function App() {
     MainApi
       .saveMovie(movie)
       .then((newMovie) => {
-        setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
-        setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem))
+        setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
+        setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
         newMovie.buttonLikeType = "delete"
         setSavedMovies((state) => [...state, newMovie])
+        setShortFilteredSavedMovies((state) => [...state, newMovie]);
         //прибавляет новый фильм к массиву имеющихся
         //обновить в LS этот массив
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
@@ -341,6 +342,7 @@ function App() {
         setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
         setShortFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
+        setShortFilteredSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id));
       })
       .catch((err) => {
         console.log(err);
