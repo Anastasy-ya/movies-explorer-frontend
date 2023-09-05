@@ -23,6 +23,8 @@ function Register({
   const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
+  console.log(values)
+
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,7 +72,9 @@ function Register({
           value={values.email ?? currentUser.email}
           handleChange={(e) => handleChange(e)}
           errors={errors}
-          pattern="^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
+          pattern="^[a-zA-Z0-9\-.]{1,}@[a-zA-Z0-9\-.]{1,}\.[a-zA-Z]{2,5}$"
+          //валидация при помощи validate на бэке не принимает нижнее подчеркивание, TODO после сдачи
+            //"^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
         />
 
         <Input

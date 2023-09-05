@@ -43,7 +43,7 @@ function MoviesCard({
       <Link
         to={trailerLink}
         // className="about-me__gihub"
-        aria-label="link to Github"
+        aria-label="link trailer"
         target="_blank"
       >
         <img

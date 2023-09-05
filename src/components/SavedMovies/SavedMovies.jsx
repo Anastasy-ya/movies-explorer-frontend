@@ -11,7 +11,9 @@ function SavedMovies({
   setRequestMessage,
   handleSearchMovie,
   isShortMovies,
-  setIsShortMovies
+  setIsShortMovies,
+  isShortSavedMovies,
+  setIsShortSavedMovies,
 }) {
 
   // eslint-disable-next-line no-unused-vars
@@ -22,7 +24,7 @@ function SavedMovies({
   function handleSearch(query) {
     setSavedQuery(query);
     handleSearchMovie(query)
-    localStorage.setItem("savedMoviesSearchQuery", query);
+    localStorage.setItem("savedMoviesSearchQuery", query || "");
   }
 
   return (
@@ -35,6 +37,8 @@ function SavedMovies({
         isShortMovies={isShortMovies}
         onSavedSearch={handleSearch}
         setSavedQuery={setSavedQuery} //значение отличается от movies тк сохраняется другой стейт
+        isShortSavedMovies={isShortSavedMovies}
+        setIsShortSavedMovies={setIsShortSavedMovies}
       />
       <MoviesCardList
         isMoviePage={false}

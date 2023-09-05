@@ -37,7 +37,7 @@ function App() {
   const [movies, setMovies] = React.useState(JSON.parse(localStorage.getItem("movies")) || []);
   // базовые фильмы для сохраненных, обновляется при лайке
   const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
-  const [savedFilteredMovies, setSavedFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("savedFilteredMovies")) || []);
+  // const [savedFilteredMovies, setSavedFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("savedFilteredMovies")) || []);
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
@@ -138,8 +138,12 @@ function App() {
   function handleRegister({ name, email, password }) {
     auth
       .register({ name, email, password })
-      .then(() => {
-        handleLogin({ email, password })
+      .then((res) => {
+        console.log(res, 'res')
+        //если вернулась ошибка, функцию не запускать
+        // if(res.ok) {
+          handleLogin({ email, password })
+        // }
         //происходит перенаправление на movies через функцию авторизации
       })
       .catch((err) => {
@@ -151,15 +155,14 @@ function App() {
       // });
   }
 
-  //авторизация 
+  //авторизация +
   function handleLogin({ email, password }) {
     auth
       .login({ email, password })
       .then((res) => {
-        console.log(res, "должен быть объект пользователя") //должен быть объект пользователя
         setIsLoggedIn(true);
         setCurrentUser({ email, password });
-        localStorage.setItem("currentUser", JSON.stringify(res))
+        localStorage.setItem("currentUser", JSON.stringify({ email, password }))
       })
       .then(() => {
         navigate("/movies", { replace: true });
@@ -230,8 +233,7 @@ function App() {
           || movie.nameEN.toLowerCase().includes(string.toLowerCase())
         )
       })
-    setSavedFilteredMovies(films);
-    localStorage.setItem("savedFilteredMovies", JSON.stringify(films))
+    setSavedMovies(films || []);
     setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
   }
 
@@ -244,7 +246,7 @@ function App() {
         .getMovies()
         .then((cards) => {
           setBasicMovies(cards) //это стейт basicMovies
-          localStorage.setItem("basicMovies", cards)
+          localStorage.setItem("basicMovies", JSON.stringify(cards))
           //начало функции поиска фильмов
           const putLikeButtons = cards.map((movie) => {
             const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
@@ -266,7 +268,8 @@ function App() {
             })
           console.log(items)
           setMovies(items);
-          localStorage.setItem("savedMovies", JSON.stringify(items));
+          //найденные фильмы movies
+          localStorage.setItem("movies", JSON.stringify(items));
           setRequestMessage(items.length > 0 ? "" : "Ничего не найдено");
           //конец функции поиска фильмов
         })
@@ -353,6 +356,9 @@ function App() {
         })
       )
     }
+    // else if (isShortMovies && savedMovies.length === 0) {
+    //   setRequestMessage("Ничего не найдено");
+    // }
   }, [isShortSavedMovies, savedMovies]);
 
   //тумблер "короткометражки" на странице с фильмами
@@ -365,7 +371,10 @@ function App() {
           )
         })
       )
-    }
+    } 
+    // else if (isShortMovies && movies.length === 0) {
+    //   // setRequestMessage("Ничего не найдено");
+    // }
   }, [isShortMovies, movies]);
 
   console.log(isLoggedIn)
@@ -471,6 +480,8 @@ function App() {
                             setRequestMessage={setRequestMessage}
                             isShortMovies={isShortMovies}
                             setIsShortMovies={setIsShortMovies}
+                            isShortSavedMovies={isShortSavedMovies}
+                            setIsShortSavedMovies={setIsShortSavedMovies}
                             handleDeleteMovie={handleDeleteMovie}
 
                           />
@@ -506,6 +517,8 @@ function App() {
                             handleDeleteMovie={handleDeleteMovie}
                             isShortMovies={isShortSavedMovies}
                             setIsShortMovies={setIsShortSavedMovies}
+                            isShortSavedMovies={isShortSavedMovies}
+                            setIsShortSavedMovies={setIsShortSavedMovies}
                           />
                         </main>
                         <Footer />

@@ -14,7 +14,9 @@ function Movies({
   handleSearchMovie,
   isShortMovies,
   setIsShortMovies,
-  handleDeleteMovie
+  handleDeleteMovie,
+  isShortSavedMovies,
+  setIsShortSavedMovies,
 }) {
 
   const [addMovies, setAddMovies] = useState(0);
@@ -80,6 +82,8 @@ function Movies({
         isShortMovies={isShortMovies}
         onSearch={handleSearch}
         setQuery={setQuery}
+        isShortSavedMovies={isShortSavedMovies}
+        setIsShortSavedMovies={setIsShortSavedMovies}
       />
       <MoviesCardList
         isMoviePage={true}

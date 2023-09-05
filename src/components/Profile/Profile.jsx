@@ -72,7 +72,9 @@ function Profile({
             maxLength="20"
             id="profile__profile-email-input`"
             onChange={(e) => handleChange(e)}
-            pattern="^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
+            pattern="^[a-zA-Z0-9\-.]{1,}@[a-zA-Z0-9\-.]{1,}\.[a-zA-Z]{2,5}$"
+            //валидация при помощи validate на бэке не принимает нижнее подчеркивание, TODO после сдачи
+            //"^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
             value={values.email ?? currentUser.email}
           />
           <span className="profile__input-error profile__input-error_type_bottom">

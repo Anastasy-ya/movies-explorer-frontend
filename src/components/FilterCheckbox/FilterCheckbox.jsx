@@ -1,9 +1,16 @@
 import React from "react";
 import './FilterCheckbox.css';
 
-function FilterCheckbox({ setIsShortMovies, isShortMovies, handleSubmit }) {
+function FilterCheckbox({ 
+  setIsShortMovies, 
+  isShortMovies,
+  isShortSavedMovies,
+  setIsShortSavedMovies,
+}) { //, handleSubmit 
+
   function handleChange(e) {
     setIsShortMovies(!isShortMovies);
+    setIsShortSavedMovies(!isShortSavedMovies);
   };
 
   return (

@@ -15,7 +15,9 @@ function SearchForm({
   onSearch,
   setQuery,
   setSavedQuery,
-  onSavedSearch
+  onSavedSearch,
+  isShortSavedMovies,
+  setIsShortSavedMovies,
 }) {
 
   const { register, errors, handleSubmit, watch, setValue } = AuthForm();
@@ -27,7 +29,7 @@ function SearchForm({
     } else {
       setValue("search", localStorage.getItem("savedMoviesSearchQuery" || ""));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log(location.pathname)
@@ -45,13 +47,13 @@ function SearchForm({
 
   useEffect(() => {
     if (location.pathname === "/movies") {
-      localStorage.setItem("moviesSearchQuery", query);
+      localStorage.setItem("moviesSearchQuery", query || "");
       setQuery(query);
     } else {
-      localStorage.setItem("savedMoviesSearchQuery", savedQuery);
-      setSavedQuery(savedQuery);
+      localStorage.setItem("savedMoviesSearchQuery", savedQuery || "");
+      setSavedQuery(savedQuery || "");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, savedQuery]);
 
 
@@ -63,6 +65,7 @@ function SearchForm({
         <form
           className="search-input__form form"
           onSubmit={handleSubmit(onSubmit)}
+          noValidate
         >
 
           <input
@@ -95,7 +98,9 @@ function SearchForm({
         <FilterCheckbox
           setIsShortMovies={setIsShortMovies}
           isShortMovies={isShortMovies}
-          handleSubmit={handleSubmit}
+          isShortSavedMovies={isShortSavedMovies}
+          setIsShortSavedMovies={setIsShortSavedMovies}
+        // handleSubmit={handleSubmit}
         />
       </div>
     </div>
