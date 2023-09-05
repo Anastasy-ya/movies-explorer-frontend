@@ -360,9 +360,9 @@ function App() {
         })
       )
     }
-    // else if (isShortMovies && savedMovies.length === 0) {
-    //   setRequestMessage("Ничего не найдено");
-    // }
+    else if (isShortMovies && savedMovies.length === 0) {
+      setShortFilteredSavedMovies([]);
+    }
   }, [isShortSavedMovies, savedMovies]);
 
   //тумблер "короткометражки" на странице с фильмами
@@ -376,9 +376,9 @@ function App() {
         })
       )
     } 
-    // else if (isShortMovies && movies.length === 0) {
-    //   // setRequestMessage("Ничего не найдено");
-    // }
+    else if (isShortMovies && movies.length === 0) {
+      setShortFilteredMovies([]);
+    }
   }, [isShortMovies, movies]);
 
   console.log(isLoggedIn)
