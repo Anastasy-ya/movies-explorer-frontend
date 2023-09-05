@@ -218,7 +218,6 @@ function App() {
         localStorage.removeItem("isShortMovies");
         localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
-        localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
         navigate("/", { replace: true });
       })
