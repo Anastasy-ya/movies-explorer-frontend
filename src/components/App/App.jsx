@@ -98,7 +98,6 @@ function App() {
         localStorage.removeItem("isShortMovies");
         localStorage.removeItem("films");
         localStorage.removeItem("moviesSearchQuery");
-        navigate("/", { replace: true });
         console.log(err);
       })
       .finally(() => {
