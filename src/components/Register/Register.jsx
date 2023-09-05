@@ -87,11 +87,11 @@ function Register({
           errors={errors}
         />
 
-        {/* <RequestMessage
+        <RequestMessage
           parent={"auth-container"}
           requestMessage={requestMessage}
-          oneMoreElement={""}
-        /> */}
+          erroElem={""}
+        />
 
 
       </Form>

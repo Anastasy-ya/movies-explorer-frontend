@@ -140,9 +140,14 @@ function App() {
     auth
       .register({ name, email, password })
       .then((res) => {
-        // console.log(res, 'res') undefined
+        console.log(res, 'res')
+        // if (res.ok) {
+        //   handleLogin({ email, password })
+        //происходит перенаправление на movies через функцию авторизации
         //если вернулась ошибка, функцию не запускать
-        setIsRegistered(true)
+        // }
+        // else console.log('что за херня')
+
       })
       .catch((err) => {
         console.log(err);
@@ -151,10 +156,7 @@ function App() {
         //уведомление о неудачной регистрации на странице с фильмами добавить
       })
       .finally(() => {
-        if(isRegistered) {
-          handleLogin({ email, password })
-          //происходит перенаправление на movies через функцию авторизации
-        }
+        handleLogin({ email, password })
       });
   }
 
