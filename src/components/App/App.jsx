@@ -38,7 +38,7 @@ function App() {
   const [movies, setMovies] = React.useState(JSON.parse(localStorage.getItem("movies")) || []);
   // базовые фильмы для сохраненных, обновляется при лайке
   const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
-  // const [savedFilteredMovies, setSavedFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("savedFilteredMovies")) || []);
+  const [savedFilteredMovies, setSavedFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("savedFilteredMovies")) || []);
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
@@ -84,7 +84,6 @@ function App() {
     auth
       .checkToken()
       .then((user) => {
-        console.log(user)
         setIsLoggedIn(true);
         setCurrentUser(user);
         localStorage.setItem("currentUser", JSON.stringify(currentUser))
@@ -140,14 +139,6 @@ function App() {
     auth
       .register({ name, email, password })
       .then((res) => {
-        console.log(res, 'res')
-        // if (res.ok) {
-        //   handleLogin({ email, password })
-        //происходит перенаправление на movies через функцию авторизации
-        //если вернулась ошибка, функцию не запускать
-        // }
-        // else console.log('что за херня')
-
       })
       .catch((err) => {
         console.log(err);
@@ -218,6 +209,7 @@ function App() {
       .then(() => setIsLoggedIn(false))
       .then(() => {
         localStorage.removeItem("isShortMovies");
+        localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("movies");
         localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
@@ -237,6 +229,8 @@ function App() {
       });
   };
 
+  console.log(savedMovies.length, 'savedMovies')
+
   // поиск на странице с сохраненными фильмами
   function handleSearchSavedMovie(string) {
     const films =
@@ -246,7 +240,8 @@ function App() {
           || movie.nameEN.toLowerCase().includes(string.toLowerCase())
         )
       })
-    setSavedMovies(films || []);
+    setSavedFilteredMovies(films || []);
+    localStorage.setItem("savedFilteredMovies", JSON.stringify(films))
     setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
   }
 
@@ -258,7 +253,6 @@ function App() {
       moviesApi
         .getMovies()
         .then((cards) => {
-          console.log(cards)
           setBasicMovies(cards) 
           localStorage.setItem("basicMovies", JSON.stringify({cards}))
           //начало функции поиска фильмов
@@ -271,16 +265,13 @@ function App() {
             }
             return { ...movie, buttonLikeType: "unliked", key: movie.id }
           })
-          console.log(putLikeButtons, "putLikeButtons") //+
           const items = //это films
             putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
-              console.log(movie)
               return (
                 movie.nameRU.toLowerCase().includes(string.toLowerCase())
                 || movie.nameEN.toLowerCase().includes(string.toLowerCase())
               )
             })
-          console.log(items)
           setMovies(items);
           //найденные фильмы movies
           localStorage.setItem("movies", JSON.stringify(items));
@@ -392,8 +383,6 @@ function App() {
       setShortFilteredMovies([]);
     }
   }, [isShortMovies, movies]);
-
-  console.log(isLoggedIn)
 
   return (
     <div className="root">
@@ -526,7 +515,7 @@ function App() {
                         <main className="content">
                           <SavedMovies
                             isLoggedIn={isLoggedIn}
-                            movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
+                            movies={isShortSavedMovies ? savedFilteredMovies || shortFilteredSavedMovies : savedMovies} //savedFilteredMovies
                             handleSearchMovie={handleSearchSavedMovie} //отличается от movies
                             requestMessage={requestMessage}
                             setRequestMessage={setRequestMessage}
