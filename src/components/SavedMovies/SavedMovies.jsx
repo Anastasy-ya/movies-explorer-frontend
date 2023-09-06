@@ -14,6 +14,7 @@ function SavedMovies({
   setIsShortMovies,
   isShortSavedMovies,
   setIsShortSavedMovies,
+  setIsOpenConfirmationPopup
 }) {
 
   // eslint-disable-next-line no-unused-vars
@@ -22,6 +23,11 @@ function SavedMovies({
   );
 
   function handleSearch(query) {
+    if (query.length === 0) {
+      setRequestMessage("Нужно ввести ключевое слово");
+      setIsOpenConfirmationPopup(true);
+      return;
+    }
     setSavedQuery(query);
     handleSearchMovie(query)
     localStorage.setItem("savedMoviesSearchQuery", query || "");

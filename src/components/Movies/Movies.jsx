@@ -17,6 +17,8 @@ function Movies({
   handleDeleteMovie,
   isShortSavedMovies,
   setIsShortSavedMovies,
+  setShortFilteredMovies,
+  setIsOpenConfirmationPopup
 }) {
 
   const [addMovies, setAddMovies] = useState(0);
@@ -27,14 +29,16 @@ function Movies({
     localStorage.getItem("moviesSearchQuery") || "",
   );
 
+  
+
   const { isWideScreen, isMiddleScreen } = useResize();
 
   //количество карточек на странице при первой отрисовке
   const count = isWideScreen ?
     12 :
     isMiddleScreen ?
-    8 :
-    5;
+      8 :
+      5;
 
   //сколько показывать фильмов по кнопке "еще"?
   function handlerMoreFilms() {
@@ -52,7 +56,10 @@ function Movies({
   const moviesForRender = () => {
     if (movies.length > 0) {
       return movies.slice(0, showedMovies);
-    } return [];
+    } else {
+      return [];
+    }
+    
   };
 
   const moviesToRender = movies.length - showedMovies;
@@ -61,12 +68,17 @@ function Movies({
     if (moviesToRender > 0) {
       setIsRenderedLearnMore(true)
     } else {
-      setIsRenderedLearnMore(false)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      setIsRenderedLearnMore(false);
+     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movies, showedMovies]);
 
   function handleSearch(query) {
+    if (query.length === 0) {
+      setRequestMessage("Нужно ввести ключевое слово");
+      setIsOpenConfirmationPopup(true);
+      return;
+    }
     handleSearchMovie(query)
     setQuery(query);
     localStorage.setItem("moviesSearchQuery", query);

@@ -1,4 +1,10 @@
 .request-message {
+  
+}
+
+
+
+/* .request-message {
   animation: text 4s infinite ease-in-out;
   width: 100%;
   margin: 0 auto;
@@ -26,4 +32,4 @@
     transform: translate(-75%, 0);
     color: rgba(238, 52, 101, .1);
   }
-}
+} */

@@ -17,7 +17,10 @@ function Login({
   askToChangeForm, // предложение изменить форму ввода
   askToChangeFormLink,
   routTo,
-  requestMessage
+  requestMessage,
+  setIsOpenConfirmationPopup,
+  setRequestMessage,
+  setIsLoggedIn
 }) {
 
   const currentUser = React.useContext(CurrentUserContext);
@@ -26,10 +29,19 @@ function Login({
 
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
-    e.preventDefault();
-    handleLogin(values);
-    resetForm();
+    e.preventDefault(); 
+    handleLogin(values)
+    .then(() => {
+    })
+    .catch((err) => {
+      console.log(err, 'ошибка авторизации')
+      setRequestMessage(err || "");
+      setIsOpenConfirmationPopup(true);
+      setIsLoggedIn(false);
+      resetForm();
+    })
   };
+
 
   return (
     <section className="auth-container">

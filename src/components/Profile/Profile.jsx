@@ -19,8 +19,8 @@ function Profile({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleChangeProfile(values);
-    resetForm();
+    handleChangeProfile(values) //resetForm();
+    
   };
 
 

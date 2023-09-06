@@ -11,25 +11,34 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 function Register({
   handleRegister,
   formName,
-  className,
   buttonText,
   wellcomeText, //заголовок формы
   askToChangeForm, // предложение изменить форму ввода
   askToChangeFormLink,
   routTo,
-  requestMessage
+  requestMessage,
+  setRequestMessage,
+  setIsOpenConfirmationPopup
 }) {
 
   const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  console.log(values)
 
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister(values);
-    resetForm();
+    handleRegister(values)
+    // .then(() => {
+    // })
+    .catch((err) => {
+      console.log(err)
+      setRequestMessage(err || "");
+      setIsOpenConfirmationPopup(true);
+      resetForm();
+    })
+    .finally(() => {
+    });
   };
 
 
@@ -87,11 +96,11 @@ function Register({
           errors={errors}
         />
 
-        <RequestMessage
+        {/* <RequestMessage
           parent={"auth-container"}
           requestMessage={requestMessage}
           erroElem={""}
-        />
+        /> */}
 
 
       </Form>

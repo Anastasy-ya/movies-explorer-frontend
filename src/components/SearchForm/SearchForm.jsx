@@ -74,9 +74,7 @@ function SearchForm({
             className="search-input__field"
             placeholder="Фильм"
             aria-label="write keywords for searching"
-            {...register("search", {
-              required: "Нужно ввести ключевое слово",
-            })}
+            {...register("search")}
           />
 
           <button
@@ -86,11 +84,11 @@ function SearchForm({
           >Найти
           </button>
 
-          <RequestMessage
+          {/* <RequestMessage
             requestMessage={requestMessage}
             parent={"search-input"}
             erroElem={<ErrorMessage errors={errors} name="search" />}
-          />
+          /> */}
 
         </form>
 

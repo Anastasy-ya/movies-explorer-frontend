@@ -1,17 +1,21 @@
 import React from "react";
 import './FilterCheckbox.css';
+import { useLocation } from "react-router-dom";
 
 function FilterCheckbox({ 
   setIsShortMovies, 
   isShortMovies,
   isShortSavedMovies,
   setIsShortSavedMovies,
-}) { //, handleSubmit 
+}) {
+
+  const location = useLocation();
 
   function handleChange(e) {
-    setIsShortMovies(!isShortMovies);
-    setIsShortSavedMovies(!isShortSavedMovies);
-  };
+  if (location.pathname === "/movies") {
+    return setIsShortMovies(!isShortMovies);
+  } else return setIsShortSavedMovies(!isShortSavedMovies);
+}
 
   return (
     <div className="search-input__tumbl">

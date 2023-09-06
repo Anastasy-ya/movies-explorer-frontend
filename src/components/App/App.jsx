@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import './App.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -18,6 +18,7 @@ import { useResize } from "../../components/hooks/useResize";
 import * as auth from "../../utils/auth";
 import * as moviesApi from "../../utils/MoviesApi";
 import * as MainApi from "../../utils/MainApi";
+import RequestMessage from "../RequestMessage/RequestMessage";
 
 function App() {
   const [tokenChecked, setTokenChecked] = useState(false);
@@ -31,7 +32,7 @@ function App() {
 
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
+  // const [isRegistered, setIsRegistered] = useState(false);
   // базовые фильмы, этот стейт не меняется в коде
   const [basicMovies, setBasicMovies] = React.useState([]);
   //отфильтрованные основные фильмы
@@ -47,6 +48,7 @@ function App() {
   const [shortFilteredMovies, setShortFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredMovies")) || []);
   // отфильтрованные короткометражки на странице с сохраненными фильмами
   const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredSavedMovies")) || []);
+  const [isOpenConfirmationPopup, setIsOpenConfirmationPopup] = useState(false);
 
   //получение значения от кастомного хука
   const { isWideScreen } = useResize();
@@ -56,6 +58,11 @@ function App() {
   useEffect(() => {
     localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies))
   }, [isShortMovies])
+
+  function openPopup(string) {
+    setRequestMessage(string);
+    setIsOpenConfirmationPopup(true);
+  }
 
   //получение сохраненных фильмов из бд
   useEffect(() => {
@@ -73,8 +80,8 @@ function App() {
           localStorage.setItem("savedMovies", JSON.stringify(deleteIconMovies)) //savedMovies
         })
         .catch(console.error)
-        // .finally(() => {
-        // });
+      // .finally(() => {
+      // });
     }
   }, [isLoggedIn])
 
@@ -90,17 +97,17 @@ function App() {
         //зарегистрированному пользователю в инпутах форм 
         //будут показаны его данные
       })
-      .catch((err) => { 
+      .catch((err) => {
         // если кука истекла, удалить все данные как при разлогировании
-        // setIsLoggedIn(false);
-        // setCurrentUser({
-        //   name: "",
-        //   email: "",
-        //   password: "",
-        // });
-        // localStorage.removeItem("isShortMovies");
-        // localStorage.removeItem("films");
-        // localStorage.removeItem("moviesSearchQuery");
+        setIsLoggedIn(false);
+        setCurrentUser({
+          name: "",
+          email: "",
+          password: "",
+        });
+        localStorage.removeItem("isShortMovies");
+        localStorage.removeItem("films");
+        localStorage.removeItem("moviesSearchQuery");
         console.log(err);
       })
       .finally(() => {
@@ -116,14 +123,13 @@ function App() {
   }, [path]);
 
   //удалить сообщение от сервера в компоненте RequestMessage по таймеру
-  // (бегущая строка)
   useEffect(() => {
-    if (requestMessage) {
+    if (isOpenConfirmationPopup) {
       setTimeout(() => {
-        setRequestMessage("")
+        setIsOpenConfirmationPopup(false)
       }, 3000);
     }
-  }, [requestMessage]);
+  }, [isOpenConfirmationPopup]);
 
   //функция открытия/закрытия попапа
   function handleOpenClosePopup() {
@@ -136,24 +142,17 @@ function App() {
 
   //регистрация
   function handleRegister({ name, email, password }) {
-    auth
+    return auth
       .register({ name, email, password })
       .then((res) => {
-      })
-      .catch((err) => {
-        console.log(err);
-        setRequestMessage(err || "");
-        setIsRegistered(false)
-        //уведомление о неудачной регистрации на странице с фильмами добавить
-      })
-      .finally(() => {
+        console.log(res, 'res')
         handleLogin({ email, password })
-      });
-  }
+      })
+  };
 
-  //авторизация +
+  //авторизация 
   function handleLogin({ email, password }) {
-    auth
+    return auth
       .login({ email, password })
       .then((res) => {
         setIsLoggedIn(true);
@@ -166,32 +165,27 @@ function App() {
         // и если пользователь попадет на сайт раньше, чем произойдет авторизация, 
         // он снова будет перенаправлен на главную
       })
-      .catch((err) => {
-        console.log(err);
-        setIsLoggedIn(false);
-        setRequestMessage(err || "");
-      })
-      // .finally(() => {
-      // });
   }
 
   //изменить данные профиля
   function handleChangeProfile({ name, email }) {
-    auth
+    return auth
       .updateUser({ name, email })
       .then((res) => {
         setCurrentUser(res)
         localStorage.setItem("currentUser", JSON.stringify(
           //заменить только измененные поля
-            res.name ? { name: res.name } : { name: "" },
-            res.email ? { email: res.email } : { email: "" }
+          res.name ? { name: res.name } : { name: "" },
+          res.email ? { email: res.email } : { email: "" }
         ))
         setRequestMessage('Данные успешно изменены');
+        setIsOpenConfirmationPopup(true);
         // уведомление в профиле
       })
       .catch((err) => {
         console.log(err);
         setRequestMessage(err || "");
+        setIsOpenConfirmationPopup(true);
         // уведомление в профиле
       })
       .finally(() => {
@@ -218,6 +212,7 @@ function App() {
         localStorage.removeItem("isShortMovies");
         localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
+        localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
         navigate("/", { replace: true });
       })
@@ -227,8 +222,6 @@ function App() {
       .finally(() => {
       });
   };
-
-  console.log(savedMovies.length, 'savedMovies')
 
   // поиск на странице с сохраненными фильмами
   function handleSearchSavedMovie(string) {
@@ -241,19 +234,22 @@ function App() {
       })
     setSavedFilteredMovies(films || []);
     localStorage.setItem("savedFilteredMovies", JSON.stringify(films))
-    setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
+    if (films.length === 0) {
+      setRequestMessage("Ничего не найдено");
+      setIsOpenConfirmationPopup(true);
+    }
   }
 
+  // handleSearchMovie
   // основная функция поиска фильмов TODO:рефакторить
   function handleSearchMovie(string) {
-
     if (basicMovies.length === 0) { // если карточек нет, получить
       setShowPreloader(true);
       moviesApi
         .getMovies()
         .then((cards) => {
-          setBasicMovies(cards) 
-          localStorage.setItem("basicMovies", JSON.stringify({cards}))
+          setBasicMovies(cards)
+          localStorage.setItem("basicMovies", JSON.stringify({ cards }))
           //начало функции поиска фильмов
           const putLikeButtons = cards.map((movie) => {
             const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
@@ -274,19 +270,20 @@ function App() {
           setMovies(items);
           //найденные фильмы movies
           localStorage.setItem("movies", JSON.stringify(items));
-          setRequestMessage(items.length > 0 ? "" : "Ничего не найдено");
+          if (items.length === 0) {
+            openPopup("Ничего не найдено"); //
+          }
           //конец функции поиска фильмов
         })
         .catch((err) => {
           console.log(err)
-          setRequestMessage(err, `Во время запроса произошла ошибка. 
+          openPopup(err, `Во время запроса произошла ошибка. 
           Возможно, проблема с соединением или сервер недоступен. 
-          Подождите немного и попробуйте ещё раз`)//пока так
+          Подождите немного и попробуйте ещё раз`);
         })
         .finally(() => {
           setShowPreloader(false);
-
-          // searchMovies(string)//вызов второй функции
+          //вызов второй функции
         })
     }
     else {//начало блока else
@@ -308,9 +305,13 @@ function App() {
         })
       setMovies(films);
       localStorage.setItem("savedMovies", JSON.stringify(films));
-      setRequestMessage(films.length > 0 ? "" : "Ничего не найдено");
+      if (films.length === 0) {
+        openPopup("Ничего не найдено");
+      }
     }//конец блока else
   };
+
+
 
   //функция сохранения фильма +
   function handleSaveMovie(movie) {
@@ -347,8 +348,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-      // .finally(() => {
-      // });
+
   }
 
   //тумблер "короткометражки" на странице с сохраненными фильмами
@@ -362,12 +362,15 @@ function App() {
         })
       )
     }
-    else if (isShortMovies && savedMovies.length === 0) {
+    else if (isShortSavedMovies && savedMovies.length === 0) {
       setShortFilteredSavedMovies([]);
+      openPopup("Ничего не найдено");
     }
   }, [isShortSavedMovies, savedMovies]);
 
-  //тумблер "короткометражки" на странице с фильмами
+
+
+  // тумблер "короткометражки" на странице с фильмами
   useEffect(() => {
     if (isShortMovies && movies.length > 0) {
       setShortFilteredMovies(
@@ -377,9 +380,10 @@ function App() {
           )
         })
       )
-    } 
+    }
     else if (isShortMovies && movies.length === 0) {
       setShortFilteredMovies([]);
+      openPopup("Ничего не найдено")
     }
   }, [isShortMovies, movies]);
 
@@ -403,26 +407,27 @@ function App() {
 
               <Route
                 path="/signup"
-                element={
+                element={isLoggedIn ? <Navigate to="/" /> : (
                   <main className="content">
                     <Register
                       handleRegister={handleRegister}
                       formName={"signup"}
-                      className={"auth-container__form"}
                       buttonText={"Зарегистрироваться"}
                       wellcomeText={"Добро пожаловать!"}
                       askToChangeForm={"Уже зарегистрированы? "}
                       askToChangeFormLink={"Войти"}
                       routTo={"/signin"}
                       requestMessage={requestMessage}
+                      setRequestMessage={setRequestMessage}
+                      setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
                     />
                   </main>
-                }
+                )}
               />
 
               <Route
                 path="/signin"
-                element={
+                element={isLoggedIn ? <Navigate to="/" /> : (
                   <main className="content">
                     <Login
                       handleLogin={handleLogin}
@@ -434,9 +439,12 @@ function App() {
                       askToChangeFormLink={"Регистрация"}
                       routTo={"/signup"}
                       requestMessage={requestMessage}
+                      setRequestMessage={setRequestMessage}
+                      setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
+                      setIsLoggedIn={setIsLoggedIn}
                     />
                   </main>
-                }
+                )}
               />
 
               <Route
@@ -487,7 +495,8 @@ function App() {
                             isShortSavedMovies={isShortSavedMovies}
                             setIsShortSavedMovies={setIsShortSavedMovies}
                             handleDeleteMovie={handleDeleteMovie}
-
+                            setShortFilteredMovies={setShortFilteredMovies}
+                            setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
                           />
                         </main>
                         <Footer />
@@ -514,7 +523,7 @@ function App() {
                         <main className="content">
                           <SavedMovies
                             isLoggedIn={isLoggedIn}
-                            movies={isShortSavedMovies ? savedFilteredMovies || shortFilteredSavedMovies : savedMovies} //savedFilteredMovies
+                            movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
                             handleSearchMovie={handleSearchSavedMovie} //отличается от movies
                             requestMessage={requestMessage}
                             setRequestMessage={setRequestMessage}
@@ -523,6 +532,7 @@ function App() {
                             setIsShortMovies={setIsShortSavedMovies}
                             isShortSavedMovies={isShortSavedMovies}
                             setIsShortSavedMovies={setIsShortSavedMovies}
+                            setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
                           />
                         </main>
                         <Footer />
@@ -562,6 +572,12 @@ function App() {
               />
 
             </Routes>
+
+            <RequestMessage //редактирование имени польз
+              isOpenConfirmationPopup={isOpenConfirmationPopup}
+              requestMessage={requestMessage}
+              setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
+            />
 
           </CurrentUserContext.Provider>
         </div>
