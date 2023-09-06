@@ -41,7 +41,7 @@ export const checkToken = () => {
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+      // "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
     },
   }).then((res) => {
     return checkResponse(res);
@@ -61,6 +61,7 @@ export const updateUser = ({ name, email }) => {
       name, email
     }),
   }).then((res) => {
+
     return checkResponse(res);
   });
 };

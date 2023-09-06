@@ -178,28 +178,48 @@ function App() {
 
   //изменить данные профиля
   function handleChangeProfile({ name, email }) {
-    return auth
+    auth
       .updateUser({ name, email })
       .then((res) => {
         setCurrentUser(res)
-        localStorage.setItem("currentUser", JSON.stringify(
-          //заменить только измененные поля
-          res.name ? { name: res.name } : { name: "" },
-          res.email ? { email: res.email } : { email: "" }
-        ))
-        setRequestMessage('Данные успешно изменены');
-        setIsOpenConfirmationPopup(true);
+        openPopup('Данные успешно изменены');
         // уведомление в профиле
       })
       .catch((err) => {
         console.log(err);
-        setRequestMessage(err || "");
-        setIsOpenConfirmationPopup(true);
+        openPopup(err || "");
         // уведомление в профиле
       })
       .finally(() => {
       });
   }
+
+
+
+  // function handleChangeProfile({ name, email }) {
+  //   return auth
+  //     .updateUser({ name, email })
+  //     .then((res) => {
+
+  //       setCurrentUser(res)
+  //       localStorage.setItem("currentUser", JSON.stringify({
+  //         //заменить только измененные поля
+  //         name :  res.name,
+  //         email : res.email 
+  //     }))
+  //       setRequestMessage('Данные успешно изменены');
+  //       setIsOpenConfirmationPopup(true);
+  //       // уведомление в профиле
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setRequestMessage(err || "");
+  //       setIsOpenConfirmationPopup(true);
+  //       // уведомление в профиле
+  //     })
+  //     .finally(() => {
+  //     });
+  // }
 
   //выйти
   function handleDeleteToken() {
