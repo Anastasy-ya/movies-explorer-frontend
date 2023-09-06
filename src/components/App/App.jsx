@@ -108,7 +108,6 @@ function App() {
         localStorage.removeItem("isShortMovies");
         localStorage.removeItem("films");
         localStorage.removeItem("moviesSearchQuery");
-        console.log(err);
       })
       .finally(() => {
         setTokenChecked(true);
@@ -232,8 +231,8 @@ function App() {
           || movie.nameEN.toLowerCase().includes(string.toLowerCase())
         )
       })
-    setSavedFilteredMovies(films || []);
-    localStorage.setItem("savedFilteredMovies", JSON.stringify(films))
+    setSavedMovies(films || []);
+    localStorage.setItem("savedMovies", JSON.stringify(films))
     if (films.length === 0) {
       openPopup("Ничего не найдено");
     }
@@ -520,7 +519,7 @@ function App() {
                         <main className="content">
                           <SavedMovies
                             isLoggedIn={isLoggedIn}
-                            movies={isShortSavedMovies ? savedFilteredMovies || shortFilteredSavedMovies : savedMovies}
+                            movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
                             handleSearchMovie={handleSearchSavedMovie} //отличается от movies
                             requestMessage={requestMessage}
                             setRequestMessage={setRequestMessage}
