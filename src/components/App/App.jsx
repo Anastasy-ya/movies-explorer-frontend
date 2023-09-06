@@ -93,7 +93,7 @@ function App() {
       .then((user) => {
         setIsLoggedIn(true);
         setCurrentUser(user);
-        localStorage.setItem("currentUser", JSON.stringify(currentUser))
+        // localStorage.setItem("currentUser", JSON.stringify(currentUser))
         //зарегистрированному пользователю в инпутах форм 
         //будут показаны его данные
       })
@@ -165,8 +165,8 @@ function App() {
       .login({ email, password })
       .then((res) => {
         setIsLoggedIn(true);
-        setCurrentUser({ email, password });
-        localStorage.setItem("currentUser", JSON.stringify({ email, password }))
+        setCurrentUser(res);
+        // localStorage.setItem("currentUser", JSON.stringify({ email, password }))
       })
       .then(() => {
         navigate("/movies", { replace: true });
