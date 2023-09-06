@@ -235,8 +235,7 @@ function App() {
     setSavedFilteredMovies(films || []);
     localStorage.setItem("savedFilteredMovies", JSON.stringify(films))
     if (films.length === 0) {
-      setRequestMessage("Ничего не найдено");
-      setIsOpenConfirmationPopup(true);
+      openPopup("Ничего не найдено");
     }
   }
 
@@ -330,8 +329,6 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {
-      });
   }
 
   // удаление из сохраненных +
@@ -523,7 +520,7 @@ function App() {
                         <main className="content">
                           <SavedMovies
                             isLoggedIn={isLoggedIn}
-                            movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
+                            movies={isShortSavedMovies ? savedFilteredMovies || shortFilteredSavedMovies : savedMovies}
                             handleSearchMovie={handleSearchSavedMovie} //отличается от movies
                             requestMessage={requestMessage}
                             setRequestMessage={setRequestMessage}
