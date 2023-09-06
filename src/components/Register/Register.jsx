@@ -29,9 +29,7 @@ function Register({
   const handleSubmit = (e) => {
     e.preventDefault();
     handleRegister(values)
-    // .then(() => {
-    // })
-    .catch((err) => {
+      .catch((err) => {
       console.log(err)
       setRequestMessage(err || "");
       setIsOpenConfirmationPopup(true);

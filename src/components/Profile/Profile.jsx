@@ -81,11 +81,11 @@ function Profile({
             {errors["profile-email"] && "E-mail: "}{errors?.["profile-email"]}
           </span>
 
-          <RequestMessage
+          {/* <RequestMessage
             requestMessage={requestMessage}
             parent={"profile"}
             erroElem={""}
-          />
+          /> */}
 
           <button
             className="profile__change-data"

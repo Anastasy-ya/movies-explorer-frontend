@@ -83,11 +83,11 @@ function Login({
           values={values}
         />
 
-        <RequestMessage
+        {/* <RequestMessage
           requestMessage={requestMessage}
           parent={"auth-container"}
           erroElem={""}
-        />
+        /> */}
 
       </Form>
 
