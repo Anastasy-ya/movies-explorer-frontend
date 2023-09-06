@@ -3,7 +3,7 @@ import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import useFormWithValidation from "../hooks/usevalidate";
-import RequestMessage from "../RequestMessage/RequestMessage";
+// import RequestMessage from "../RequestMessage/RequestMessage";
 
 function Profile({
   isLoggedIn,

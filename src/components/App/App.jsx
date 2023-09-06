@@ -106,8 +106,18 @@ function App() {
           password: "",
         });
         localStorage.removeItem("isShortMovies");
-        localStorage.removeItem("films");
+        localStorage.removeItem("savedFilteredMovies");
+        localStorage.removeItem("movies");
+        localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
+        localStorage.removeItem("shortFilteredSavedMovies");
+        localStorage.removeItem("shortFilteredMovies");
+        localStorage.removeItem("isShortMovies");
+        localStorage.removeItem("savedMoviesSearchQuery");
+        localStorage.removeItem("currentUser");
+        localStorage.removeItem("savedFilteredMovies");
+        localStorage.removeItem("basicMovies");
+        console.log(err);
       })
       .finally(() => {
         setTokenChecked(true);
@@ -382,6 +392,8 @@ function App() {
       openPopup("Ничего не найдено")
     }
   }, [isShortMovies, movies]);
+
+  console.log(isLoggedIn)
 
   return (
     <div className="root">
