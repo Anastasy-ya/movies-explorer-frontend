@@ -24,8 +24,8 @@ function MoviesCardList({
             key={index}
             movie={movie}
             isMoviePage={isMoviePage}
-            handleSearchMovie={handleSearchMovie}
-            requestMessage={requestMessage}
+            // handleSearchMovie={handleSearchMovie}
+            // requestMessage={requestMessage}
             handleSaveMovie={handleSaveMovie} //попадает из movies
             handleDeleteMovie={handleDeleteMovie} //попадает из saved-movies
           />

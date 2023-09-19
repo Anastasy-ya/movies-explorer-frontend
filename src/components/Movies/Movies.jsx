@@ -9,8 +9,8 @@ function Movies({
   movies,
   isLoggedIn,
   handleSaveMovie,
-  requestMessage,
-  setRequestMessage,
+  // requestMessage,
+  // setRequestMessage,
   handleSearchMovie,
   isShortMovies,
   setIsShortMovies,
@@ -18,7 +18,8 @@ function Movies({
   isShortSavedMovies,
   setIsShortSavedMovies,
   setShortFilteredMovies,
-  setIsOpenConfirmationPopup
+  // setIsOpenConfirmationPopup
+  openPopup
 }) {
 
   const [addMovies, setAddMovies] = useState(0);
@@ -75,8 +76,8 @@ function Movies({
 
   function handleSearch(query) {
     if (query.length === 0) {
-      setRequestMessage("Нужно ввести ключевое слово");
-      setIsOpenConfirmationPopup(true);
+      openPopup("Нужно ввести ключевое слово");
+      // setIsOpenConfirmationPopup(true);
       return;
     }
     handleSearchMovie(query)
@@ -87,8 +88,8 @@ function Movies({
   return (
     <>
       <SearchForm
-        requestMessage={requestMessage}
-        setRequestMessage={setRequestMessage}
+        // requestMessage={requestMessage}
+        // setRequestMessage={setRequestMessage}
         handleSearchMovie={handleSearchMovie}
         setIsShortMovies={setIsShortMovies}
         isShortMovies={isShortMovies}
@@ -103,7 +104,7 @@ function Movies({
         isLoggedIn={isLoggedIn}
         handleSaveMovie={handleSaveMovie}
         handleSearchMovie={handleSearchMovie}
-        requestMessage={requestMessage}
+        // requestMessage={requestMessage}
         handleDeleteMovie={handleDeleteMovie}
       //этот параметр отличается у фильмов и сохраненных фильмов
       />

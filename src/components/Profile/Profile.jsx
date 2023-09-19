@@ -3,24 +3,23 @@ import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import useFormWithValidation from "../hooks/usevalidate";
-// import RequestMessage from "../RequestMessage/RequestMessage";
 
 function Profile({
-  isLoggedIn,
+  // isLoggedIn,
   routTo,
   handleChangeProfile,
   handleDeleteToken,
-  requestMessage
+  // requestMessage
 }) {
 
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   const currentUser = React.useContext(CurrentUserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleChangeProfile(values) //resetForm();
-    
+    handleChangeProfile(values) 
+    //здесь обнулять форму не требуется
   };
 
 
@@ -80,12 +79,6 @@ function Profile({
           <span className="profile__input-error profile__input-error_type_bottom">
             {errors["profile-email"] && "E-mail: "}{errors?.["profile-email"]}
           </span>
-
-          {/* <RequestMessage
-            requestMessage={requestMessage}
-            parent={"profile"}
-            erroElem={""}
-          /> */}
 
           <button
             className="profile__change-data"

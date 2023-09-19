@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import RequestMessage from "../RequestMessage/RequestMessage";
+// import RequestMessage from "../RequestMessage/RequestMessage";
 import AuthForm from "../AuthForm/AuthForm";
 import { ErrorMessage } from "@hookform/error-message";
 import { useLocation } from "react-router-dom";
 
 function SearchForm({
   handleSearchMovie,
-  requestMessage,
-  setRequestMessage,
+  // requestMessage,
+  // setRequestMessage,
   setIsShortMovies,
   isShortMovies,
   onSearch,
@@ -83,12 +83,6 @@ function SearchForm({
             aria-label="search films"
           >Найти
           </button>
-
-          {/* <RequestMessage
-            requestMessage={requestMessage}
-            parent={"search-input"}
-            erroElem={<ErrorMessage errors={errors} name="search" />}
-          /> */}
 
         </form>
 

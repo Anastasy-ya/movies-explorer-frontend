@@ -7,14 +7,15 @@ function SavedMovies({
   movies,
   isLoggedIn,
   handleDeleteMovie,
-  requestMessage,
-  setRequestMessage,
+  // requestMessage,
+  // setRequestMessage,
   handleSearchMovie,
   isShortMovies,
   setIsShortMovies,
   isShortSavedMovies,
   setIsShortSavedMovies,
-  setIsOpenConfirmationPopup
+  openPopup
+  // setIsOpenConfirmationPopup
 }) {
 
   // eslint-disable-next-line no-unused-vars
@@ -24,8 +25,8 @@ function SavedMovies({
 
   function handleSearch(query) {
     if (query.length === 0) {
-      setRequestMessage("Нужно ввести ключевое слово");
-      setIsOpenConfirmationPopup(true);
+      openPopup("Нужно ввести ключевое слово");
+      // setIsOpenConfirmationPopup(true);
       return;
     }
     setSavedQuery(query);
@@ -36,8 +37,8 @@ function SavedMovies({
   return (
     <>
       <SearchForm
-        requestMessage={requestMessage}
-        setRequestMessage={setRequestMessage}
+        // requestMessage={requestMessage}
+        // setRequestMessage={setRequestMessage}
         handleSearchMovie={handleSearchMovie}
         setIsShortMovies={setIsShortMovies}
         isShortMovies={isShortMovies}
@@ -52,7 +53,7 @@ function SavedMovies({
         isLoggedIn={isLoggedIn}
         handleDeleteMovie={handleDeleteMovie}
         handleSearchMovie={handleSearchMovie}
-        requestMessage={requestMessage}
+        // requestMessage={requestMessage}
       />
     </>
   );

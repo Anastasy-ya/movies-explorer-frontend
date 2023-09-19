@@ -5,7 +5,6 @@ import Form from "../Form/Form";
 import { Link } from "react-router-dom";
 import Input from "../Input/Input";
 import useFormWithValidation from "../hooks/usevalidate";
-// import RequestMessage from "../RequestMessage/RequestMessage";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Login({
@@ -17,9 +16,10 @@ function Login({
   askToChangeForm, // предложение изменить форму ввода
   askToChangeFormLink,
   routTo,
-  requestMessage,
-  setIsOpenConfirmationPopup,
-  setRequestMessage,
+  // requestMessage,
+  // setIsOpenConfirmationPopup,
+  // setRequestMessage,
+  openPopup,
   setIsLoggedIn
 }) {
 
@@ -35,8 +35,8 @@ function Login({
     })
     .catch((err) => {
       console.log(err, 'ошибка авторизации')
-      setRequestMessage(err || "");
-      setIsOpenConfirmationPopup(true);
+      openPopup(err || "");
+      // setIsOpenConfirmationPopup(true);
       setIsLoggedIn(false);
       resetForm();
     })
@@ -82,12 +82,6 @@ function Login({
           errors={errors}
           values={values}
         />
-
-        {/* <RequestMessage
-          requestMessage={requestMessage}
-          parent={"auth-container"}
-          erroElem={""}
-        /> */}
 
       </Form>
 

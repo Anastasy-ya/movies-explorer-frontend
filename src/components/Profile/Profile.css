@@ -1,7 +1,6 @@
 .profile__container {
   padding: 45px 0;
   max-width: 410px;
-  /* max-height: 100vh; */
   margin: 0 auto;
 }
 
@@ -55,7 +54,7 @@
   background-color: transparent;
   border: none;
   grid-area: button;
-  margin: 145px 0 0;
+  margin: 0;
 }
 
 .profile__change-data:disabled {
@@ -63,33 +62,21 @@
   background-color: transparent;
 }
 
-@media screen and (max-width: 1200px) {
-  .profile__change-data {
-    margin: 135px 0 0;
-  }
-}
-
-@media screen and (max-width: 720px) {
-  .profile__change-data {
-    margin: 300px 0 0;
-  }
-}
-
 .profile__change-data_type_link {
-  color: var(--pink);
-  margin: 112px 0 0;
+  color: var(--grey);
+  margin: 15px 0 0;
 }
 
 @media screen and (max-width: 1200px) {
   .profile__change-data_type_link {
-    margin: 100px 0 0;
+    /* margin: 15px 0 0; */
     font-size: 12px;
   }
 }
 
 @media screen and (max-width: 720px) {
   .profile__change-data_type_link {
-    margin: 58px 0 0;
+    margin: 10px 0 0;
   }
 }
 
@@ -161,47 +148,28 @@
 }
 
 .profile__form {
+  /*решено оставить первое пустое поле для добавления инпутов в будущем*/
   display: grid;
   justify-content: center;
-  grid-template-rows: 36px 36px 36px 35px 20px;
+  grid-template-rows: 36px 36px 36px 132px 20px;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     "labelName1 inputName2"
     "labelName3 inputName4"
-    "message message"
-    "button button"    ;
+    ". ."
+    ". ."
+    "button button";
   grid-row-gap: 12px;
-  /* position: absolute; */
+}
+
+@media screen and (max-width: 1200px) {
+  .profile__form {
+    grid-template-rows: 36px 36px 36px 120px 20px;
+  }
 }
 
 @media screen and (max-width: 720px) {
   .profile__form {
-    grid-template-rows: 36px 36px 36px 185px 20px;
+    grid-template-rows: 36px 36px 36px 285px 20px;
   }
-}
-
-.profile__input-error {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  min-height: 30px;
-  color: var(--pink);
-  padding: 0;
-  margin: 5px 0 0;
-  grid-area: message;
-  text-align: center;
-}
-
-.profile__input-error_type_bottom {
-  padding-top: 30px;
-}
-
-@media screen and (max-width: 720px) {
-  .profile__input-error_type_bottom {
-    padding-top: 50px;
-  }
-}
-
-.profile__request-message {
-  grid-area: message;
 }

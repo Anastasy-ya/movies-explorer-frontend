@@ -27,7 +27,6 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({
     name: "",
     email: "",
-    password: "",
   });
 
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
@@ -93,7 +92,6 @@ function App() {
       .then((user) => {
         setIsLoggedIn(true);
         setCurrentUser(user);
-        // localStorage.setItem("currentUser", JSON.stringify(currentUser))
         //зарегистрированному пользователю в инпутах форм 
         //будут показаны его данные
       })
@@ -103,7 +101,6 @@ function App() {
         setCurrentUser({
           name: "",
           email: "",
-          password: "",
         });
         localStorage.removeItem("isShortMovies");
         localStorage.removeItem("savedFilteredMovies");
@@ -131,12 +128,12 @@ function App() {
       setIsMainPage(false);
   }, [path]);
 
-  //удалить сообщение от сервера в компоненте RequestMessage по таймеру
+  //скрыть попап с уведомлением по таймеру
   useEffect(() => {
     if (isOpenConfirmationPopup) {
       setTimeout(() => {
         setIsOpenConfirmationPopup(false)
-      }, 3000);
+      }, 2000);
     }
   }, [isOpenConfirmationPopup]);
 
@@ -166,7 +163,6 @@ function App() {
       .then((res) => {
         setIsLoggedIn(true);
         setCurrentUser(res);
-        // localStorage.setItem("currentUser", JSON.stringify({ email, password }))
       })
       .then(() => {
         navigate("/movies", { replace: true });
@@ -194,43 +190,16 @@ function App() {
       });
   }
 
-
-
-  // function handleChangeProfile({ name, email }) {
-  //   return auth
-  //     .updateUser({ name, email })
-  //     .then((res) => {
-
-  //       setCurrentUser(res)
-  //       localStorage.setItem("currentUser", JSON.stringify({
-  //         //заменить только измененные поля
-  //         name :  res.name,
-  //         email : res.email 
-  //     }))
-  //       setRequestMessage('Данные успешно изменены');
-  //       setIsOpenConfirmationPopup(true);
-  //       // уведомление в профиле
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setRequestMessage(err || "");
-  //       setIsOpenConfirmationPopup(true);
-  //       // уведомление в профиле
-  //     })
-  //     .finally(() => {
-  //     });
-  // }
-
   //выйти
   function handleDeleteToken() {
     auth.logOut()
       .then(() => setCurrentUser({
         name: "",
         email: "",
-        password: "",
       }))
       .then(() => setIsLoggedIn(false))
       .then(() => {
+        //TO DO: проверить лишние
         localStorage.removeItem("isShortMovies");
         localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("movies");
@@ -445,9 +414,7 @@ function App() {
                       askToChangeForm={"Уже зарегистрированы? "}
                       askToChangeFormLink={"Войти"}
                       routTo={"/signin"}
-                      requestMessage={requestMessage}
-                      setRequestMessage={setRequestMessage}
-                      setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
+                      openPopup={openPopup}
                     />
                   </main>
                 )}
@@ -466,9 +433,7 @@ function App() {
                       askToChangeForm={"Ещё не зарегистрированы? "}
                       askToChangeFormLink={"Регистрация"}
                       routTo={"/signup"}
-                      requestMessage={requestMessage}
-                      setRequestMessage={setRequestMessage}
-                      setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
+                      openPopup={openPopup}
                       setIsLoggedIn={setIsLoggedIn}
                     />
                   </main>
@@ -516,15 +481,14 @@ function App() {
                             movies={isShortMovies ? shortFilteredMovies : movies}
                             handleSaveMovie={handleSaveMovie}
                             handleSearchMovie={handleSearchMovie}
-                            requestMessage={requestMessage}
-                            setRequestMessage={setRequestMessage}
                             isShortMovies={isShortMovies}
                             setIsShortMovies={setIsShortMovies}
                             isShortSavedMovies={isShortSavedMovies}
                             setIsShortSavedMovies={setIsShortSavedMovies}
                             handleDeleteMovie={handleDeleteMovie}
                             setShortFilteredMovies={setShortFilteredMovies}
-                            setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
+                            openPopup={openPopup}
+                            
                           />
                         </main>
                         <Footer />
@@ -553,14 +517,12 @@ function App() {
                             isLoggedIn={isLoggedIn}
                             movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
                             handleSearchMovie={handleSearchSavedMovie} //отличается от movies
-                            requestMessage={requestMessage}
-                            setRequestMessage={setRequestMessage}
+                            openPopup={openPopup}
                             handleDeleteMovie={handleDeleteMovie}
                             isShortMovies={isShortSavedMovies}
                             setIsShortMovies={setIsShortSavedMovies}
                             isShortSavedMovies={isShortSavedMovies}
                             setIsShortSavedMovies={setIsShortSavedMovies}
-                            setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
                           />
                         </main>
                         <Footer />
@@ -586,11 +548,10 @@ function App() {
                         />
                         <main className="content">
                           <Profile
-                            isLoggedIn={isLoggedIn}
+                            // isLoggedIn={isLoggedIn}
                             routTo={"/"}
                             handleChangeProfile={handleChangeProfile}
                             handleDeleteToken={handleDeleteToken}
-                            requestMessage={requestMessage}
                           />
                         </main>
                       </>
