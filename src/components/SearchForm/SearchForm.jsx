@@ -32,8 +32,6 @@ function SearchForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(location.pathname)
-
   const onSubmit = (data) => {
     if (location.pathname === "/movies") {
       onSearch(data.search);

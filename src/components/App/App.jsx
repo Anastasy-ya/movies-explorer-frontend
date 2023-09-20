@@ -20,6 +20,8 @@ import * as moviesApi from "../../utils/MoviesApi";
 import * as MainApi from "../../utils/MainApi";
 import RequestMessage from "../RequestMessage/RequestMessage";
 
+//TO DO перевести комментарии на английский
+
 function App() {
   const [tokenChecked, setTokenChecked] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,7 +40,7 @@ function App() {
   const [movies, setMovies] = React.useState(JSON.parse(localStorage.getItem("movies")) || []);
   // базовые фильмы для сохраненных, обновляется при лайке
   const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
-  const [savedFilteredMovies, setSavedFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("savedFilteredMovies")) || []);
+  // const [savedFilteredMovies, setSavedFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("savedFilteredMovies")) || []);
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
@@ -103,7 +105,6 @@ function App() {
           email: "",
         });
         localStorage.removeItem("isShortMovies");
-        localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("movies");
         localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
@@ -112,7 +113,7 @@ function App() {
         localStorage.removeItem("isShortMovies");
         localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
-        localStorage.removeItem("savedFilteredMovies");
+        // localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
         console.log(err);
       })
@@ -201,7 +202,6 @@ function App() {
       .then(() => {
         //TO DO: проверить лишние
         localStorage.removeItem("isShortMovies");
-        localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("movies");
         localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
@@ -210,7 +210,7 @@ function App() {
         localStorage.removeItem("isShortMovies");
         localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
-        localStorage.removeItem("savedFilteredMovies");
+        // localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
         navigate("/", { replace: true });
       })
@@ -221,96 +221,7 @@ function App() {
       });
   };
 
-  // поиск на странице с сохраненными фильмами
-  function handleSearchSavedMovie(string) {
-    const films =
-      savedMovies.filter((movie) => {
-        return (
-          movie.nameRU.toLowerCase().includes(string.toLowerCase())
-          || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-        )
-      })
-    setSavedMovies(films || []);
-    localStorage.setItem("savedMovies", JSON.stringify(films))
-    if (films.length === 0) {
-      openPopup("Ничего не найдено");
-    }
-  }
-
-  // handleSearchMovie
-  // основная функция поиска фильмов TODO:рефакторить
-  function handleSearchMovie(string) {
-    if (basicMovies.length === 0) { // если карточек нет, получить
-      setShowPreloader(true);
-      moviesApi
-        .getMovies()
-        .then((cards) => {
-          setBasicMovies(cards)
-          localStorage.setItem("basicMovies", JSON.stringify({ cards }))
-          //начало функции поиска фильмов
-          const putLikeButtons = cards.map((movie) => {
-            const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
-            if (savedMovieLike) {
-              return {
-                ...movie, buttonLikeType: "liked", key: movie.id
-              }
-            }
-            return { ...movie, buttonLikeType: "unliked", key: movie.id }
-          })
-          const items = //это films
-            putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
-              return (
-                movie.nameRU.toLowerCase().includes(string.toLowerCase())
-                || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-              )
-            })
-          setMovies(items);
-          //найденные фильмы movies
-          localStorage.setItem("movies", JSON.stringify(items));
-          if (items.length === 0) {
-            openPopup("Ничего не найдено"); //
-          }
-          //конец функции поиска фильмов
-        })
-        .catch((err) => {
-          console.log(err)
-          openPopup(err, `Во время запроса произошла ошибка. 
-          Возможно, проблема с соединением или сервер недоступен. 
-          Подождите немного и попробуйте ещё раз`);
-        })
-        .finally(() => {
-          setShowPreloader(false);
-          //вызов второй функции
-        })
-    }
-    else {//начало блока else
-      const putLikeButtons = basicMovies.map((movie) => {
-        const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
-        if (savedMovieLike) {
-          return {
-            ...movie, buttonLikeType: "liked", key: movie.id
-          }
-        }
-        return { ...movie, buttonLikeType: "unliked", key: movie.id }
-      })
-      const films =
-        putLikeButtons.filter((movie) => { //измененные movies с добавленным свойством
-          return (
-            movie.nameRU.toLowerCase().includes(string.toLowerCase())
-            || movie.nameEN.toLowerCase().includes(string.toLowerCase())
-          )
-        })
-      setMovies(films);
-      localStorage.setItem("savedMovies", JSON.stringify(films));
-      if (films.length === 0) {
-        openPopup("Ничего не найдено");
-      }
-    }//конец блока else
-  };
-
-
-
-  //функция сохранения фильма +
+  //функция сохранения фильма
   function handleSaveMovie(movie) {
     MainApi
       .saveMovie(movie)
@@ -329,7 +240,7 @@ function App() {
       })
   }
 
-  // удаление из сохраненных +
+  // удаление из сохраненных
   function handleDeleteMovie(id) {
     const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
     MainApi
@@ -343,8 +254,87 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-
   }
+
+  ///////////////////////////////////////////////////
+
+  // функция фильтрации массива по ключевому слову
+  function searchFilm(movies, string) {
+    return movies.filter((movie) => {
+      return (
+        movie.nameRU.toLowerCase().includes(string.toLowerCase())
+        || movie.nameEN.toLowerCase().includes(string.toLowerCase())
+      )
+    })
+  }
+
+  // поиск на странице с сохраненными фильмами
+  function handleSearchSavedMovie(string) {
+    const films = searchFilm(savedMovies, string);
+    setSavedMovies(films || []);
+    localStorage.setItem("savedMovies", JSON.stringify(films))
+    if (films.length === 0) {
+      openPopup("Ничего не найдено");
+    }
+  }
+
+  // получение списка фильмов от moviesApi, вызывается только при первом поиске
+  function getBasicMovies() {
+    return moviesApi
+      .getMovies()
+      .then((cards) => {
+        setBasicMovies(cards)
+        localStorage.setItem("basicMovies", JSON.stringify({ cards }))
+        return cards
+      })
+  }
+
+  //установление свойства buttonLikeType каждому фильму из базовых для отображения его статуса
+  function setLikeStatus(movies) {
+    return movies.map((movie) => {
+      const savedMovieLike = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
+      if (savedMovieLike) {
+        return {
+          ...movie, buttonLikeType: "liked", key: movie.id
+        }
+      }
+      return { ...movie, buttonLikeType: "unliked", key: movie.id }
+    })
+  }
+
+  //повторяющаяся механика поиска для основной функции поиска фильмов
+  function searchMovies(movies, string) {
+    const setLikeStatusMovies = setLikeStatus(movies);
+    const films = searchFilm(setLikeStatusMovies, string);
+    setMovies(films);
+    localStorage.setItem("movies", JSON.stringify(films));
+    if (films.length === 0) {
+      openPopup("Ничего не найдено"); //
+    }
+  }
+
+  // основная функция поиска фильмов
+  function handleSearchMovie(string) {
+    if (basicMovies.length === 0) { // если карточек нет, получить
+      setShowPreloader(true);
+      getBasicMovies()
+        .then((basicMovies) => {
+          searchMovies(basicMovies, string)
+        })
+        .catch((err) => {
+          console.log(err)
+          openPopup(err, `Во время запроса произошла ошибка. 
+            Возможно, проблема с соединением или сервер недоступен. 
+            Подождите немного и попробуйте ещё раз`);
+        })
+        .finally(() => {
+          setShowPreloader(false);
+        })
+    }
+    else {
+      searchMovies(basicMovies, string)
+    }
+  };
 
   //тумблер "короткометражки" на странице с сохраненными фильмами
   useEffect(() => {
@@ -382,7 +372,8 @@ function App() {
     }
   }, [isShortMovies, movies]);
 
-  console.log(isLoggedIn)
+
+
 
   return (
     <div className="root">
@@ -488,7 +479,7 @@ function App() {
                             handleDeleteMovie={handleDeleteMovie}
                             setShortFilteredMovies={setShortFilteredMovies}
                             openPopup={openPopup}
-                            
+
                           />
                         </main>
                         <Footer />
