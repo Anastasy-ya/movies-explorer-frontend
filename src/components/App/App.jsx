@@ -40,7 +40,8 @@ function App() {
   const [movies, setMovies] = React.useState(JSON.parse(localStorage.getItem("movies")) || []);
   // базовые фильмы для сохраненных, обновляется при лайке
   const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
-  // const [savedFilteredMovies, setSavedFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("savedFilteredMovies")) || []);
+  // результат поиска по сохраненным фильмам
+  const [savedFilteredMovies, setSavedFilteredMovies] = React.useState([]);
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
@@ -81,8 +82,6 @@ function App() {
           localStorage.setItem("savedMovies", JSON.stringify(deleteIconMovies)) //savedMovies
         })
         .catch(console.error)
-      // .finally(() => {
-      // });
     }
   }, [isLoggedIn])
 
@@ -134,7 +133,7 @@ function App() {
     if (isOpenConfirmationPopup) {
       setTimeout(() => {
         setIsOpenConfirmationPopup(false)
-      }, 2000);
+      }, 1500);
     }
   }, [isOpenConfirmationPopup]);
 
@@ -271,12 +270,23 @@ function App() {
   // поиск на странице с сохраненными фильмами
   function handleSearchSavedMovie(string) {
     const films = searchFilm(savedMovies, string);
-    setSavedMovies(films || []);
-    localStorage.setItem("savedMovies", JSON.stringify(films))
+    setSavedFilteredMovies(films || []);
     if (films.length === 0) {
       openPopup("Ничего не найдено");
     }
   }
+
+  //Определить фильмы для отображения 
+  useEffect(() => {
+    if (path.pathname === "/movies") {
+
+    }
+  }, [
+    path,
+    savedFilteredMovies,
+    savedMovies,
+    movies
+   ]);
 
   // получение списка фильмов от moviesApi, вызывается только при первом поиске
   function getBasicMovies() {
@@ -306,8 +316,8 @@ function App() {
   function searchMovies(movies, string) {
     const setLikeStatusMovies = setLikeStatus(movies);
     const films = searchFilm(setLikeStatusMovies, string);
-    setMovies(films);
-    localStorage.setItem("movies", JSON.stringify(films));
+    setMovies(films || []);
+    localStorage.setItem("movies", JSON.stringify(films || []));
     if (films.length === 0) {
       openPopup("Ничего не найдено"); //
     }
@@ -315,10 +325,12 @@ function App() {
 
   // основная функция поиска фильмов
   function handleSearchMovie(string) {
-    if (basicMovies.length === 0) { // если карточек нет, получить
+    // если карточек нет, получить
+    if (basicMovies.length === 0) {
       setShowPreloader(true);
       getBasicMovies()
         .then((basicMovies) => {
+          // отфильтровать по ключевому слову и записать их в localStorage, стейт movies
           searchMovies(basicMovies, string)
         })
         .catch((err) => {
@@ -332,6 +344,7 @@ function App() {
         })
     }
     else {
+      // отфильтровать по ключевому слову и записать их в localStorage, стейт movies
       searchMovies(basicMovies, string)
     }
   };
