@@ -2,10 +2,10 @@ import React from "react";
 import './LearnMore.css';
 
 function LearnMore({
-  moviesToRender,
+  // moviesToRender,
   handlerMoreFilms,
   isRenderedLearnMore,
-  movies
+  // movies
 }) {
 
   return (

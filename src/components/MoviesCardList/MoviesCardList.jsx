@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './MoviesCardList.css';
 import MoviesCard from "../MoviesCard/MoviesCard";
+
 
 
 
@@ -11,8 +12,15 @@ function MoviesCardList({
   handleSaveMovie,
   handleSearchMovie,
   requestMessage,
-  handleDeleteMovie
+  handleDeleteMovie,
+  openPopup
 }) {
+
+  // useEffect(() => {
+  //   if (movies.length === 0) {
+  //     openPopup("Ничего не найдено")
+  //   }
+  // }, [movies]);
 
   return (
     <section className="card-list">

@@ -45,11 +45,14 @@ function App() {
   //сообщения об ошибках
   const [requestMessage, setRequestMessage] = React.useState("");
   const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
-  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false); //переписать и обойтись без него
+  const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(JSON.parse(localStorage.getItem("isShortSavedMovies")) || false);
+  const [moviesForShow, setMoviesForShow] = React.useState([]);
+  // const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
+  // const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false); //переписать и обойтись без него
   // отфильтрованные короткометражки на странице с фильмами
-  const [shortFilteredMovies, setShortFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredMovies")) || []);
+  // const [shortFilteredMovies, setShortFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredMovies")) || []);
   // отфильтрованные короткометражки на странице с сохраненными фильмами
-  const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredSavedMovies")) || []);
+  // const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredSavedMovies")) || []);
   const [isOpenConfirmationPopup, setIsOpenConfirmationPopup] = useState(false);
 
   //получение значения от кастомного хука
@@ -57,9 +60,9 @@ function App() {
   const navigate = useNavigate();
   const path = useLocation();
 
-  useEffect(() => {
-    localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies))
-  }, [isShortMovies])
+  // useEffect(() => {
+  //   localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies))
+  // }, [isShortMovies])
 
   function openPopup(string) {
     setRequestMessage(string);
@@ -226,10 +229,10 @@ function App() {
       .saveMovie(movie)
       .then((newMovie) => {
         setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
-        setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
+        // setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
         newMovie.buttonLikeType = "delete"
         setSavedMovies((state) => [...state, newMovie])
-        setShortFilteredSavedMovies((state) => [...state, newMovie]);
+        // setShortFilteredSavedMovies((state) => [...state, newMovie]);
         //прибавляет новый фильм к массиву имеющихся
         //обновить в LS этот массив
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
@@ -247,8 +250,8 @@ function App() {
       .then(() => {
         setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
-        setShortFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
-        setShortFilteredSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id));
+        setSavedFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
+        // setShortFilteredSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id));
       })
       .catch((err) => {
         console.log(err);
@@ -257,7 +260,7 @@ function App() {
 
   ///////////////////////////////////////////////////
 
-  // функция фильтрации массива по ключевому слову
+  // повторяющаяся функция фильтрации массива по ключевому слову
   function searchFilm(movies, string) {
     return movies.filter((movie) => {
       return (
@@ -270,23 +273,60 @@ function App() {
   // поиск на странице с сохраненными фильмами
   function handleSearchSavedMovie(string) {
     const films = searchFilm(savedMovies, string);
-    setSavedFilteredMovies(films || []);
     if (films.length === 0) {
+      setSavedFilteredMovies([]); //тут работает! обнуляются сохраненные фильмы до сохраненных фильмов
+      // console.log(savedFilteredMovies)
       openPopup("Ничего не найдено");
+    } else {
+      setSavedFilteredMovies(films); // || []
     }
+    
   }
 
   //Определить фильмы для отображения 
   useEffect(() => {
     if (path.pathname === "/movies") {
 
+      if (movies.length > 0) {
+        setMoviesForShow(isShortMovies ? (
+          movies.filter((movie) => {
+            return (
+              movie.duration <= 40
+            )
+          })
+        ) : movies)
+      } else if (movies.length === 0) {
+        setMoviesForShow([]);
+        // isLoggedIn && openPopup("Ничего не найдено"); //здесь это нельзя размещать из-за проблем при регистрации
+      }
+
+    } else {  //записать значение сохраненных или отфильтрованных соханенных
+
+      const films = savedFilteredMovies.length > 0 ? savedFilteredMovies : savedMovies
+      if (films.length > 0) {
+        setMoviesForShow(isShortSavedMovies ? (
+          films.filter((film) => {
+            return (
+              film.duration <= 40
+            )
+          })
+        ) : films)
+      } else if (films.length === 0) {
+        setMoviesForShow([]);
+        // isLoggedIn && openPopup("Ничего не найдено");  //здесь это нельзя размещать из-за проблем при регистрации
+      }
     }
   }, [
     path,
     savedFilteredMovies,
     savedMovies,
-    movies
-   ]);
+    movies,
+    isShortMovies,
+    isShortSavedMovies,
+    isLoggedIn
+  ]);
+
+  
 
   // получение списка фильмов от moviesApi, вызывается только при первом поиске
   function getBasicMovies() {
@@ -312,14 +352,17 @@ function App() {
     })
   }
 
-  //повторяющаяся механика поиска для основной функции поиска фильмов
+  //механика поиска для основной функции поиска фильмов
   function searchMovies(movies, string) {
     const setLikeStatusMovies = setLikeStatus(movies);
     const films = searchFilm(setLikeStatusMovies, string);
-    setMovies(films || []);
-    localStorage.setItem("movies", JSON.stringify(films || []));
     if (films.length === 0) {
       openPopup("Ничего не найдено"); //
+      setMovies([]);
+      localStorage.setItem("movies", JSON.stringify([]));
+    } else {
+      setMovies(films); // || []
+      localStorage.setItem("movies", JSON.stringify(films)); // || []
     }
   }
 
@@ -350,40 +393,41 @@ function App() {
   };
 
   //тумблер "короткометражки" на странице с сохраненными фильмами
-  useEffect(() => {
-    if (isShortSavedMovies && savedMovies.length > 0) {
-      setShortFilteredSavedMovies(
-        savedMovies.filter((savedmovie) => {
-          return (
-            savedmovie.duration <= 40
-          )
-        })
-      )
-    }
-    else if (isShortSavedMovies && savedMovies.length === 0) {
-      setShortFilteredSavedMovies([]);
-      openPopup("Ничего не найдено");
-    }
-  }, [isShortSavedMovies, savedMovies]);
+  // useEffect(() => {
+  //   if (isShort && savedMovies.length > 0) {
+  //     // setShortFilteredSavedMovies(
+  //     //   savedMovies.filter((savedmovie) => {
+  //     //     return (
+  //     //       savedmovie.duration <= 40
+  //     //     )
+  //     // console.log(1)
+  //     //   })
+  //     // )
+  //   }
+  //   else if (isShort && savedMovies.length === 0) {
+  //     // setShortFilteredSavedMovies([]);
+  //     openPopup("Ничего не найдено");
+  //   }
+  // }, [isShort, savedMovies]);
 
 
 
-  // тумблер "короткометражки" на странице с фильмами
-  useEffect(() => {
-    if (isShortMovies && movies.length > 0) {
-      setShortFilteredMovies(
-        movies.filter((movie) => {
-          return (
-            movie.duration <= 40
-          )
-        })
-      )
-    }
-    else if (isShortMovies && movies.length === 0) {
-      setShortFilteredMovies([]);
-      openPopup("Ничего не найдено")
-    }
-  }, [isShortMovies, movies]);
+  // // тумблер "короткометражки" на странице с фильмами
+  // useEffect(() => {
+  //   if (isShortMovies && movies.length > 0) {
+  //     setShortFilteredMovies(
+  //       movies.filter((movie) => {
+  //         return (
+  //           movie.duration <= 40
+  //         )
+  //       })
+  //     )
+  //   }
+  //   else if (isShortMovies && movies.length === 0) {
+  //     setShortFilteredMovies([]);
+  //     openPopup("Ничего не найдено")
+  //   }
+  // }, [isShortMovies, movies]);
 
 
 
@@ -398,7 +442,7 @@ function App() {
             <Routes>
 
               <Route
-                path="*" //пользователь вошел на несуществующую страницу
+                path="*"
                 element={
                   <main className="content">
                     <PageNotFound />
@@ -482,7 +526,8 @@ function App() {
                         <main className="content">
                           <Movies
                             isLoggedIn={isLoggedIn}
-                            movies={isShortMovies ? shortFilteredMovies : movies}
+                            // movies={isShortMovies ? shortFilteredMovies : movies} 
+                            movies={moviesForShow}
                             handleSaveMovie={handleSaveMovie}
                             handleSearchMovie={handleSearchMovie}
                             isShortMovies={isShortMovies}
@@ -490,7 +535,7 @@ function App() {
                             isShortSavedMovies={isShortSavedMovies}
                             setIsShortSavedMovies={setIsShortSavedMovies}
                             handleDeleteMovie={handleDeleteMovie}
-                            setShortFilteredMovies={setShortFilteredMovies}
+                            // setShortFilteredMovies={setShortFilteredMovies}
                             openPopup={openPopup}
 
                           />
@@ -519,7 +564,8 @@ function App() {
                         <main className="content">
                           <SavedMovies
                             isLoggedIn={isLoggedIn}
-                            movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
+                            // movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
+                            movies={moviesForShow}
                             handleSearchMovie={handleSearchSavedMovie} //отличается от movies
                             openPopup={openPopup}
                             handleDeleteMovie={handleDeleteMovie}

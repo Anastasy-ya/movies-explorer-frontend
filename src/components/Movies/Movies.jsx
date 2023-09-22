@@ -30,16 +30,9 @@ function Movies({
     localStorage.getItem("moviesSearchQuery") || "",
   );
 
-  
-
   const { isWideScreen, isMiddleScreen } = useResize();
 
-  //количество карточек на странице при первой отрисовке
-  const count = isWideScreen ?
-    12 :
-    isMiddleScreen ?
-      8 :
-      5;
+
 
   //сколько показывать фильмов по кнопке "еще"?
   function handlerMoreFilms() {
@@ -50,34 +43,46 @@ function Movies({
         setAddMovies(addMovies + 2);
   }
 
-  //сколько карточек показано сейчас?
-  const showedMovies = count + addMovies;
+  function findShowedMovies() {
+    //количество карточек на странице при первой отрисовке
+    const count = isWideScreen ?
+      12 :
+      isMiddleScreen ?
+        8 :
+        5;
+    //сколько карточек показано сейчас?
+    return count + addMovies;
+  }
+
+  const showedMovies = findShowedMovies();
 
   //определить количество карточек к показу
-  const moviesForRender = () => {
+  function moviesForRender() {
     if (movies.length > 0) {
       return movies.slice(0, showedMovies);
     } else {
+      // !isRenderedLearnMore && isLoggedIn && openPopup('Ничего не найдено'); // работает но не закрывается подумать как объединить с юзэффектом ниже
       return [];
     }
-    
   };
 
-  const moviesToRender = movies.length - showedMovies;
+
+
 
   useEffect(() => {
+    const moviesToRender = movies.length - showedMovies;
     if (moviesToRender > 0) {
       setIsRenderedLearnMore(true)
     } else {
       setIsRenderedLearnMore(false);
-     }
+      // openPopup('Ничего не найдено');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movies, showedMovies]);
 
   function handleSearch(query) {
     if (query.length === 0) {
       openPopup("Нужно ввести ключевое слово");
-      // setIsOpenConfirmationPopup(true);
       return;
     }
     handleSearchMovie(query)
@@ -106,13 +111,15 @@ function Movies({
         handleSearchMovie={handleSearchMovie}
         // requestMessage={requestMessage}
         handleDeleteMovie={handleDeleteMovie}
+        openPopup={openPopup}
       //этот параметр отличается у фильмов и сохраненных фильмов
       />
       <LearnMore
-        moviesToRender={moviesToRender}
+        // moviesToRender={moviesToRender}
         handlerMoreFilms={handlerMoreFilms}
         isRenderedLearnMore={isRenderedLearnMore}
-        movies={moviesForRender()}
+        // openPopup={openPopup}
+      // movies={moviesForRender()}
       />
     </>
   );

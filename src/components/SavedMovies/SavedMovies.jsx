@@ -17,6 +17,7 @@ function SavedMovies({
   openPopup
   // setIsOpenConfirmationPopup
 }) {
+  // openPopup('Ничего не найдено');
 
   // eslint-disable-next-line no-unused-vars
   const [savedQuery, setSavedQuery] = useState(
@@ -53,6 +54,7 @@ function SavedMovies({
         isLoggedIn={isLoggedIn}
         handleDeleteMovie={handleDeleteMovie}
         handleSearchMovie={handleSearchMovie}
+        openPopup={openPopup}
         // requestMessage={requestMessage}
       />
     </>
