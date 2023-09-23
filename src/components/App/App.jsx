@@ -228,19 +228,37 @@ function App() {
     MainApi
       .saveMovie(movie)
       .then((newMovie) => {
-        setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
-        // setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
+        // setMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
+        // // setShortFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
+        // setSavedFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
+        // newMovie.buttonLikeType = "delete"
+        // setSavedMovies((state) => [...state, newMovie])
+        // // setShortFilteredSavedMovies((state) => [...state, newMovie]);
+        // //прибавляет новый фильм к массиву имеющихся
+        // //обновить в LS этот массив
+        // localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
+
+        setMovies((state) => state.map((elem) => {
+          return elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem
+        }));
+        setSavedFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
         newMovie.buttonLikeType = "delete"
         setSavedMovies((state) => [...state, newMovie])
         // setShortFilteredSavedMovies((state) => [...state, newMovie]);
         //прибавляет новый фильм к массиву имеющихся
         //обновить в LS этот массив
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
+        
+      })
+      .then(() => {
+        localStorage.setItem("movies", JSON.stringify(movies)); //нов не факт что нужно
       })
       .catch((err) => {
         console.log(err);
       })
   }
+
+  console.log(movies, 'movies')
 
   // удаление из сохраненных
   function handleDeleteMovie(id) {
@@ -248,9 +266,10 @@ function App() {
     MainApi
       .deleteCard(deleteMovie._id)
       .then(() => {
-        setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
+        setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))
         setSavedFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
+        localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
         // setShortFilteredSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id));
       })
       .catch((err) => {
@@ -275,7 +294,6 @@ function App() {
     const films = searchFilm(savedMovies, string);
     if (films.length === 0) {
       setSavedFilteredMovies([]); //тут работает! обнуляются сохраненные фильмы до сохраненных фильмов
-      // console.log(savedFilteredMovies)
       openPopup("Ничего не найдено");
     } else {
       setSavedFilteredMovies(films); // || []
@@ -286,7 +304,7 @@ function App() {
   //Определить фильмы для отображения 
   useEffect(() => {
     if (path.pathname === "/movies") {
-
+      localStorage.setItem("movies", JSON.stringify(movies)); //нов не факт что нужно
       if (movies.length > 0) {
         setMoviesForShow(isShortMovies ? (
           movies.filter((movie) => {
@@ -311,6 +329,7 @@ function App() {
             )
           })
         ) : films)
+        
       } else if (films.length === 0) {
         setMoviesForShow([]);
         // isLoggedIn && openPopup("Ничего не найдено");  //здесь это нельзя размещать из-за проблем при регистрации

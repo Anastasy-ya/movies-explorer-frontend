@@ -13,8 +13,12 @@ function FilterCheckbox({
 
   function handleChange(e) {
   if (location.pathname === "/movies") {
+    localStorage.setItem("isShortMovies", JSON.stringify(!isShortMovies));
     return setIsShortMovies(!isShortMovies);
-  } else return setIsShortSavedMovies(!isShortSavedMovies);
+  } else {
+    localStorage.setItem("isShortSavedMovies", JSON.stringify(isShortSavedMovies));
+    return setIsShortSavedMovies(!isShortSavedMovies);
+  }
 }
 
   return (

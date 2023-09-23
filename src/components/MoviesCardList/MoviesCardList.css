@@ -5,6 +5,9 @@
   column-gap: 24px;
   flex-wrap: wrap;
   justify-content: center;
+  min-height: 873px;
+  justify-content: flex-start;
+  align-content: flex-start;
 }
 
 @media screen and (max-width: 1200px) {
