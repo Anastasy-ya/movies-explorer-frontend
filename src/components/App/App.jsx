@@ -140,15 +140,7 @@ function App() {
     }
   }, [isOpenConfirmationPopup]);
 
-  //функция открытия/закрытия попапа
-  function handleOpenClosePopup() {
-    // поменять значение на противоположное
-    setIsOpenPopup(!isOpenPopup);
-    document.querySelector(".burger").classList.toggle('open');
-    /*TODO: после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
-    //и найти пропавшую анимацию
-  };
-
+ 
   //регистрация
   function handleRegister({ name, email, password }) {
     return auth
@@ -250,9 +242,9 @@ function App() {
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
         
       })
-      .then(() => {
-        localStorage.setItem("movies", JSON.stringify(movies)); //нов не факт что нужно
-      })
+      // .then(() => {
+      //   localStorage.setItem("movies", JSON.stringify(movies)); //нов не факт что нужно
+      // })
       .catch((err) => {
         console.log(err);
       })
@@ -513,8 +505,9 @@ function App() {
                   <>
                     <Header
                       isLoggedIn={isLoggedIn}
-                      handleOpenClosePopup={handleOpenClosePopup}
+                      // handleOpenClosePopup={handleOpenClosePopup}
                       isOpenPopup={isOpenPopup}
+                      setIsOpenPopup={setIsOpenPopup}
                       isMainPage={isMainPage}
                       isWideScreen={isWideScreen}
                     />
@@ -537,8 +530,9 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          handleOpenClosePopup={handleOpenClosePopup}
+                          // handleOpenClosePopup={handleOpenClosePopup}
                           isOpenPopup={isOpenPopup}
+                          setIsOpenPopup={setIsOpenPopup}
                           isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />
@@ -575,8 +569,9 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          handleOpenClosePopup={handleOpenClosePopup}
+                          // handleOpenClosePopup={handleOpenClosePopup}
                           isOpenPopup={isOpenPopup}
+                          setIsOpenPopup={setIsOpenPopup}
                           isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />
@@ -610,8 +605,9 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          handleOpenClosePopup={handleOpenClosePopup}
+                          // handleOpenClosePopup={handleOpenClosePopup}
                           isOpenPopup={isOpenPopup}
+                          setIsOpenPopup={setIsOpenPopup}
                           isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />

@@ -3,14 +3,15 @@ import './Burger.css';
 
 function Burger({ handleOpenClosePopup }) { //isLoggedIn, isOpen, 
 
-  function handler() {
+  function handlerClick() {
     handleOpenClosePopup();
   }
 
   return (
     <div
       className="header__burger burger"
-      onClick={handler}>
+      onClick={handlerClick}
+    >
       <span className="burger__icon"></span>
     </div>
   );

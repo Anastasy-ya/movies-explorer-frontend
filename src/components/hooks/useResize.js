@@ -20,8 +20,8 @@ export const useResize = () => {
   }, []);
 
   return {
-    isWideScreen: width >= 1200,
-    isMiddleScreen: width >= 720 && width <= 1199,
+    isWideScreen: width >= 900,
+    isMiddleScreen: width >= 720 && width <= 899,
     isNarrowScreen: width <= 719,
   };
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
 import Burger from "../Burger/Burger";
@@ -10,56 +10,21 @@ function Header({
   isLoggedIn,
   isMainPage,
   isOpenPopup,
-  handleOpenClosePopup,
+  setIsOpenPopup,
+  // handleOpenClosePopup,
   isWideScreen,
+
 }) {
 
-
-  const [headerView, setHeaderView] = useState(<p></p>);
-
-  useEffect(() => {
-    if (!isMainPage && !isWideScreen) {
-      setHeaderView(
-        <div className="header__info-account">
-          <Burger
-            handleOpenClosePopup={handleOpenClosePopup}
-          />
-        </div>
-      )
-    }
-    else {
-      setHeaderView(
-        <>
-          {isLoggedIn && (<nav className="header__navigation-box"> {/*isWideScreen &&  */}
-
-            <NavLink
-              className={({ isActive }) => `header__link ${isActive ? "header__link_active" : ""}`}
-              aria-label="link to films"
-              to="/movies"
-            >
-              Фильмы
-            </NavLink>
-
-            <NavLink
-              className="header__link"
-              aria-label="link to saved films"
-              to="/saved-movies"
-            >
-              Сохраненные фильмы
-            </NavLink>
-
-          </nav>)}
-
-          <InfoAccount
-            isLoggedIn={isLoggedIn}
-            isPopup={false} // стили для попапа
-          />
-        </>
-      )
-    }
-  }, [isWideScreen, isMainPage, isLoggedIn, handleOpenClosePopup]);
-
-
+  //функция открытия/закрытия попапа
+  function handleOpenClosePopup() {
+    // поменять значение на противоположное
+    setIsOpenPopup(!isOpenPopup);
+    console.log(document.querySelector(".burger"));
+    document.querySelector(".burger").classList.toggle('burger_opened');
+    /*TODO: после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
+    //и найти пропавшую анимацию
+  }
 
   return (
     <header className="header">
@@ -67,7 +32,39 @@ function Header({
       <div className={`header__main ${isMainPage ? "header__main_type_turquoise" : ""}`}>
         <div className="header__size-container size-container">
           <Logo />
-          {headerView}
+          {!isMainPage && !isWideScreen ?
+            <div className="header__info-account">
+              <Burger
+                handleOpenClosePopup={handleOpenClosePopup}
+              />
+            </div> :
+            <>
+              {isLoggedIn && (<nav className="header__navigation-box"> {/*isWideScreen &&  */}
+
+                <NavLink
+                  className={({ isActive }) => `header__link ${isActive ? "header__link_active" : ""}`}
+                  aria-label="link to films"
+                  to="/movies"
+                >
+                  Фильмы
+                </NavLink>
+
+                <NavLink
+                  className="header__link"
+                  aria-label="link to saved films"
+                  to="/saved-movies"
+                >
+                  Сохраненные фильмы
+                </NavLink>
+
+              </nav>)}
+
+              <InfoAccount
+                isLoggedIn={isLoggedIn}
+                isPopup={false} // стили для попапа
+              />
+            </>
+          }
         </div>
       </div>
 
