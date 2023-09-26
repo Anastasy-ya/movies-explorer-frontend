@@ -16,25 +16,27 @@ function Header({
 
   //функция открытия/закрытия попапа
   function handleOpenClosePopup() {
+
     // поменять значение на противоположное
     setIsOpenPopup(!isOpenPopup);
+
     // изменить стили бургера
     document.querySelector(".burger").classList.toggle("burger_opened");
-    // зафиксировать фон, сохранив положение прокрутки
-  
+
+    // зафиксировать фон
     if (!isOpenPopup) {
       document.body.style.position = 'fixed';
-      // document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.width = '100%';
+      // document.body.style.top = `-${window.scrollY}px`; // для фиксации прокрутки окна
     } else {
-      // const scrollY = document.body.style.top;
       document.body.style.position = '';
+      //значение по умолчанию
+      document.body.style.width = 'auto';
+      // const scrollY = document.body.style.top; // для фиксации прокрутки окна
       // document.body.style.top = '';
       // window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
-    /*TODO: после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
   };
-
-  console.log(isOpenPopup)
 
   return (
     <header className="header">

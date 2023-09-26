@@ -49,8 +49,4 @@
   pointer-events: none;
 }
 
-.header__info-account {
-  position: absolute;
-  right: 44px;
-  /* padding: 0; */
-}
+.header__info-account {}
