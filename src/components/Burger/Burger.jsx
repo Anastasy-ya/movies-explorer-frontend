@@ -1,16 +1,16 @@
-import React from "react";
+// import React from "react";
 import './Burger.css';
 
-function Burger({ handleOpenClosePopup }) { //isLoggedIn, isOpen, 
+import React from "react";
 
-  function handlerClick() {
-    handleOpenClosePopup();
-  }
+function Burger({ 
+  handleOpenClosePopup
+}) {
 
   return (
     <div
       className="header__burger burger"
-      onClick={handlerClick}
+      onClick={handleOpenClosePopup}
     >
       <span className="burger__icon"></span>
     </div>

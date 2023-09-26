@@ -27,7 +27,6 @@ function SavedMovies({
   function handleSearch(query) {
     if (query.length === 0) {
       openPopup("Нужно ввести ключевое слово");
-      // setIsOpenConfirmationPopup(true);
       return;
     }
     setSavedQuery(query);

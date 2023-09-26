@@ -31,7 +31,7 @@ function App() {
     email: "",
   });
 
-  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+  
   const [isMainPage, setIsMainPage] = useState(false);
   // const [isRegistered, setIsRegistered] = useState(false);
   // базовые фильмы, этот стейт не меняется в коде
@@ -136,11 +136,13 @@ function App() {
     if (isOpenConfirmationPopup) {
       setTimeout(() => {
         setIsOpenConfirmationPopup(false)
-      }, 1500);
+      }, 1000);
     }
   }, [isOpenConfirmationPopup]);
 
  
+  
+
   //регистрация
   function handleRegister({ name, email, password }) {
     return auth
@@ -505,9 +507,6 @@ function App() {
                   <>
                     <Header
                       isLoggedIn={isLoggedIn}
-                      // handleOpenClosePopup={handleOpenClosePopup}
-                      isOpenPopup={isOpenPopup}
-                      setIsOpenPopup={setIsOpenPopup}
                       isMainPage={isMainPage}
                       isWideScreen={isWideScreen}
                     />
@@ -530,16 +529,12 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          // handleOpenClosePopup={handleOpenClosePopup}
-                          isOpenPopup={isOpenPopup}
-                          setIsOpenPopup={setIsOpenPopup}
                           isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />
                         <main className="content">
                           <Movies
                             isLoggedIn={isLoggedIn}
-                            // movies={isShortMovies ? shortFilteredMovies : movies} 
                             movies={moviesForShow}
                             handleSaveMovie={handleSaveMovie}
                             handleSearchMovie={handleSearchMovie}
@@ -548,9 +543,7 @@ function App() {
                             isShortSavedMovies={isShortSavedMovies}
                             setIsShortSavedMovies={setIsShortSavedMovies}
                             handleDeleteMovie={handleDeleteMovie}
-                            // setShortFilteredMovies={setShortFilteredMovies}
                             openPopup={openPopup}
-
                           />
                         </main>
                         <Footer />
@@ -569,16 +562,12 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          // handleOpenClosePopup={handleOpenClosePopup}
-                          isOpenPopup={isOpenPopup}
-                          setIsOpenPopup={setIsOpenPopup}
                           isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />
                         <main className="content">
                           <SavedMovies
                             isLoggedIn={isLoggedIn}
-                            // movies={isShortSavedMovies ? shortFilteredSavedMovies : savedMovies}
                             movies={moviesForShow}
                             handleSearchMovie={handleSearchSavedMovie} //отличается от movies
                             openPopup={openPopup}
@@ -605,15 +594,12 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          // handleOpenClosePopup={handleOpenClosePopup}
-                          isOpenPopup={isOpenPopup}
-                          setIsOpenPopup={setIsOpenPopup}
                           isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />
                         <main className="content">
                           <Profile
-                            // isLoggedIn={isLoggedIn}
+
                             routTo={"/"}
                             handleChangeProfile={handleChangeProfile}
                             handleDeleteToken={handleDeleteToken}
@@ -630,7 +616,6 @@ function App() {
             <RequestMessage //редактирование имени польз
               isOpenConfirmationPopup={isOpenConfirmationPopup}
               requestMessage={requestMessage}
-              setIsOpenConfirmationPopup={setIsOpenConfirmationPopup}
             />
 
           </CurrentUserContext.Provider>

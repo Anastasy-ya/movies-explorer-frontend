@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
 import Burger from "../Burger/Burger";
@@ -9,22 +9,32 @@ import Popup from "../Popup/Popup";
 function Header({
   isLoggedIn,
   isMainPage,
-  isOpenPopup,
-  setIsOpenPopup,
-  // handleOpenClosePopup,
   isWideScreen,
-
 }) {
+
+  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
 
   //функция открытия/закрытия попапа
   function handleOpenClosePopup() {
     // поменять значение на противоположное
     setIsOpenPopup(!isOpenPopup);
-    console.log(document.querySelector(".burger"));
-    document.querySelector(".burger").classList.toggle('burger_opened');
+    // изменить стили бургера
+    document.querySelector(".burger").classList.toggle("burger_opened");
+    // зафиксировать фон, сохранив положение прокрутки
+  
+    if (!isOpenPopup) {
+      document.body.style.position = 'fixed';
+      // document.body.style.top = `-${window.scrollY}px`;
+    } else {
+      // const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      // document.body.style.top = '';
+      // window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
     /*TODO: после сдачи всех этапов добавить переключатель стиля для запрета прокрутки попапа*/
-    //и найти пропавшую анимацию
-  }
+  };
+
+  console.log(isOpenPopup)
 
   return (
     <header className="header">
@@ -37,7 +47,8 @@ function Header({
               <Burger
                 handleOpenClosePopup={handleOpenClosePopup}
               />
-            </div> :
+            </div>
+            :
             <>
               {isLoggedIn && (<nav className="header__navigation-box"> {/*isWideScreen &&  */}
 
