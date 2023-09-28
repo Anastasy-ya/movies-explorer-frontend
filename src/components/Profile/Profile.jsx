@@ -19,7 +19,7 @@ function Profile({
   const handleSubmit = (e) => {
     e.preventDefault();
     handleChangeProfile(values) 
-    //здесь обнулять форму не требуется
+    //обнулять форму не требуется
   };
 
 

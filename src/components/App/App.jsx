@@ -113,7 +113,7 @@ function App() {
         localStorage.removeItem("shortFilteredSavedMovies");
         localStorage.removeItem("shortFilteredMovies");
         localStorage.removeItem("isShortMovies");
-        localStorage.removeItem("savedMoviesSearchQuery");
+        // localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
         // localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
@@ -204,7 +204,7 @@ function App() {
         localStorage.removeItem("shortFilteredSavedMovies");
         localStorage.removeItem("shortFilteredMovies");
         localStorage.removeItem("isShortMovies");
-        localStorage.removeItem("savedMoviesSearchQuery");
+        // localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
         // localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
@@ -501,7 +501,7 @@ function App() {
                 )}
               />
 
-              <Route
+              <Route  
                 path="/"
                 element={
                   <>

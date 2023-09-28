@@ -31,6 +31,7 @@ function FilterCheckbox({
           checked={isShortMovies}
         />
         <span className="tumbl__slider"
+          tabIndex="0"
           aria-label="filter short films"></span>
       </label>
       <p className="search-input__text">Короткометражки</p>

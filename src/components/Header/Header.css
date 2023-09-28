@@ -10,6 +10,7 @@
   align-items: center;
   min-height: 74px;
   margin: 0 auto;
+  
 }
 
 .header__main_type_turquoise {
@@ -20,8 +21,8 @@
   display: flex;
   gap: 16px;
   align-items: center;
-  width: 215px;
-  justify-content: center;
+  width: 213px;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 720px) {
