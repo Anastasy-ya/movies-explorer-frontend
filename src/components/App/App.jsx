@@ -55,6 +55,8 @@ function App() {
   // const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredSavedMovies")) || []);
   const [isOpenConfirmationPopup, setIsOpenConfirmationPopup] = useState(false);
 
+  console.log(isShortSavedMovies, 'isShortSavedMovies')
+
   //получение значения от кастомного хука
   const { isWideScreen } = useResize();
   const navigate = useNavigate();

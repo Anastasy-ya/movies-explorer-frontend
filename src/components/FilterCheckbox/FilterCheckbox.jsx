@@ -16,7 +16,7 @@ function FilterCheckbox({
     localStorage.setItem("isShortMovies", JSON.stringify(!isShortMovies));
     return setIsShortMovies(!isShortMovies);
   } else {
-    localStorage.setItem("isShortSavedMovies", JSON.stringify(isShortSavedMovies));
+    localStorage.setItem("isShortSavedMovies", JSON.stringify(!isShortSavedMovies));
     return setIsShortSavedMovies(!isShortSavedMovies);
   }
 }
