@@ -1,27 +1,59 @@
 import React from 'react';
 import './MoviesCard.css';
+import { MOVIES_URL } from "../../utils/consts";
+import { Link } from 'react-router-dom';
 
-function MoviesCard(props) { //pageMovie(true/false)
+function MoviesCard({
+  movie,
+  isMoviePage,
+  handleSaveMovie,
+  handleDeleteMovie
+}) {
 
-  const saveOrDeleteText = props.isMoviePage ? "save movie" : "delete movie from saved";
+
+  const saveOrDeleteText = isMoviePage ? "save movie" : "delete movie from saved";
+  const { id, nameRU, duration, trailerLink, movieId } = movie;
+  let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`
+
+  function saveOrDeleteHandler(e) {
+    e.preventDefault();
+    movie.buttonLikeType === "unliked" ? handleSaveMovie(movie) : handleDeleteMovie(isMoviePage ? id : movieId)
+    //всегда если класс анлайк, нужно сохранить карточку, во всех остальных случаях удалять
+  }
 
   return (
-    <li className="card">      
-        <div className="card__info">
-          <div className="card__text-block">
-            <h2 className="card__header">33 слова о дизайне</h2>
-            <p className="card__subtitle">1ч 47м</p>
-          </div>
-            <button
-            className={`card__icon ${props.isMoviePage ? "card__icon_type_save" : "card__icon_type_delete"}`}
-             /*card__icon_type_save_active класс добавится на этапе добавления функционала*/
-            // alt={saveOrDeleteText}
-            // aria-label={saveOrDeleteText}
-            ></button>
+    <>
+      <div className="card__info">
+        <div className="card__text-block">
+          <h2 className="card__header">{nameRU}</h2>
+          <p className="card__subtitle">{movieDuration}</p>
         </div>
-        
-        <div className="card__image"></div>
-    </li>
+        <button
+          className={`card__icon ${movie.buttonLikeType === "liked"
+            ? "card__icon_type_save_active"
+            : movie.buttonLikeType === "unliked"
+              ? "card__icon_type_save"
+              : "card__icon_type_delete"}`}
+          /*card__icon_type_save_active*/
+          aria-label={saveOrDeleteText}
+          onClick={(e) => saveOrDeleteHandler(e)}
+        ></button>
+      </div>
+
+      <Link
+        to={trailerLink}
+        // className="about-me__gihub"
+        aria-label="link trailer"
+        target="_blank"
+      >
+        <img
+          src={`${isMoviePage ? (MOVIES_URL + movie.image.url) : (movie.image)}`}
+          className="card__image"
+          alt="Movie"
+        />
+      </Link>
+    </>
+
   );
 }
 

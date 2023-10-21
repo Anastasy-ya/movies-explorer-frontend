@@ -76,7 +76,7 @@
   }
 }
 
-.open span {
+.burger_opened span {
   /*средняя полоска после преобразования*/
   transition-duration: 0.1s;
   transition-delay: 0.25s;
@@ -86,7 +86,7 @@
   margin: 0 auto;
 }
 
-.open span:before {
+.burger_opened span:before {
   /*верхняя полоска после преобразования*/
   transition: top 0.25s, transform 0.25s 0.25s;
   top: 0px;
@@ -95,7 +95,7 @@
   width: 22px;
 }
 
-.open span:after {
+.burger_opened span:after {
   /*нижяя полоска осле преобразования*/
   transition: top 0.4s, transform 0.25s 0.25s;
   top: 0px;

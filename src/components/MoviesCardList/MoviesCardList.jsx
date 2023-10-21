@@ -1,45 +1,46 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import './MoviesCardList.css';
-import SearchForm from "../SearchForm/SearchForm";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import LearnMore from "../LearnMore/LearnMore";
 
-function MoviesCardList(props) {
+
+
+
+function MoviesCardList({
+  isMoviePage,
+  movies,
+  isLoggedIn,
+  handleSaveMovie,
+  handleSearchMovie,
+  requestMessage,
+  handleDeleteMovie,
+  openPopup
+}) {
+
+  // useEffect(() => {
+  //   if (movies.length === 0) {
+  //     openPopup("Ничего не найдено")
+  //   }
+  // }, [movies]);
+
   return (
     <section className="card-list">
 
-      <SearchForm />
-
       <ul className="card-list__size-container size-container">
-        <MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        />
-        <MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        /><MoviesCard
-          isMoviePage={props.isMoviePage}
-        />
-      </ul>
+        {movies.length > 0 && movies.map((movie, index) => (
+          <li className="card" key={index}>
+          <MoviesCard
+            key={index}
+            movie={movie}
+            isMoviePage={isMoviePage}
+            // handleSearchMovie={handleSearchMovie}
+            // requestMessage={requestMessage}
+            handleSaveMovie={handleSaveMovie} //попадает из movies
+            handleDeleteMovie={handleDeleteMovie} //попадает из saved-movies
+          />
+          </li>
+        ))}
 
-      <LearnMore />
+      </ul>
 
     </section>
   );

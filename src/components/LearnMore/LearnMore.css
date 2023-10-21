@@ -17,3 +17,11 @@
   text-align: center;
   border: none;
 }
+
+.learn-more__message{
+  text-align: center;
+}
+
+.learn-more__none {
+  display: none;
+}

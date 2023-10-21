@@ -5,21 +5,23 @@ function Form({
   formName,
   onSubmit,
   children,
-  // isLoading, раскомментировать на 4 этапе
   buttonText,
-  typeReg }) {
+  typeReg,
+  disabled }) {
 
   return (
     <form
-      className="form" /*popup__form  */
+      className="form"
       name={formName}
       onSubmit={onSubmit}
     >
       {children}
-      <button 
+      <button
         className={`form__button ${typeReg && "form__button_type_reg"}`}
-        type="submit" 
-        aria-label={formName}>
+        type="submit"
+        aria-label={formName}
+        disabled={disabled}
+      >
         {buttonText}
       </button>
     </form>

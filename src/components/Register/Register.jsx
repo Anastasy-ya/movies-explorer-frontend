@@ -3,61 +3,80 @@ import './Register.css';
 import Logo from "../Logo/Logo";
 import Form from "../Form/Form";
 import { Link } from "react-router-dom";
-import Input from "../Input/Input"
+import Input from "../Input/Input";
+import useFormWithValidation from "../hooks/usevalidate";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Register(props) {
+function Register({
+  handleRegister,
+  formName,
+  buttonText,
+  wellcomeText, //заголовок формы
+  askToChangeForm, // предложение изменить форму ввода
+  askToChangeFormLink,
+  routTo,
+  // requestMessage,
+  openPopup
+}) {
 
-  //запишем данные таргета в соответствующие поля userData, неизмененные поля не меняем
-  // function handleChange(e) {
-  //   const { name, value } = e.target;
-  //   setUserData({
-  //     ...userData,
-  //     [name]: value,
-  //   });
-  // }
+  const currentUser = React.useContext(CurrentUserContext);
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  // //отправка данных в ф-ю, сделающую запрос на сервер
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   onSubmit(userData);
-  // };
 
-  // function handleChangeName(e) {
-  //   setName(e.target.value);
-  // }
+  //отправка данных в ф-ю, сделающую запрос на сервер
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleRegister(values)
+      .catch((err) => {
+        console.log(err)
+        openPopup(err || "");
+        resetForm();
+      })
+      .finally(() => {
+      });
+  };
+
 
   return (
     <section className="auth-container">
 
       <Logo />
-      <h1 className="auth-container__wellcome">{props.wellcomeText}</h1>
+      <h1 className="auth-container__wellcome">{wellcomeText}</h1>
 
       <Form
-        className={props.className}
-        formName={props.formName}
-        onSubmit={props.onSubmit}
-        // isLoading={props.isLoading} раскомментировать на 4 этапе
-        buttonText={props.buttonText}
-        typeReg={true}>
+        formName={formName}
+        buttonText={buttonText}
+        typeReg={true}
+        onSubmit={(e) => handleSubmit(e)}
+        disabled={!isValid}
+      >
 
         <Input
           type={"text"}
           name={"name"}
           minLength={"2"}
-          maxLength={"40"}
+          maxLength={"20"}
           labelText={"Имя"}
           placeholder={"Введите имя"}
-          value={"Анастасия"}
+          value={values.name ?? currentUser.name}
+          handleChange={(e) => handleChange(e)}
+          errors={errors}
+          pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
         />
 
         <Input
           type={"text"}
           name={"email"}
           minLength={"2"}
-          maxLength={"40"}
+          maxLength={"20"}
           labelText={"E-mail"}
           placeholder={"Введите E-mail"}
-          value={"mail@mail.com"}
+          value={values.email ?? currentUser.email}
+          handleChange={(e) => handleChange(e)}
+          errors={errors}
+          pattern="^[a-zA-Z0-9\-.]{1,}@[a-zA-Z0-9\-.]{1,}\.[a-zA-Z]{2,5}$"
+        //валидация при помощи validate на бэке не принимает нижнее подчеркивание, TODO после сдачи
+        //"^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
         />
 
         <Input
@@ -66,20 +85,23 @@ function Register(props) {
           minLength={"2"}
           maxLength={"20"}
           labelText={"Пароль"}
-          placeholder={""}
+          placeholder={"Введите пароль"}
+          value={values.password ?? currentUser.password}
+          handleChange={(e) => handleChange(e)}
+          errors={errors}
         />
 
       </Form>
 
       <div className="auth-container__link-container">
         <p className="auth-container__change-form-text">
-          {props.askToChangeForm}
+          {askToChangeForm}
         </p>
         <Link
-          to={props.routTo}
+          to={routTo}
           className="auth-container__change-form-text auth-container__change-form-text_type_link"
           aria-label="login"
-        >{props.askToChangeFormLink}</Link>
+        >{askToChangeFormLink}</Link>
       </div>
 
     </section>
@@ -87,3 +109,6 @@ function Register(props) {
 }
 
 export default Register;
+
+
+

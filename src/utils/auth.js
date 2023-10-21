@@ -1,14 +1,14 @@
-export const baseUrl = "https://s.anastasy-ya.pet-project.nomoredomains.work";
+import { API_URL } from "../utils/consts";
+export const baseUrl = API_URL;
 
-function checkResponce(res) {
-  //повторяющийся кот (^˵◕ω◕˵^)(^˵◕ω◕˵^)(^˵◕ω◕˵^)
+function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-export const register = ({ email, password }) => {
+export const register = ({ name, email, password }) => {
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     credentials: "include",
@@ -16,9 +16,9 @@ export const register = ({ email, password }) => {
       "Accept": "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ name, email, password }),
   }).then((res) => {
-    checkResponce(res);
+    return checkResponse(res);
   });
 };
 
@@ -31,7 +31,7 @@ export const login = ({ email, password }) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then((res) => checkResponce(res));
+  }).then((res) => checkResponse(res));
 };
 
 export const checkToken = () => {
@@ -41,21 +41,39 @@ export const checkToken = () => {
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+      // "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
     },
   }).then((res) => {
-    return checkResponce(res);
+    return checkResponse(res);
   });
 };
 
-  export const logOut = () => {
-    return fetch(`${baseUrl}/signout`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      },
-    }).then((res) => checkResponce(res));
-  };
+export const updateUser = ({ name, email }) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      // "Authorization": `Bearer ${localStorage.getItem("jwt")}`, //?
+    },
+    body: JSON.stringify({
+      name, email
+    }),
+  }).then((res) => {
+
+    return checkResponse(res);
+  });
+};
+
+export const logOut = () => {
+  return fetch(`${baseUrl}/signout`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => checkResponse(res));
+};
 

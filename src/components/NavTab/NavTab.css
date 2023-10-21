@@ -3,7 +3,6 @@
   height: 66px;
   padding: 0;
   margin: 0;
-  /* justify-self: flex-end; */
 }
 
 .navigation__size-container {
@@ -35,7 +34,7 @@
   width: 67px;
 }
 
-@media screen and (max-width: 720px) { /*этот стиль отключен, перенести свойства*/
+@media screen and (max-width: 720px) {
   .navigation__text {
     font-size: 11px;
   }

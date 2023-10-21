@@ -5,15 +5,6 @@
   border: 0.5px solid red;
 } */
 
-.root {
-  background-color: rgba(32, 32, 32, 1);
-  min-height: 100vh;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
 :root {
   --dark-turquoise: rgba(7, 48, 66, 1); /* var(--dark-turquoise) */
   --main-background: rgba(32, 32, 32, 1); /* var(--main-background) */
@@ -26,25 +17,14 @@ html {
   --pink: rgba(238, 52, 101, 1); /* var(--pink) */
 }
 
-/*стилизация кнопок при наведении*/
-
-button:enabled {
-  transition: opacity 0.6s linear;
-  cursor: pointer;
-}
-button:enabled:hover {
-  opacity: 0.8;
-  transition: opacity 0.2s linear;
+.root {
+  background-color: var(--main-background);
+  min-height: 100vh;
 }
 
-/*стилизация линков при наведении*/
-:any-link:hover {
-  font-weight: 500;
-  cursor: pointer;
-}
-
-:any-link {
-  text-decoration: none;
+/*плавная прокрутка*/
+html {
+  scroll-behavior: smooth;
 }
 
 p,
@@ -56,13 +36,53 @@ h4,
 article,
 button,
 input,
-label {
+label,
+span {
   color: white;
   font-family: "Inter", "Arial", "sans-serif";
   font-style: normal;
   text-rendering: optimizeLegibility;
   margin: 0;
   padding: 0;
+}
+
+/*стили автозаполнения*/
+:-webkit-autofill,
+:-webkit-autofill:hover, 
+:-webkit-autofill:focus {
+  border-bottom: 2px solid var(--blue);
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px var(--main-background) inset;
+  transition: background-color 5000s ease-in-out 0.2s;
+}
+
+input:focus {
+  border-bottom: 2px solid var(--blue);
+}
+
+/*стилизация кнопок при наведении*/
+button:enabled { /*до модификации*/
+  transition: all 0.5s linear;
+  cursor: pointer;
+}
+
+button:enabled:hover { /*по наведению*/
+  opacity: 0.8;
+}
+
+button:disabled { /*не активна*/
+  background-color: gray;
+  color: var(--middle-grey);
+}
+
+/*стилизация линков при наведении*/
+:any-link:hover {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+:any-link {
+  text-decoration: none;
 }
 
 ul {
@@ -86,11 +106,13 @@ ul {
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
   width: 100%;
+  align-content: flex-start;
 }
 
 .content {
   grid-area: content;
-  position: relative; /*задается поскольку дочерний элемент popup имеет position fixed*/
+  position: relative; 
+  /*дочерний элемент popup имеет position fixed*/
 }
 
 .size-container {

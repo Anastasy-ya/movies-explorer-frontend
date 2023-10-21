@@ -1,0 +1,16 @@
+@import url(../blocks/confirmation-popup/confirmation-popup.css);
+@import url(../blocks/confirmation-popup/_opened/confirmation-popup_opened.css);
+@import url(../blocks/confirmation-popup/__container/confirmation-popup__container.css);
+
+.confirmation-popup__message {
+  color: black;
+  font-family: "Inter", "Arial", "sans-serif";
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+}
