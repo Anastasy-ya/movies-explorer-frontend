@@ -12,7 +12,14 @@ const AuthForm = () => {
     mode: "onChange",
   });
 
-  return { register, errors, isValid, handleSubmit, reset, setValue, watch };
+  const formsubmit = (data, event) => {
+    event.preventdefault();
+
+    // do something with values
+
+}
+
+  return { register, errors, isValid, handleSubmit, reset, setValue, watch, formsubmit };
 };
 
 export default AuthForm;

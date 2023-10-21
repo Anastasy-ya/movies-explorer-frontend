@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ function Profile({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleChangeProfile(values) 
+    handleChangeProfile(values);
     //обнулять форму не требуется
   };
 

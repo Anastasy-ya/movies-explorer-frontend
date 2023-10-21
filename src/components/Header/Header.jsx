@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
 import Burger from "../Burger/Burger";
 import InfoAccount from "../InfoAccount/InfoAccount";
 import Logo from "../Logo/Logo";
 import Popup from "../Popup/Popup";
+import { useLocation } from "react-router-dom";
 
 function Header({
   isLoggedIn,
-  isMainPage,
+  // isMainPage,
   isWideScreen,
 }) {
 
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+  const [isMainPage, setIsMainPage] = useState(false);
+
+  const path = useLocation();
+  
+  //проверка главная ли страница для функции отображения хэдера
+  useEffect(() => {
+    path.pathname === "/" ?
+      setIsMainPage(true) :
+      setIsMainPage(false);
+  }, [path]);
 
   //функция открытия/закрытия попапа
   function handleOpenClosePopup() {

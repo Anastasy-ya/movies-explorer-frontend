@@ -15,23 +15,18 @@ function SavedMovies({
   isShortSavedMovies,
   setIsShortSavedMovies,
   openPopup
-  // setIsOpenConfirmationPopup
 }) {
-  // openPopup('Ничего не найдено');
 
   // eslint-disable-next-line no-unused-vars
-  const [savedQuery, setSavedQuery] = useState(
-    localStorage.getItem("savedMoviesSearchQuery") || "",
-  );
+  const [savedQuery, setSavedQuery] = useState("");
 
-  function handleSearch(query) {
+  function handleSearch(query, e) {
+    e.preventDefault();
     if (query.length === 0) {
       openPopup("Нужно ввести ключевое слово");
       return;
     }
-    setSavedQuery(query);
-    handleSearchMovie(query)
-    localStorage.setItem("savedMoviesSearchQuery", query || "");
+    handleSearchMovie(query, e);
   }
 
   return (

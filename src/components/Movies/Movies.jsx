@@ -80,12 +80,13 @@ function Movies({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movies, showedMovies]);
 
-  function handleSearch(query) {
+  function handleSearch(query, e) {
+    e.preventDefault();
     if (query.length === 0) {
       openPopup("Нужно ввести ключевое слово");
       return;
     }
-    handleSearchMovie(query)
+    handleSearchMovie(query, e)
     setQuery(query);
     localStorage.setItem("moviesSearchQuery", query);
   }

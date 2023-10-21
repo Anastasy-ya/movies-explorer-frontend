@@ -13,8 +13,8 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import Preloader from "../Preloader/Preloader";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { useLocation } from "react-router-dom";
 import { useResize } from "../../components/hooks/useResize";
+import { useLocation } from "react-router-dom";
 import * as auth from "../../utils/auth";
 import * as moviesApi from "../../utils/MoviesApi";
 import * as MainApi from "../../utils/MainApi";
@@ -31,8 +31,6 @@ function App() {
     email: "",
   });
 
-  
-  const [isMainPage, setIsMainPage] = useState(false);
   // const [isRegistered, setIsRegistered] = useState(false);
   // базовые фильмы, этот стейт не меняется в коде
   const [basicMovies, setBasicMovies] = React.useState([]);
@@ -47,20 +45,23 @@ function App() {
   const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
   const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(JSON.parse(localStorage.getItem("isShortSavedMovies")) || false);
   const [moviesForShow, setMoviesForShow] = React.useState([]);
-  // const [isShortMovies, setIsShortMovies] = React.useState(JSON.parse(localStorage.getItem("isShortMovies")) || false);
-  // const [isShortSavedMovies, setIsShortSavedMovies] = React.useState(false); //переписать и обойтись без него
   // отфильтрованные короткометражки на странице с фильмами
   // const [shortFilteredMovies, setShortFilteredMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredMovies")) || []);
   // отфильтрованные короткометражки на странице с сохраненными фильмами
-  // const [shortFilteredSavedMovies, setShortFilteredSavedMovies] = React.useState(JSON.parse(localStorage.getItem("shortFilteredSavedMovies")) || []);
   const [isOpenConfirmationPopup, setIsOpenConfirmationPopup] = useState(false);
-
-  console.log(isShortSavedMovies, 'isShortSavedMovies')
 
   //получение значения от кастомного хука
   const { isWideScreen } = useResize();
   const navigate = useNavigate();
   const path = useLocation();
+
+  console.log(basicMovies, 'basicMovies')
+  console.log(movies, 'movies')
+  console.log(savedMovies, 'savedMovies')
+  console.log(savedFilteredMovies, 'savedFilteredMovies')
+  console.log(moviesForShow, 'moviesForShow')
+
+
 
   // useEffect(() => {
   //   localStorage.setItem("isShortMovies", JSON.stringify(isShortMovies))
@@ -112,12 +113,12 @@ function App() {
         localStorage.removeItem("movies");
         localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
-        localStorage.removeItem("shortFilteredSavedMovies");
-        localStorage.removeItem("shortFilteredMovies");
+        // localStorage.removeItem("shortFilteredSavedMovies");
+        // localStorage.removeItem("shortFilteredMovies");
         localStorage.removeItem("isShortMovies");
         // localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
-        // localStorage.removeItem("savedFilteredMovies");
+        localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
         console.log(err);
       })
@@ -126,12 +127,7 @@ function App() {
       });
   }, []);
 
-  //проверка главная ли страница для функции отображения хэдера
-  useEffect(() => {
-    path.pathname === "/" ?
-      setIsMainPage(true) :
-      setIsMainPage(false);
-  }, [path]);
+
 
   //скрыть попап с уведомлением по таймеру
   useEffect(() => {
@@ -142,8 +138,8 @@ function App() {
     }
   }, [isOpenConfirmationPopup]);
 
- 
-  
+
+
 
   //регистрация
   function handleRegister({ name, email, password }) {
@@ -203,12 +199,11 @@ function App() {
         localStorage.removeItem("movies");
         localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
-        localStorage.removeItem("shortFilteredSavedMovies");
-        localStorage.removeItem("shortFilteredMovies");
+        // localStorage.removeItem("shortFilteredMovies");
         localStorage.removeItem("isShortMovies");
         // localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
-        // localStorage.removeItem("savedFilteredMovies");
+        localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
         navigate("/", { replace: true });
       })
@@ -244,7 +239,7 @@ function App() {
         //прибавляет новый фильм к массиву имеющихся
         //обновить в LS этот массив
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
-        
+
       })
       // .then(() => {
       //   localStorage.setItem("movies", JSON.stringify(movies)); //нов не факт что нужно
@@ -254,8 +249,6 @@ function App() {
       })
   }
 
-  console.log(movies, 'movies')
-
   // удаление из сохраненных
   function handleDeleteMovie(id) {
     const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
@@ -264,9 +257,17 @@ function App() {
       .then(() => {
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
         setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))
-        setSavedFilteredMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
+        setSavedFilteredMovies((state) => {
+          console.log(state, 'state')
+          return state.map((elem) => {
+            console.log(elem, 'elem', id, 'id')
+            return elem.movieId === id ? 
+            { ...elem, buttonLikeType: "unliked", key: elem.id } :
+             elem
+          }
+          )
+        })
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
-        // setShortFilteredSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id));
       })
       .catch((err) => {
         console.log(err);
@@ -277,6 +278,7 @@ function App() {
 
   // повторяющаяся функция фильтрации массива по ключевому слову
   function searchFilm(movies, string) {
+    // console.log(movies)
     return movies.filter((movie) => {
       return (
         movie.nameRU.toLowerCase().includes(string.toLowerCase())
@@ -286,15 +288,17 @@ function App() {
   }
 
   // поиск на странице с сохраненными фильмами
-  function handleSearchSavedMovie(string) {
+  function handleSearchSavedMovie(string, e) {
+    e.preventDefault();
+    console.log('handleSearchSavedMovie')
     const films = searchFilm(savedMovies, string);
-    if (films.length === 0) {
+    if (films.length === 0) { //далее меняется стейт, с ним перерисовывается страница и теряется стейт-переменная
       setSavedFilteredMovies([]); //тут работает! обнуляются сохраненные фильмы до сохраненных фильмов
       openPopup("Ничего не найдено");
     } else {
       setSavedFilteredMovies(films); // || []
     }
-    
+
   }
 
   //Определить фильмы для отображения 
@@ -315,7 +319,6 @@ function App() {
       }
 
     } else {  //записать значение сохраненных или отфильтрованных соханенных
-
       const films = savedFilteredMovies.length > 0 ? savedFilteredMovies : savedMovies
       if (films.length > 0) {
         setMoviesForShow(isShortSavedMovies ? (
@@ -325,7 +328,7 @@ function App() {
             )
           })
         ) : films)
-        
+
       } else if (films.length === 0) {
         setMoviesForShow([]);
         // isLoggedIn && openPopup("Ничего не найдено");  //здесь это нельзя размещать из-за проблем при регистрации
@@ -341,7 +344,7 @@ function App() {
     isLoggedIn
   ]);
 
-  
+
 
   // получение списка фильмов от moviesApi, вызывается только при первом поиске
   function getBasicMovies() {
@@ -382,7 +385,8 @@ function App() {
   }
 
   // основная функция поиска фильмов
-  function handleSearchMovie(string) {
+  function handleSearchMovie(string, e) {
+    e.preventDefault();
     // если карточек нет, получить
     if (basicMovies.length === 0) {
       setShowPreloader(true);
@@ -406,46 +410,6 @@ function App() {
       searchMovies(basicMovies, string)
     }
   };
-
-  //тумблер "короткометражки" на странице с сохраненными фильмами
-  // useEffect(() => {
-  //   if (isShort && savedMovies.length > 0) {
-  //     // setShortFilteredSavedMovies(
-  //     //   savedMovies.filter((savedmovie) => {
-  //     //     return (
-  //     //       savedmovie.duration <= 40
-  //     //     )
-  //     // console.log(1)
-  //     //   })
-  //     // )
-  //   }
-  //   else if (isShort && savedMovies.length === 0) {
-  //     // setShortFilteredSavedMovies([]);
-  //     openPopup("Ничего не найдено");
-  //   }
-  // }, [isShort, savedMovies]);
-
-
-
-  // // тумблер "короткометражки" на странице с фильмами
-  // useEffect(() => {
-  //   if (isShortMovies && movies.length > 0) {
-  //     setShortFilteredMovies(
-  //       movies.filter((movie) => {
-  //         return (
-  //           movie.duration <= 40
-  //         )
-  //       })
-  //     )
-  //   }
-  //   else if (isShortMovies && movies.length === 0) {
-  //     setShortFilteredMovies([]);
-  //     openPopup("Ничего не найдено")
-  //   }
-  // }, [isShortMovies, movies]);
-
-
-
 
   return (
     <div className="root">
@@ -503,13 +467,13 @@ function App() {
                 )}
               />
 
-              <Route  
+              <Route
                 path="/"
                 element={
                   <>
                     <Header
                       isLoggedIn={isLoggedIn}
-                      isMainPage={isMainPage}
+                      // isMainPage={isMainPage}
                       isWideScreen={isWideScreen}
                     />
                     <main className="content">
@@ -531,7 +495,7 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          isMainPage={isMainPage}
+                          // isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />
                         <main className="content">
@@ -564,7 +528,7 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          isMainPage={isMainPage}
+                          // isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />
                         <main className="content">
@@ -596,7 +560,7 @@ function App() {
                       <>
                         <Header
                           isLoggedIn={isLoggedIn}
-                          isMainPage={isMainPage}
+                          // isMainPage={isMainPage}
                           isWideScreen={isWideScreen}
                         />
                         <main className="content">

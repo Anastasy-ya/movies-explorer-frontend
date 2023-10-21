@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 // import RequestMessage from "../RequestMessage/RequestMessage";
@@ -20,6 +20,13 @@ function SearchForm({
   setIsShortSavedMovies,
 }) {
 
+  
+
+  // const [savedString, setSavedString] = useState(
+  //   // localStorage.getItem("savedMoviesSearchQuery") || 
+  //   "",
+  // );
+
   const { register, errors, handleSubmit, watch, setValue } = AuthForm();
   const location = useLocation();
 
@@ -27,20 +34,22 @@ function SearchForm({
     if (location.pathname === "/movies") {
       setValue("search", localStorage.getItem("moviesSearchQuery") || ""); //динамические значения полей
     } else {
-      setValue("search", localStorage.getItem("savedMoviesSearchQuery" || ""));
+      setValue("search", savedString || ""); //в строке поиска
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSubmit = (data) => {
+  
+  const onSubmit = (data, e) => {
+    e.preventDefault();
     if (location.pathname === "/movies") {
-      onSearch(data.search);
+      onSearch(data.search, e);
     } else {
-      onSavedSearch(data.search);
+      onSavedSearch(data.search, e);
     }
   };
 
-  const savedQuery = watch("search", localStorage.getItem("savedMoviesSearchQuery") || "");
+  const savedString = watch("search", "");
   const query = watch("search", localStorage.getItem("moviesSearchQuery") || "");
 
   useEffect(() => {
@@ -48,13 +57,12 @@ function SearchForm({
       localStorage.setItem("moviesSearchQuery", query || "");
       setQuery(query);
     } else {
-      localStorage.setItem("savedMoviesSearchQuery", savedQuery || "");
-      setSavedQuery(savedQuery || "");
+      // localStorage.setItem("savedMoviesSearchQuery", savedQuery || "");
+      // setSavedString(savedQuery || "");
+      setSavedQuery(savedString); // видимо это вообще не нужно
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, savedQuery]);
-
-
+  }, [query, savedString]);
 
   return (
     <div className="search-input">
