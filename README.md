@@ -31,3 +31,22 @@ Frontend https://anastasy-ya.diplom.nomoredomains.xyz
 Backend https://api.anastasy-ya.diplom.nomoredomains.xyz
 
 Pull Request https://github.com/Anastasy-ya/movies-explorer-frontend/pull/2
+
+## Запуск проекта
+
+1. Склонировать проект на ваш компьютер с [Github]() с помощью команды:
+```
+git clone 
+```
+2. Перейти в папку проекта
+```
+cd .\mesto-main\
+```
+3. Установить зависимости:
+```
+npm install
+```
+4. Запустить проект в режиме разработки:
+```
+npm run dev
+```
