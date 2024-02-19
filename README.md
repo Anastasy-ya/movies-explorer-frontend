@@ -48,5 +48,5 @@ npm install
 ```
 4. Запустить проект в режиме разработки:
 ```
-npm run dev
+npm start
 ```
