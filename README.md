@@ -26,9 +26,9 @@ https://github.com/Anastasy-ya/movies-explorer-frontend
 
 ## Ссылки на проект
 
-Frontend https://anastasy-ya.diplom.nomoredomains.xyz
+<!--Frontend https://anastasy-ya.diplom.nomoredomains.xyz
 
-Backend https://api.anastasy-ya.diplom.nomoredomains.xyz
+Backend https://api.anastasy-ya.diplom.nomoredomains.xyz-->
 
 Pull Request https://github.com/Anastasy-ya/movies-explorer-frontend/pull/2
 
