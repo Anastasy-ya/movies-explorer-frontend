@@ -12,6 +12,7 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 
+## Реализация
 - Представляет из себя главную страницу-обложку, содержащую информацию о выполненном проекте и сервис, в котором можно найти фильмы по запросу и сохранить в личном кабинете.
 - Адаптивная верстка с учетом возможного переполнения блоков. 
 - Роуты защищены авторизацией. 
@@ -28,7 +29,7 @@
 - В проекте два бэкенда:<br>
 На Node.js написан API для аутентификации пользователей и сохранения фильмов.<br>
 Использован сторонний API MoviesExplorer — сервис поиска фильмов по ключевым словам.
-
+- Использование сторонних библиотек разрешено только для валидации формы. Использован React Hook Foorm.
 
 
 
@@ -78,8 +79,10 @@ npm install
 npm start
 ```
 
-#№ Адрес репозитория:<br>
+## Адрес репозитория:
+
 https://github.com/Anastasy-ya/movies-explorer-api<br>
-https://github.com/Anastasy-ya/movies-explorer-frontend
+https://github.com/Anastasy-ya/movies-explorer-frontend<br>
+<br><br>
 
 [Критерии оценки дипломной работы](https://code.s3.yandex.net/web-developer/static/new-program/web-diploma-criteria-2.0/index.html)
