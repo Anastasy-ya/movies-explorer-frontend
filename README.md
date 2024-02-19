@@ -19,11 +19,6 @@
 <!---Graduate work on the course web developer/backend-->
 
 
-Адрес репозитория:<br>
-https://github.com/Anastasy-ya/movies-explorer-api<br>
-https://github.com/Anastasy-ya/movies-explorer-frontend
-
-
 ## Ссылки на проект
 
 <!--Frontend https://anastasy-ya.diplom.nomoredomains.xyz
@@ -31,6 +26,7 @@ https://github.com/Anastasy-ya/movies-explorer-frontend
 Backend https://api.anastasy-ya.diplom.nomoredomains.xyz-->
 
 Pull Request https://github.com/Anastasy-ya/movies-explorer-frontend/pull/2
+
 
 ## Запуск проекта
 
@@ -50,3 +46,7 @@ npm install
 ```
 npm start
 ```
+
+Адрес репозитория:<br>
+https://github.com/Anastasy-ya/movies-explorer-api<br>
+https://github.com/Anastasy-ya/movies-explorer-frontend
