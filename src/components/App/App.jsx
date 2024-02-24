@@ -103,7 +103,7 @@ function App() {
         //будут показаны его данные
       })
       .catch((err) => {
-        // если кука истекла, удалить все данные как при разлогировании
+        // если срок действия куки истекл, удалить все данные как при разлогировании
         setIsLoggedIn(false);
         setCurrentUser({
           name: "",
@@ -113,13 +113,14 @@ function App() {
         localStorage.removeItem("movies");
         localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
+        localStorage.removeItem("isShortSavedMovies");
         // localStorage.removeItem("shortFilteredSavedMovies");
         // localStorage.removeItem("shortFilteredMovies");
         localStorage.removeItem("isShortMovies");
         // localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
         localStorage.removeItem("savedFilteredMovies");
-        localStorage.removeItem("basicMovies");
+        // localStorage.removeItem("basicMovies");  TODO раскомментировать, временная мера
         console.log(err);
       })
       .finally(() => {
@@ -196,6 +197,7 @@ function App() {
       .then(() => {
         //TO DO: проверить лишние
         localStorage.removeItem("isShortMovies");
+        localStorage.removeItem("isShortSavedMovies");
         localStorage.removeItem("movies");
         localStorage.removeItem("savedMovies");
         localStorage.removeItem("moviesSearchQuery");
@@ -251,22 +253,24 @@ function App() {
 
   // удаление из сохраненных
   function handleDeleteMovie(id) {
-    const deleteMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
+    const deletedMovie = savedMovies.find((savedMovie) => savedMovie.movieId === id)
     MainApi
-      .deleteCard(deleteMovie._id)
+      .deleteCard(deletedMovie._id)
       .then(() => {
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
-        setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))
-        setSavedFilteredMovies((state) => {
-          console.log(state, 'state')
+        console.log(movies, 'setMovies после удаления')
+        setSavedMovies((state) => state.filter((c) => c._id !== deletedMovie._id))
+        console.log(savedMovies, 'setSavedMovies после удаления')
+        setSavedFilteredMovies((state) => {//тут ошибка из-за которой не удаляются сохраненные отфильтрованные фильмы
+          // console.log(state, 'state')
           return state.map((elem) => {
-            console.log(elem, 'elem', id, 'id')
-            return elem.movieId === id ? 
-            { ...elem, buttonLikeType: "unliked", key: elem.id } :
-             elem
-          }
-          )
+            // console.log(elem, 'elem', id, 'id')
+            return elem.movieId === id ?
+              { ...elem, buttonLikeType: "unliked", key: elem.id } :
+              elem
+          })
         })
+        console.log(setSavedFilteredMovies, 'setSavedFilteredMovies после удаления')
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
       })
       .catch((err) => {
@@ -304,7 +308,7 @@ function App() {
   //Определить фильмы для отображения 
   useEffect(() => {
     if (path.pathname === "/movies") {
-      localStorage.setItem("movies", JSON.stringify(movies)); //нов не факт что нужно
+      localStorage.setItem("movies", JSON.stringify(movies));
       if (movies.length > 0) {
         setMoviesForShow(isShortMovies ? (
           movies.filter((movie) => {
@@ -351,6 +355,7 @@ function App() {
     return moviesApi
       .getMovies()
       .then((cards) => {
+        console.log(cards, 'полученные карточки перед записью в basicMovies')
         setBasicMovies(cards)
         localStorage.setItem("basicMovies", JSON.stringify({ cards }))
         return cards
@@ -387,11 +392,13 @@ function App() {
   // основная функция поиска фильмов
   function handleSearchMovie(string, e) {
     e.preventDefault();
+    //
     // если карточек нет, получить
     if (basicMovies.length === 0) {
       setShowPreloader(true);
       getBasicMovies()
         .then((basicMovies) => {
+          // setBasicMovies(basicMovies);//временное решение, удалить TODO
           // отфильтровать по ключевому слову и записать их в localStorage, стейт movies
           searchMovies(basicMovies, string)
         })
