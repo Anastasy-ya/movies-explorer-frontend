@@ -55,11 +55,11 @@ function App() {
   const navigate = useNavigate();
   const path = useLocation();
 
-  console.log(basicMovies, 'basicMovies')
-  console.log(movies, 'movies')
-  console.log(savedMovies, 'savedMovies')
+  // console.log(basicMovies, 'basicMovies')
+  // console.log(movies, 'movies')
+  // console.log(savedMovies, 'savedMovies')
   console.log(savedFilteredMovies, 'savedFilteredMovies')
-  console.log(moviesForShow, 'moviesForShow')
+  // console.log(moviesForShow, 'moviesForShow')
 
 
 
@@ -118,7 +118,7 @@ function App() {
         localStorage.removeItem("isShortMovies");
         // localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
-        localStorage.removeItem("savedFilteredMovies");
+        // localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
         console.log(err);
       })
@@ -203,7 +203,7 @@ function App() {
         localStorage.removeItem("isShortMovies");
         // localStorage.removeItem("savedMoviesSearchQuery");
         localStorage.removeItem("currentUser");
-        localStorage.removeItem("savedFilteredMovies");
+        // localStorage.removeItem("savedFilteredMovies");
         localStorage.removeItem("basicMovies");
         navigate("/", { replace: true });
       })
@@ -232,12 +232,16 @@ function App() {
         setMovies((state) => state.map((elem) => {
           return elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem
         }));
-        setSavedFilteredMovies((state) => state.map((elem) => elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem));
+        setSavedFilteredMovies((state) => state.map((elem) => {
+          console.log();
+          return elem.id === newMovie.movieId ? { ...elem, buttonLikeType: "liked", key: elem.id } : elem
+        }));
         newMovie.buttonLikeType = "delete"
         setSavedMovies((state) => [...state, newMovie])
         // setShortFilteredSavedMovies((state) => [...state, newMovie]);
         //прибавляет новый фильм к массиву имеющихся
         //обновить в LS этот массив
+
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
 
       })
@@ -258,23 +262,15 @@ function App() {
         setMovies((state) => state.map((elem) => elem.id === id ? { ...elem, buttonLikeType: "unliked", key: elem.id } : elem))
         setSavedMovies((state) => state.filter((c) => c._id !== deleteMovie._id))
         setSavedFilteredMovies((state) => {
-          console.log(state, 'state')
-          return state.map((elem) => {
-            console.log(elem, 'elem', id, 'id')
-            return elem.movieId === id ? 
-            { ...elem, buttonLikeType: "unliked", key: elem.id } :
-             elem
-          }
-          )
-        })
+          return state.filter((movie) => movie.movieId !== id)
+        }
+        )
         localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
       })
       .catch((err) => {
         console.log(err);
       })
   }
-
-  ///////////////////////////////////////////////////
 
   // повторяющаяся функция фильтрации массива по ключевому слову
   function searchFilm(movies, string) {
@@ -313,7 +309,7 @@ function App() {
             )
           })
         ) : movies)
-      } else if (movies.length === 0) {
+      } else if (movies.length === 0) { //повторяющаяся строка
         setMoviesForShow([]);
         // isLoggedIn && openPopup("Ничего не найдено"); //здесь это нельзя размещать из-за проблем при регистрации
       }
@@ -330,7 +326,7 @@ function App() {
         ) : films)
 
       } else if (films.length === 0) {
-        setMoviesForShow([]);
+        setMoviesForShow([]);  //повторяющаяся строка
         // isLoggedIn && openPopup("Ничего не найдено");  //здесь это нельзя размещать из-за проблем при регистрации
       }
     }
