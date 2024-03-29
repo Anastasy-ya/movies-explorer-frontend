@@ -16,9 +16,6 @@ function Login({
   askToChangeForm, // предложение изменить форму ввода
   askToChangeFormLink,
   routTo,
-  // requestMessage,
-  // setIsOpenConfirmationPopup,
-  // setRequestMessage,
   openPopup,
   setIsLoggedIn
 }) {
@@ -29,17 +26,16 @@ function Login({
 
   //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     handleLogin(values)
-    .then(() => {
-    })
-    .catch((err) => {
-      console.log(err, 'ошибка авторизации')
-      openPopup(err || "");
-      // setIsOpenConfirmationPopup(true);
-      setIsLoggedIn(false);
-      resetForm();
-    })
+      .then(() => {
+      })
+      .catch((err) => {
+        console.log(err, 'ошибка авторизации')
+        openPopup(err || "");
+        setIsLoggedIn(false);
+        resetForm();
+      })
   };
 
 
@@ -66,9 +62,7 @@ function Login({
           handleChange={(e) => handleChange(e)}
           errors={errors}
           values={values}
-          pattern="^[a-zA-Z0-9\-.]{1,}@[a-zA-Z0-9\-.]{1,}\.[a-zA-Z]{2,5}$"
-          //валидация при помощи validate на бэке не принимает нижнее подчеркивание, TODO после сдачи
-            //"^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
+          pattern="^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
         />
 
         <Input

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
@@ -49,7 +49,7 @@ function Profile({
             maxLength="20"
             id="profile__profile-name-input"
             onChange={(e) => handleChange(e)}
-            pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
+            pattern="[a-zA-Zа-яА-Я0-9ёЁ_\s\-]+"
             value={values.name ?? currentUser.name}
           />
           <span className="profile__input-error">
@@ -71,9 +71,7 @@ function Profile({
             maxLength="20"
             id="profile__profile-email-input`"
             onChange={(e) => handleChange(e)}
-            pattern="^[a-zA-Z0-9\-.]{1,}@[a-zA-Z0-9\-.]{1,}\.[a-zA-Z]{2,5}$"
-            //валидация при помощи validate на бэке не принимает нижнее подчеркивание, TODO после сдачи
-            //"^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
+            pattern="^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
             value={values.email ?? currentUser.email}
           />
           <span className="profile__input-error profile__input-error_type_bottom">
