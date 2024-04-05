@@ -383,7 +383,6 @@ function App() {
                     <Login
                       handleLogin={handleLogin}
                       formName={"signin"}
-                      className={"auth-container__form"}
                       buttonText={"Login"}
                       wellcomeText={"Wellcome!"}
                       askToChangeForm={"Not registered yet? "}

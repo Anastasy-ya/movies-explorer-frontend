@@ -9,22 +9,18 @@ function Movies({
   movies,
   isLoggedIn,
   handleSaveMovie,
-  // requestMessage,
-  // setRequestMessage,
   handleSearchMovie,
   isShortMovies,
   setIsShortMovies,
   handleDeleteMovie,
   isShortSavedMovies,
   setIsShortSavedMovies,
-  setShortFilteredMovies,
-  // setIsOpenConfirmationPopup
   openPopup
 }) {
 
   const [addMovies, setAddMovies] = useState(0);
   const [isRenderedLearnMore, setIsRenderedLearnMore] = useState(false);
-  //стейт для поисковой строки movies
+  // state for the search string movies
   // eslint-disable-next-line no-unused-vars
   const [query, setQuery] = useState(
     localStorage.getItem("moviesSearchQuery") || "",
@@ -32,9 +28,7 @@ function Movies({
 
   const { isWideScreen, isMiddleScreen } = useResize();
 
-
-
-  //сколько показывать фильмов по кнопке "еще"?
+  // count the number of movies to show
   function handlerMoreFilms() {
     isWideScreen ?
       setAddMovies(addMovies + 3) :
@@ -44,30 +38,26 @@ function Movies({
   }
 
   function findShowedMovies() {
-    //количество карточек на странице при первой отрисовке
+    // number of default cards
     const count = isWideScreen ?
       12 :
       isMiddleScreen ?
         8 :
         5;
-    //сколько карточек показано сейчас?
+    // return amount of cards now
     return count + addMovies;
   }
 
   const showedMovies = findShowedMovies();
 
-  //определить количество карточек к показу
+  //number of cards to show
   function moviesForRender() {
     if (movies.length > 0) {
       return movies.slice(0, showedMovies);
     } else {
-      // !isRenderedLearnMore && isLoggedIn && openPopup('Ничего не найдено'); // работает но не закрывается подумать как объединить с юзэффектом ниже
       return [];
     }
   };
-
-
-
 
   useEffect(() => {
     const moviesToRender = movies.length - showedMovies;
@@ -75,15 +65,13 @@ function Movies({
       setIsRenderedLearnMore(true)
     } else {
       setIsRenderedLearnMore(false);
-      // openPopup('Ничего не найдено');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movies, showedMovies]);
 
   function handleSearch(query, e) {
     e.preventDefault();
     if (query.length === 0) {
-      openPopup("Нужно ввести ключевое слово");
+      openPopup("You need to enter a keyword");
       return;
     }
     handleSearchMovie(query, e)
@@ -94,8 +82,6 @@ function Movies({
   return (
     <>
       <SearchForm
-        // requestMessage={requestMessage}
-        // setRequestMessage={setRequestMessage}
         handleSearchMovie={handleSearchMovie}
         setIsShortMovies={setIsShortMovies}
         isShortMovies={isShortMovies}
@@ -106,21 +92,16 @@ function Movies({
       />
       <MoviesCardList
         isMoviePage={true}
-        movies={moviesForRender()} //универсальный пропс movies, не путать со стейтом
+        movies={moviesForRender()} //universal movie props, not to be confused with state
         isLoggedIn={isLoggedIn}
         handleSaveMovie={handleSaveMovie}
         handleSearchMovie={handleSearchMovie}
-        // requestMessage={requestMessage}
         handleDeleteMovie={handleDeleteMovie}
         openPopup={openPopup}
-      //этот параметр отличается у фильмов и сохраненных фильмов
       />
       <LearnMore
-        // moviesToRender={moviesToRender}
         handlerMoreFilms={handlerMoreFilms}
         isRenderedLearnMore={isRenderedLearnMore}
-        // openPopup={openPopup}
-      // movies={moviesForRender()}
       />
     </>
   );

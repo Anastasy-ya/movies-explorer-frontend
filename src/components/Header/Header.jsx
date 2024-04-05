@@ -9,43 +9,34 @@ import { useLocation } from "react-router-dom";
 
 function Header({
   isLoggedIn,
-  // isMainPage,
   isWideScreen,
 }) {
 
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
   const [isMainPage, setIsMainPage] = useState(false);
-
   const path = useLocation();
-  
-  //проверка главная ли страница для функции отображения хэдера
+
   useEffect(() => {
     path.pathname === "/" ?
       setIsMainPage(true) :
       setIsMainPage(false);
   }, [path]);
 
-  //функция открытия/закрытия попапа
   function handleOpenClosePopup() {
 
-    // поменять значение на противоположное
+    // change the value to the opposite
     setIsOpenPopup(!isOpenPopup);
 
-    // изменить стили бургера
     document.querySelector(".burger").classList.toggle("burger_opened");
 
-    // зафиксировать фон
+    // fix background
     if (!isOpenPopup) {
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
-      // document.body.style.top = `-${window.scrollY}px`; // для фиксации прокрутки окна
     } else {
       document.body.style.position = '';
-      //значение по умолчанию
+      // default value
       document.body.style.width = 'auto';
-      // const scrollY = document.body.style.top; // для фиксации прокрутки окна
-      // document.body.style.top = '';
-      // window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
   };
 
@@ -63,14 +54,14 @@ function Header({
             </div>
             :
             <>
-              {isLoggedIn && (<nav className="header__navigation-box"> {/*isWideScreen &&  */}
+              {isLoggedIn && (<nav className="header__navigation-box">
 
                 <NavLink
                   className={({ isActive }) => `header__link ${isActive ? "header__link_active" : ""}`}
                   aria-label="link to films"
                   to="/movies"
                 >
-                  Фильмы
+                  Movies
                 </NavLink>
 
                 <NavLink
@@ -78,14 +69,14 @@ function Header({
                   aria-label="link to saved films"
                   to="/saved-movies"
                 >
-                  Сохраненные фильмы
+                  Saved movies
                 </NavLink>
 
               </nav>)}
 
               <InfoAccount
                 isLoggedIn={isLoggedIn}
-                isPopup={false} // стили для попапа
+                isPopup={false}
               />
             </>
           }

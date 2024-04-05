@@ -1,42 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-// import RequestMessage from "../RequestMessage/RequestMessage";
 import AuthForm from "../AuthForm/AuthForm";
-import { ErrorMessage } from "@hookform/error-message";
 import { useLocation } from "react-router-dom";
 
 function SearchForm({
-  handleSearchMovie,
-  // requestMessage,
-  // setRequestMessage,
   setIsShortMovies,
   isShortMovies,
   onSearch,
-  setQuery,
-  setSavedQuery,
+  setQuery, //for movies page
+  setSavedQuery, //for saved movies page
   onSavedSearch,
   isShortSavedMovies,
   setIsShortSavedMovies,
 }) {
 
-  
-
-  // const [savedString, setSavedString] = useState(
-  //   // localStorage.getItem("savedMoviesSearchQuery") || 
-  //   "",
-  // );
-
+  // eslint-disable-next-line no-unused-vars
   const { register, errors, handleSubmit, watch, setValue } = AuthForm();
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/movies") {
-      setValue("search", localStorage.getItem("moviesSearchQuery") || ""); //динамические значения полей
+      setValue("search", localStorage.getItem("moviesSearchQuery") || "");
     } else {
-      setValue("search", savedString || ""); //в строке поиска
+      setValue("search", savedString || "");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   
@@ -57,9 +46,7 @@ function SearchForm({
       localStorage.setItem("moviesSearchQuery", query || "");
       setQuery(query);
     } else {
-      // localStorage.setItem("savedMoviesSearchQuery", savedQuery || "");
-      // setSavedString(savedQuery || "");
-      setSavedQuery(savedString); // видимо это вообще не нужно
+      setSavedQuery(savedString);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, savedString]);
@@ -78,7 +65,7 @@ function SearchForm({
             type="text"
             name="search"
             className="search-input__field"
-            placeholder="Фильм"
+            placeholder="Movie"
             aria-label="write keywords for searching"
             {...register("search")}
           />
@@ -87,7 +74,7 @@ function SearchForm({
             type="submit"
             className="search-input__button"
             aria-label="search films"
-          >Найти
+          >Find
           </button>
 
         </form>
@@ -97,7 +84,6 @@ function SearchForm({
           isShortMovies={isShortMovies}
           isShortSavedMovies={isShortSavedMovies}
           setIsShortSavedMovies={setIsShortSavedMovies}
-        // handleSubmit={handleSubmit}
         />
       </div>
     </div>

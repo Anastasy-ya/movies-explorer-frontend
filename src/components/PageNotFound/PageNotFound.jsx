@@ -9,12 +9,12 @@ function PageNotFound() {
   return (
     <section className="page-not-found">
       <h1 className="page-not-found__code">404</h1>
-      <p className="page-not-found__text">страница не найдена</p>
+      <p className="page-not-found__text">Page Not Found</p>
       <button
         onClick={() => navigate(-1)}
         className="page-not-found__link"
         aria-label="to main page"
-      >Назад</button>
+      >Back</button>
     </section>
   );
 }

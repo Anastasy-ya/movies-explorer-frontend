@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-//хук управления формой и валидации формы
+// Form management and form validation hook
 export function useFormWithValidation() {
 
   const [values, setValues] = React.useState({});

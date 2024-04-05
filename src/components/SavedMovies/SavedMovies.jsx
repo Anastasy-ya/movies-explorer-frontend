@@ -7,8 +7,6 @@ function SavedMovies({
   movies,
   isLoggedIn,
   handleDeleteMovie,
-  // requestMessage,
-  // setRequestMessage,
   handleSearchMovie,
   isShortMovies,
   setIsShortMovies,
@@ -23,7 +21,7 @@ function SavedMovies({
   function handleSearch(query, e) {
     e.preventDefault();
     if (query.length === 0) {
-      openPopup("Нужно ввести ключевое слово");
+      openPopup("You need to enter a keyword");
       return;
     }
     handleSearchMovie(query, e);
@@ -32,24 +30,21 @@ function SavedMovies({
   return (
     <>
       <SearchForm
-        // requestMessage={requestMessage}
-        // setRequestMessage={setRequestMessage}
         handleSearchMovie={handleSearchMovie}
         setIsShortMovies={setIsShortMovies}
         isShortMovies={isShortMovies}
         onSavedSearch={handleSearch}
-        setSavedQuery={setSavedQuery} //значение отличается от movies тк сохраняется другой стейт
+        setSavedQuery={setSavedQuery} //the value is different from movies because the state is different
         isShortSavedMovies={isShortSavedMovies}
         setIsShortSavedMovies={setIsShortSavedMovies}
       />
       <MoviesCardList
         isMoviePage={false}
-        movies={movies} //универсальный пропс movies, не путать со стейтом
+        movies={movies}  //universal movie props, not to be confused with state
         isLoggedIn={isLoggedIn}
         handleDeleteMovie={handleDeleteMovie}
         handleSearchMovie={handleSearchMovie}
         openPopup={openPopup}
-        // requestMessage={requestMessage}
       />
     </>
   );

@@ -10,10 +10,9 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 function Login({
   handleLogin,
   formName,
-  className,
   buttonText,
-  wellcomeText, //заголовок формы
-  askToChangeForm, // предложение изменить форму ввода
+  wellcomeText,
+  askToChangeForm,
   askToChangeFormLink,
   routTo,
   openPopup,
@@ -24,20 +23,18 @@ function Login({
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  //отправка данных в ф-ю, сделающую запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(values)
       .then(() => {
       })
       .catch((err) => {
-        console.log(err, 'ошибка авторизации')
+        console.log(err, 'authorization error')
         openPopup(err || "");
         setIsLoggedIn(false);
         resetForm();
       })
   };
-
 
   return (
     <section className="auth-container">
@@ -57,7 +54,7 @@ function Login({
           minLength={"2"}
           maxLength={"20"}
           labelText={"E-mail"}
-          placeholder={"Введите E-mail"}
+          placeholder={"Enter E-mail"}
           value={values.email ?? currentUser.email}
           handleChange={(e) => handleChange(e)}
           errors={errors}
@@ -70,8 +67,8 @@ function Login({
           name={"password"}
           minLength={"2"}
           maxLength={"20"}
-          labelText={"Пароль"}
-          placeholder={"Введите пароль"}
+          labelText={"Password"}
+          placeholder={"Enter password"}
           handleChange={(e) => handleChange(e)}
           errors={errors}
           values={values}

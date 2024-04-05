@@ -73,6 +73,7 @@
   font-weight: 500;
   letter-spacing: 0;
   line-height: normal;
+  margin: 15px 0;
 }
 
 @media screen and (max-width: 720px) {

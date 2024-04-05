@@ -14,21 +14,21 @@ function Main() {
 
       <SectionFrame
         content={<AboutProject></AboutProject>}
-        title={'О проекте'}
+        title={'About project'}
         sectionName={'about-project'}
       >
       </SectionFrame>
 
       <SectionFrame
         content={<Techs></Techs>}
-        title={'Технологии'}
+        title={'Technologies'}
         sectionName={'techs'}
       >
       </SectionFrame>
 
       <SectionFrame
         content={<AboutMe></AboutMe>}
-        title={'Студент'}
+        title={'About me'}
         sectionName={'about-me'}
       >
       </SectionFrame>

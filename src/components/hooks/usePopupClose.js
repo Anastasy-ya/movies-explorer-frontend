@@ -1,11 +1,14 @@
+// custom hook for closing popup by clicking on an empty space, pressing ESC
 import { useEffect } from "react";
-// кастомные хуки всегда должны начинаться с глагола `use`, чтобы реакт понял, что это хук. Он следит за их вызовами
+
+// кастомные хуки всегда должны начинаться с глагола `use`, чтобы реакт понял, что это хук
+// custom hooks should always start with the verb `use` so that React understands that it is a hook
 function usePopupClose({ isOpen, handleOpenClosePopup }) {
   useEffect(() => {
-    if (!isOpen) return; // останавливаем действие эффекта, если попап закрыт
+    if (!isOpen) return; // stop effect if popup is closed
 
     const handleOverlay = (event) => {
-      // если есть `popup_opened` в классах блока, значит, кликнули на оверлей
+      // if there is `popup_opened` in blocks classes it means clicked on overlay
       if (event.target.classList.contains("popup_opened")) {
         handleOpenClosePopup();
       }
@@ -16,16 +19,16 @@ function usePopupClose({ isOpen, handleOpenClosePopup }) {
         handleOpenClosePopup();
       }
     };
-    // запустить слушатели, запускающие функции закрытия
     document.addEventListener("keydown", handleEscape);
     document.addEventListener("mousedown", handleOverlay);
 
-    //  обязательно удаляем обработчики в `clean-up`- функции
+    // to be sure to remove handlers
     return () => {
       document.removeEventListener("keydown", handleEscape);
       document.removeEventListener("mousedown", handleOverlay);
     };
-    // обязательно следим за `isOpen`, чтобы срабатывало только при открытии, а не при любой перерисовке компонента
+    // be sure to monitor `isOpen` so that it only works when opening, 
+    // and not during any redrawing of the component
   }, [isOpen, handleOpenClosePopup]);
 }
 

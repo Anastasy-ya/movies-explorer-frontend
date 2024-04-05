@@ -24,7 +24,7 @@ function Popup({ isOpen, isLoggedIn, handleOpenClosePopup }) {
                 to="/"
                 onClick={handleOpenClosePopup}
               >
-                Главная
+                Main
               </NavLink>
               <NavLink
                 className={({ isActive }) => `popup__link ${isActive ? "popup__link_active" : ""}`}
@@ -32,7 +32,7 @@ function Popup({ isOpen, isLoggedIn, handleOpenClosePopup }) {
                 to="/movies"
                 onClick={handleOpenClosePopup}
               >
-                Фильмы
+                Movies
               </NavLink>
               <NavLink
                 className={({ isActive }) => `popup__link ${isActive ? "popup__link_active" : ""}`}
@@ -40,11 +40,11 @@ function Popup({ isOpen, isLoggedIn, handleOpenClosePopup }) {
                 to="/saved-movies"
                 onClick={handleOpenClosePopup}
               >
-                Сохраненные фильмы
+                Saved movies
               </NavLink>
             </div>
           ) : (
-            <></> //ссылки для незарегистрированного пользователя для добавления в будущем
+            <></> // links for unregistered user to add in the future
           )}
           <InfoAccount
             isLoggedIn={isLoggedIn}

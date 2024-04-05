@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 function Portfolio() {
   return (
 
-
     <div className="portfolio">
 
-      <h4 className="portfolio__title">Портфолио</h4>
+      <h4 className="portfolio__title">Portfolio</h4>
 
       <div className="portfolio__link">
         <Link
@@ -16,7 +15,7 @@ function Portfolio() {
           className="portfolio__text"
           aria-label="link to static web site"
           target="_blank"
-        >Статичный сайт</Link>
+        >Web-site with static layout</Link>
         <div className="portfolio__icon">↗</div>
       </div>
       <div className="portfolio__link">
@@ -25,7 +24,7 @@ function Portfolio() {
           className="portfolio__text"
           aria-label="link to adaptive web site"
           target="_blank"
-        >Адаптивный сайт</Link>
+        >Web-site with adaptive layout</Link>
         <div className="portfolio__icon">↗</div>
       </div>
       <div className="portfolio__link">
@@ -34,7 +33,7 @@ function Portfolio() {
           className="portfolio__text"
           aria-label="link to one-page application"
           target="_blank"
-        >Одностраничное приложение</Link>
+        >Single Page Application</Link>
         <div className="portfolio__icon">↗</div>
       </div>
     </div>
