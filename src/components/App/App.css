@@ -105,7 +105,8 @@ ul {
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-  width: 100%;
+  background-color: var(--main-background);
+  min-width: 292px;
   align-content: flex-start;
 }
 
