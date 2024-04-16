@@ -1,4 +1,4 @@
-// export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "http://localhost:3000";
 export const MOVIES_URL = "https://api.nomoreparties.co";
 export const API_URL = "api.anastasy-ya.diplom.nomoredomains.xyz" // "http://localhost:3000"; "api.anastasy-ya.diplom.nomoredomains.xyz"
 export const MOVIES_API = "https://api.nomoreparties.co/beatfilm-movies";
