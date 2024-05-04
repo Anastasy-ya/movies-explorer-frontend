@@ -37,7 +37,7 @@
 *Бэкенд по [ссылке](https://github.com/Anastasy-ya/movies-explorer-api)*
 
 
-[Ссылка на макет в Figma](https://www.figma.com/file/mqW0Joa8w2EToBoXqKky1S/Diploma-(Copy)?type=design&node-id=344-0&mode=design)
+[Ссылка на макет в Figma]([https://www.figma.com/file/mqW0Joa8w2EToBoXqKky1S/Diploma-(Copy)?type=design&node-id=344-0&mode=design](https://www.figma.com/file/LAjsVEZSYL5EmZEeyTvlWB/Diploma-(Copy)%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D1%8F%D1%8F-%D1%81-%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D0%BC%D0%B8-28-%D1%81%D0%B5%D0%BD%D1%82?type=design&node-id=891%3A3857&mode=dev&t=L512bQzZGWA5qwHl-1))
 
 
 *Функционал:*
