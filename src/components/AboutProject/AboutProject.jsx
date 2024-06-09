@@ -7,16 +7,16 @@ function AboutProject() {
       <ul className="about-project__container" id="about-project">
 
         <li className="about-project__column">
-          <h3 className="about-project__subtitle">Дипломный проект включал 5 этапов</h3>
+          <h3 className="about-project__subtitle">Included 5 stages</h3>
           <p className="about-project__text">
-            Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.
+            Planning, working on the backend, then on layout, adding functionality and final improvements.
           </p>
         </li>
 
         <li className="about-project__column">
-          <h3 className="about-project__subtitle">На выполнение диплома ушло 5 недель</h3>
+          <h3 className="about-project__subtitle">It took 5 weeks to develop</h3>
           <p className="about-project__text">
-            У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.
+            Each stage had a soft and hard deadline for successful defense.
           </p>
         </li>
 
@@ -27,11 +27,11 @@ function AboutProject() {
           infographic__text
           infographic__text_type_black 
           infographic__text_type_green-background
-        ">1 неделя</p>
+        ">1 week</p>
         <p className="
           infographic__text 
           infographic__text_type_grey-background
-        ">4 недели</p>
+        ">4 weeks</p>
         <p className="
           infographic__text 
           infographic__text_type_grey

@@ -7,7 +7,7 @@ function Promo() {
     <section className="banner">
 
       <div className="banner__image">
-        <h1 className="banner__text">Учебный проект студента факультета Веб-разработки.</h1>
+        <h1 className="banner__text">Web Development educational project</h1>
       </div>
 
       <NavTab></NavTab>

@@ -10,15 +10,13 @@ function MoviesCard({
   handleDeleteMovie
 }) {
 
-
   const saveOrDeleteText = isMoviePage ? "save movie" : "delete movie from saved";
   const { id, nameRU, duration, trailerLink, movieId } = movie;
-  let movieDuration = `${Math.floor(duration / 60)}ч ${duration % 60}м`
+  let movieDuration = `${Math.floor(duration / 60)}hr ${duration % 60}мin`
 
   function saveOrDeleteHandler(e) {
     e.preventDefault();
     movie.buttonLikeType === "unliked" ? handleSaveMovie(movie) : handleDeleteMovie(isMoviePage ? id : movieId)
-    //всегда если класс анлайк, нужно сохранить карточку, во всех остальных случаях удалять
   }
 
   return (
@@ -34,7 +32,7 @@ function MoviesCard({
             : movie.buttonLikeType === "unliked"
               ? "card__icon_type_save"
               : "card__icon_type_delete"}`}
-          /*card__icon_type_save_active*/
+          /*third class type is card__icon_type_save_active*/
           aria-label={saveOrDeleteText}
           onClick={(e) => saveOrDeleteHandler(e)}
         ></button>
@@ -42,7 +40,6 @@ function MoviesCard({
 
       <Link
         to={trailerLink}
-        // className="about-me__gihub"
         aria-label="link trailer"
         target="_blank"
       >

@@ -12,21 +12,21 @@ function NavTab() {
           reloadDocument
           className="navigation__text"
           aria-label="navigate to about project info"
-        >О проекте</Link>
+        >About project</Link>
 
         <Link
           to="#techs"
           reloadDocument
           className="navigation__text"
           aria-label="navigate to used technologies"
-        >Технологии</Link>
+        >Technologies</Link>
 
         <Link
           to="#about-me"
           reloadDocument
           className="navigation__text"
           aria-label="navigate to info about student"
-        >Студент</Link>
+        >About me</Link>
 
       </div>
     </div>

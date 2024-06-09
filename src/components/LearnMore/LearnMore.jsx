@@ -2,10 +2,8 @@ import React from "react";
 import './LearnMore.css';
 
 function LearnMore({
-  // moviesToRender,
   handlerMoreFilms,
   isRenderedLearnMore,
-  // movies
 }) {
 
   return (
@@ -17,7 +15,7 @@ function LearnMore({
           aria-label="show more films"
           onClick={handlerMoreFilms}
         >
-          Ещё
+          Show more
         </button>
       : ""}
 

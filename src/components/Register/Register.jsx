@@ -5,25 +5,21 @@ import Form from "../Form/Form";
 import { Link } from "react-router-dom";
 import Input from "../Input/Input";
 import useFormWithValidation from "../hooks/usevalidate";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Register({
   handleRegister,
   formName,
   buttonText,
-  wellcomeText, //заголовок формы
-  askToChangeForm, // предложение изменить форму ввода
+  wellcomeText,
+  askToChangeForm,
   askToChangeFormLink,
   routTo,
-  // requestMessage,
   openPopup
 }) {
 
-  const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-
-  //отправка данных в ф-ю, сделающую запрос на сервер
+  // sending data to a function that will make a request to the server
   const handleSubmit = (e) => {
     e.preventDefault();
     handleRegister(values)
@@ -32,8 +28,6 @@ function Register({
         openPopup(err || "");
         resetForm();
       })
-      .finally(() => {
-      });
   };
 
 
@@ -56,27 +50,25 @@ function Register({
           name={"name"}
           minLength={"2"}
           maxLength={"20"}
-          labelText={"Имя"}
-          placeholder={"Введите имя"}
-          value={values.name ?? currentUser.name}
+          labelText={"name"}
+          placeholder={"Enter name"}
+          value={values.name || ""}
           handleChange={(e) => handleChange(e)}
           errors={errors}
-          pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
+          pattern="[a-zA-Zа-яА-Я0-9ёЁ_\s\-]+"
         />
 
         <Input
           type={"text"}
           name={"email"}
+          placeholder={"Enter E-mail"}
+          value={values.email || ""}
           minLength={"2"}
           maxLength={"20"}
           labelText={"E-mail"}
-          placeholder={"Введите E-mail"}
-          value={values.email ?? currentUser.email}
-          handleChange={(e) => handleChange(e)}
           errors={errors}
-          pattern="^[a-zA-Z0-9\-.]{1,}@[a-zA-Z0-9\-.]{1,}\.[a-zA-Z]{2,5}$"
-        //валидация при помощи validate на бэке не принимает нижнее подчеркивание, TODO после сдачи
-        //"^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
+          pattern="^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
+          handleChange={(e) => handleChange(e)}
         />
 
         <Input
@@ -84,9 +76,9 @@ function Register({
           name={"password"}
           minLength={"2"}
           maxLength={"20"}
-          labelText={"Пароль"}
-          placeholder={"Введите пароль"}
-          value={values.password ?? currentUser.password}
+          labelText={"Password"}
+          placeholder={"Enter password"}
+          value={values.password || ""}
           handleChange={(e) => handleChange(e)}
           errors={errors}
         />

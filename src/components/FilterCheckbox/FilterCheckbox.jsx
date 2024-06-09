@@ -34,7 +34,7 @@ function FilterCheckbox({
           tabIndex="0"
           aria-label="filter short films"></span>
       </label>
-      <p className="search-input__text">Короткометражки</p>
+      <p className="search-input__text">Short films</p>
     </div>
   );
 }

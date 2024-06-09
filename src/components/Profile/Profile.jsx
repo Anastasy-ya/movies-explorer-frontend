@@ -1,15 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
 import useFormWithValidation from "../hooks/usevalidate";
 
 function Profile({
-  // isLoggedIn,
   routTo,
   handleChangeProfile,
-  handleDeleteToken,
-  // requestMessage
+  handleDeleteToken
 }) {
 
   const { values, handleChange, errors, isValid } = useFormWithValidation();
@@ -19,7 +17,7 @@ function Profile({
   const handleSubmit = (e) => {
     e.preventDefault();
     handleChangeProfile(values);
-    //обнулять форму не требуется
+    // there's no need to reset the input form values
   };
 
 
@@ -27,7 +25,7 @@ function Profile({
     <section className="profile">
       <div className="profile__container">
 
-        <h1 className="profile__wellcome">Привет, {currentUser.name}</h1>
+        <h1 className="profile__wellcome">Hello, {currentUser.name}</h1>
 
         <form
           className="profile__form"
@@ -35,7 +33,7 @@ function Profile({
           onSubmit={handleSubmit}
         >
           <label className="profile__label profile__label_type_grid1">
-            Имя
+           Name
           </label>
           <input
             type="text"
@@ -43,17 +41,17 @@ function Profile({
             className="
             profile__input 
             profile__input_type_grid2"
-            placeholder="Введите имя"
+            placeholder="Enter name"
             required
             minLength="2"
             maxLength="20"
             id="profile__profile-name-input"
             onChange={(e) => handleChange(e)}
-            pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
+            pattern="[a-zA-Zа-яА-Я0-9ёЁ_\s\-]+"
             value={values.name ?? currentUser.name}
           />
           <span className="profile__input-error">
-            {errors["profile-name"] && "Имя: "}{errors?.["profile-name"]}
+            {errors["profile-name"] && "Name: "}{errors?.["profile-name"]}
           </span>
 
           <label className="profile__label profile__label_type_grid3">
@@ -65,15 +63,13 @@ function Profile({
             className="
             profile__input 
             profile__input_type_grid4"
-            placeholder="Введите E-mail"
+            placeholder="Enter E-mail"
             required
             minLength="2"
             maxLength="20"
             id="profile__profile-email-input`"
             onChange={(e) => handleChange(e)}
-            pattern="^[a-zA-Z0-9\-.]{1,}@[a-zA-Z0-9\-.]{1,}\.[a-zA-Z]{2,5}$"
-            //валидация при помощи validate на бэке не принимает нижнее подчеркивание, TODO после сдачи
-            //"^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
+            pattern="^[a-zA-Z0-9_\-.]{1,}@[a-zA-Z0-9_\-.]{1,}\.[a-zA-Z]{2,5}$"
             value={values.email ?? currentUser.email}
           />
           <span className="profile__input-error profile__input-error_type_bottom">
@@ -87,7 +83,7 @@ function Profile({
             disabled={!isValid || currentUser.name === values.name || currentUser.email === values.email}
 
           >
-            Редактировать
+            Edit
           </button>
         </form>
 
@@ -98,7 +94,7 @@ function Profile({
           className="profile__change-data profile__change-data_type_link"
         >
           <p className="profile__change-data profile__change-data_type_link">
-            Выйти из аккаунта
+            Log out
           </p></Link>
 
       </div>

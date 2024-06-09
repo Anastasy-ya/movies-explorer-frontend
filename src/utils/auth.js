@@ -1,5 +1,5 @@
 import { API_URL } from "../utils/consts";
-export const baseUrl = API_URL;
+// export const baseUrl = API_URL;
 
 function checkResponse(res) {
   if (res.ok) {
@@ -9,7 +9,7 @@ function checkResponse(res) {
 }
 
 export const register = ({ name, email, password }) => {
-  return fetch(`${baseUrl}/signup`, {
+  return fetch(`${API_URL}/signup`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -23,7 +23,7 @@ export const register = ({ name, email, password }) => {
 };
 
 export const login = ({ email, password }) => {
-  return fetch(`${baseUrl}/signin`, {
+  return fetch(`${API_URL}/signin`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -35,13 +35,12 @@ export const login = ({ email, password }) => {
 };
 
 export const checkToken = () => {
-  return fetch(`${baseUrl}/users/me`, {
+  return fetch(`${API_URL}/users/me`, {
     method: "GET",
     credentials: "include",
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      // "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
     },
   }).then((res) => {
     return checkResponse(res);
@@ -49,7 +48,7 @@ export const checkToken = () => {
 };
 
 export const updateUser = ({ name, email }) => {
-  return fetch(`${baseUrl}/users/me`, {
+  return fetch(`${API_URL}/users/me`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -67,7 +66,7 @@ export const updateUser = ({ name, email }) => {
 };
 
 export const logOut = () => {
-  return fetch(`${baseUrl}/signout`, {
+  return fetch(`${API_URL}/signout`, {
     method: "GET",
     credentials: "include",
     headers: {
