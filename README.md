@@ -1,7 +1,12 @@
-# movies-explorer-frontend
-Дипломная работа по курсу Веб-разработчик. Яндекс Практикум
+*Read this in [Russian](README.rus.md)*
 
-## Технологии
+# movies-explorer-frontend
+Diploma work on the course Web developer
+
+*This repository contains frontend.*<br>
+*backend is there [link](https://github.com/Anastasy-ya/movies-explorer-frontend)*
+
+## Technologies
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -12,79 +17,71 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 
-## Реализация
-- Представляет из себя главную страницу-обложку, содержащую информацию о выполненном проекте и сервис, в котором можно найти фильмы по запросу и сохранить в личном кабинете.
-- Адаптивная верстка с учетом возможного переполнения блоков. 
-- Роуты защищены авторизацией. 
-- Запрос к серверу осуществляется только при первом поиске(обязательный пункт задания).
-Блок результатов появляется только после обработки запроса. Если пользователь ещё ничего не искал, блока с карточками на странице нет. Как только запрос сделан, 
-данные передаются в стейт-переменную и блок появляется. 
-- JWT-токен хранится в cookie, стейты в localStorage. 
-- Слайдер реализован независимо для каждой страницы.
-- Если карточек больше, чем требуется для отображения 4 рядов, то под ними появляется кнопка «Ещё». 
-- Количество карточек, которые отображаются на странице, зависит от ширины экрана устройства.
-Ширина 1280px — 4 ряда карточек. Кнопка «Ещё» загружает дополнительный ряд карточек. Ширина 768px — 4 ряда карточек. Кнопка «Ещё» загружает дополнительный ряд карточек.
-Ширина от 320px до 480px — 5 карточек по 1 в ряд. Кнопка «Ещё» загружает по 2 карточки. 
-- Результаты уже выполненного запроса не пропадают, а снова отображаются пользователю, если он перезагрузил страницу или даже закрыл вкладку, но потом вернулся на сайт.
-- Осуществляется моментальная валидация форм. Если одно из полей не заполнено или не прошло валидацию, кнопка «Зарегистрироваться» неактивна.
-- В проекте два бэкенда:<br>
-На Node.js написан API для аутентификации пользователей и сохранения фильмов.<br>
-Использован сторонний API MoviesExplorer — сервис поиска фильмов по ключевым словам.
+## Functionality
 
-- Использование сторонних библиотек разрешено только для валидации формы. Использован React Hook Foorm.
-
-
-*В этом репозитории располагается фронтенд.*<br>
-*Бэкенд по [ссылке](https://github.com/Anastasy-ya/movies-explorer-api)*
+- The application is a landing page that contains information about the completed project and a service where users can search for movies
+and save them to their personal account.
+- Adaptive layout taking into account possible overflow of blocks.
+- Routes are protected by authorization.
+- A request to the server occurs only after the first search (an unusual, but mandatory requirement of the task).
+- The results block appears only after processing the request. If the user has not searched yet, there are no card blocks on the page. As soon as the request is made, the data is transferred to the state variable and the block appears.
+- JWT token is stored in the cookie, REACT states in the localStorage.
+- The slider is implemented independently for each page.
+- The number of cards displayed on the page depends on the screen width of the device.
+Width 1280px - 4 card rows. The "More" button loads an additional row of cards. Width 768px - 4 card rows. The "More" button loads an additional row of cards.
+Width from 320px to 480px - 5 cards in 1 row. The "More" button loads 2 cards.
+- The results of the already completed request do not disappear, but are again displayed to the user if they have reloaded the page or even closed the tab, but then returned to the site.
+- There is instant validation of forms. If any field is not filled out or has not passed validation, the "Register" button is inactive.
+- There are two backends in the project:
+1. A self-written API on Node.js for user authentication and saving movies.
+2. A free MoviesExplorer API - a movie search service by keywords.
+- The use of third-party libraries is allowed only for form validation. In app used React Hook Form.
 
 
-[Ссылка на макет в Figma](https://www.figma.com/file/mqW0Joa8w2EToBoXqKky1S/Diploma-(Copy)?type=design&node-id=344-0&mode=design)
+[Link to Figma layout](https://www.figma.com/file/mqW0Joa8w2EToBoXqKky1S/Diploma-(Copy)?type=design&node-id=344-0&mode=design)
 
 
-*Функционал:*
+*Pages:*
 
-*  по роуту "/" отображается страница «О проекте»;
-*  по роуту "/movies" отображается страница «Фильмы»;
-*  по роуту "/saved-movies" отображается страница «Сохранённые фильмы»;
-*  по роуту "/profile" отображается страница с профилем пользователя;
-*  по роутам "/signin" и "/signup" отображаются страницы авторизации и регистрации.
-
-<!---Graduate work on the course web developer/backend-->
+*  route "/" - About project page;
+*  route "/movies" - Movies page;
+*  route "/saved-movies" - Saved movies page;
+*  route "/profile" - user account page;
+*  routes "/signin" и "/signup" - authorization and registaration pages.
 
 
-## Ссылки на проект
+## The application is deployed on the server. Links:
 
-<!--Frontend https://anastasy-ya.diplom.nomoredomains.xyz
+Frontend https://anastasy-ya.diplom.nomoredomains.xyz
 
-Backend https://api.anastasy-ya.diplom.nomoredomains.xyz-->
+Backend https://api.anastasy-ya.diplom.nomoredomains.xyz
 
 Pull Request https://github.com/Anastasy-ya/movies-explorer-frontend/pull/2
 
 
-## Запуск проекта
+## To launch app (It may be necessary to change the frontend connection addresses and CORS settings for the backend)
 
-1. Склонировать проект на ваш компьютер с [Github]() с помощью команды:
+1. Clone the project to your computer from Github using the command:
 ```
 git clone 
 ```
-2. Перейти в папку проекта
+2. Go to the project folder
 ```
 cd .\mesto-main\
 ```
-3. Установить зависимости:
+3. Install:
 ```
 npm install
 ```
-4. Запустить проект:
+4. Launch project:
 ```
 npm start
 ```
 
-## Адрес репозитория:
+## Links to repositories:
 
 https://github.com/Anastasy-ya/movies-explorer-api<br>
 https://github.com/Anastasy-ya/movies-explorer-frontend<br>
 <br><br>
 
-[Критерии оценки дипломной работы](https://code.s3.yandex.net/web-developer/static/new-program/web-diploma-criteria-2.0/index.html)
 
